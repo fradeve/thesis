@@ -1,0 +1,50 @@
+\chapter{Case study: geostatistics on neolithic settlements in Tavoliere}
+
+    \begin{chaptersum}
+        Sommario in italiano
+    \end{chaptersum}
+
+    The geostatistical system described in this chapter has been structured using the processed spatial data collected during almost ten years of surveying of the settlements in the Tavoliere plain. The existence of buried settlements ranging from neolithic period to middle ages has been proved by field and aerial surveys and by historical records. Given the variety and widespread distribution of the settlements across about \SI{150}{\hectare}, aerial and geophysical methods assured the best results, and heavily contributed to collect the data useful to an accurate landscape archaeology study \cite[pp.~45--48]{remote-ciminale}.
+
+    \section{General features of the settlements}
+        As extensively reported in literature \cite{intro-tavoliere}, the 256 sites form one of the densest concentrations of prehistoric settlements in Europe, lying within a plain approximately \SI{50}{\kilo\meter} by \SI{80}{\kilo\meter} at its broadest and longest points. The natural boundaries of this area are marked from rivers Fortore and Ofanto --- north and south --- and the Gulf of Manfredonia and Appennine foothills --- east and west.\\
+        The settlements are large or small villages, normally surrounded by one or more ditches, with the interior generally filled with a number of internal compounds. The majority of the sites occupied level ground. Refer to published materials for further details.
+
+        \subsection{Published data and the work of J. D. B. Jones}
+
+            \subsubsection{Spatial analysis}
+
+        \subsection{Modern spatial investigations}
+            \input{tab/layers}
+            After the post-processing, all the data have been placed in a GIS environment, currently containing XXX different raster layers and XXX vector layers (\fref{tab:layers}). These vector layers refer to the latest study in chronological order, carried out by dott.ssa Angela Laterza in 2013,
+            % TODO: add bib reference to Angelica's thesis
+            who completely digitized the structures contained in 22 neolithic settlements. The whole digitalization process took as long as 320 hours and consisted in manually tracing the borders of the visible structures (\emph{ditches} and \emph{compounds}) and, as a separate geometry, the respective area for each of them; the operator has been employed for about two months, and has produced about 1300 geometries; \fref{fig:scheme-derive} shows the whole process.
+
+            \begin{figure}[htb]
+                \resizebox{1.1\textwidth}{!}{%
+                    \input{tab/geo-workflow}
+                }
+                \caption[Data deriving workflow for the Tavoliere project]{Data derivation workflow for the case study. Raster layers (\textsf{rs}) are the source of all derived vector data (\textsf{vt}). Bold lines represents a manual process, while dashed ones an automated process. Perimeter as numeric value have been calculated and saved in derived geometries.}
+                \label{fig:scheme-derive}
+            \end{figure}
+
+    \section{The GIS approach to statistics}
+        The first step in statistical analysis at any level is to build a suitable set of data. In this case study, vector shapes of ditches and compounds can be considered as \emph{primary} data, while area geometries as \emph{derived} data.
+        The statistical and spatial approach to the study of neolithic --- or, in general, prehistoric --- settlements data is well documented in literature \cite{arch-location-model}, and the strict relation between the morphology of the natural environment and the ancient societies enforces the use of GIS systems when deriving data.\\
+        
+        Moving from the standard geophysical survey workflow to a spatial analysis context during the study of the settlements has generated some necessities, which need to be added to the critical points already defined in \fref{sec:gis-data-management}:
+
+        \begin{description}
+            \item[automate derived data creation] the set of derived data may be generated automatically, since it consists of geometries describing the same characteristic on every shape (e.g. the internal area of a ditch or compound);
+            \item[automate calculations] most of the processes operated on data take a feature of the element (e.g. the perimeter), save it in a database field, retrieves all of them and make calculations; this is a repetitive task which could be done more efficiently;
+            \item[platform independent results] the results must be reproducible by any researcher on any platform, and the dynamics of calculations must be public; the structure of the project should enable other researchers to contribute and improve the algorithms.
+        \end{description}
+
+        Given that, some objectives have been defined to improve the current workflow and speed up the process, trying to gain in the same time more precision, accuracy and reproducibility; the following subsections will explain how every objective has been achieved in detail.
+
+        \subsection{Bulk distinguishing ditches and compounds}
+        \subsection{Derive and measure ditches and compounds areas}
+        \subsection{Automating compounds orientation discovering}
+            % compounds orientation derived from external rectangle orientation
+        \subsection{Plot and present data}
+        \subsection{The open source webGIS interface}

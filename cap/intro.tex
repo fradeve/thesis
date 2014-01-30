@@ -1,0 +1,53 @@
+\chapter{Introduction}
+
+    \begin{chaptersum}
+        Testo sommario contenuti in italiano
+    \end{chaptersum}
+
+    The history of non-invasive geophysical research and methods has evolved rapidly over the years, widening the horizons of research in all the fields in which it has been applied. In this context, archaeology is one of the disciplines which has taken advantage of this and the number of published experiences on the topic is growing every year.\\
+    In the last 20 years, both geophysics and archaeology have steadily expanded their use of Geographic Information Systems (GIS) to organize, clean, analyze and produce results from raw data, and 35 years have past since the first application of GIS in archaeology \cite[pp.~2--3]{kvamme1995}. From this point of view, GIS placed itself in the intersection of both fields and has developed itself as a separate discipline over the years, moving from desktop software to the internet with \emph{webGIS}. The ever growing amount of case studies focused on GIS, geophysics and archaeology is making clear that in the future these disciplines will evolve together towards an interdisciplinary approach, and probably each of these will take advantage from the advancements in the others.\\
+    This works presents a case study of a statistical approach on geophysical data recorded in the archaeological field, using some well known methods and introducing some innovations with respect to data analysis, webGIS and interfaces to present results. 
+    \section{Archaeology and geophysics}
+        The relationship between geophysics and \emph{landscape archaeology} in particular is well documented and presents some practical advantages over any other approach, mainly:
+        \begin{description}
+            \item[cost reduction] geophysical surveys can drive the excavation and avoid losing time in unfruitful diggings, helping to define the best approach to manage the site
+            \item[flexible approaches] geophysical methods are suitable for large scale analysis as well as small scale surveys
+            \item[integration] since part of the archaeological data consists of spatial data, geophysical information --- most of the times --- could be easily integrated with current data, defining another ``layer of knowledge''.
+        \end{description}
+
+    \section{Landscape archaeology and Geographic Information Systems}
+        The natural tendency of modern archaeology to move from small scale excavations to a larger view and comprehension of the relationship between ancient communities and past natural environment --- the so called \emph{landscape archaeology} --- has brought new methods in archaeology, and most of these relies on Geographic Information Systems. In this field, this relationship has gained strength more than with any other archaeological approach, as most of the landscape archaeology methods beyond excavation are \emph{spatial methods} \cite[preface]{space-archaeology}. The commonest uses of GIS in this field are: data classification, data plotting, environment modeling; the first two have been used in this work.
+
+        By definition \cite{american-dict}, the scientific method consists of
+        \begin{quote}
+            the observation, identification, description, experimental investigation, and theoretical explanation of phenomena. Such activities restricted to a class of natural phenomena.
+        \end{quote}
+        Landscape archaeology deals with spatially described phenomena, and in modern approaches, GIS are the best tool to manage, identify and do experimental investigation on phenomena distributed on everything more complex than a Cartesian surface (like a geoid).
+
+    \section{Geophysics analysis workflow}
+        Despite of some peculiarities depending on the approach, the workflow of a geophysical analysis in the archaeological context has a fixed structure consisting of a sequence of data collecting techniques, cleaning of the collected data and GIS methods to clean, calculate and plot results. These steps, with particular attention to topics related to the current work, are briefly described below.
+
+        \subsection{Aerial photography}
+            The term \emph{aerial} refers to any image of the ground taken from an elevated position \cite{wiki:aerial}; in geophysics it is used to describe the images taken from aircrafts, helicopters or balloon with the specific purpose to define the characteristics of the ground before starting a deeper investigation with more precise methods. It is useful to have a general idea of where heritage is on the ground and its relations with the natural and anthropic environment.\\
+            With reference to the nature of the work that will be presented in the following chapters, the aerial (oblique) survey gives best results in a plain farmed ground, providing effective documentation on cropmarks, classical and medieval structures (as well as their place in rural or urban landscape) \cite[pp.~11--12]{arch-site-detection}. Before satellite imaging, it has been one of the most valuable survey techniques and its use rapidly matured during the two World Wars.
+            
+        \subsection{Magnetometry}
+            Magnetic techniques are proved as the most effective ones, when the necessity rises to define the position and size of buried structures. In its basic principles, it measures the anomalies on the measured Earth's magnetic field on the ground, caused by the presence of buried archaeological remains. Different configurations of the magnetometer's sensors are available (e.g. \emph{duo--quadro} sensors) and usually it is operated moving sensors on parallel equispaced lines (\num{0.1} to \SI{0.5}{\meter}), enabling the survey of large areas in a very small amount of time. The obtained data must be processed by specialized software (cleaning them by defects like \emph{spikes}, \emph{stripes} and \emph{zig-zag}) to obtain meaningful representations of the measures \cite[p.~47]{remote-ciminale}; these representations give a detailed visual insight and 3D appearance of the underlying structures.
+
+        \subsection{GIS and vector data creation}
+            Analyzing data from different sources and with different contents like photos and magnetic prospecting would be impossible without the help of a spatial analysis software, which is in fact merging them in a single entity (the GIS project) using the only common attribute: the geographical coordinates. The data (after being georeferred and projected with a suitable geographical projection) are stored as \emph{raster} (actually, images with a latitude--longitude tuple associated with every pixel) in a plain file or database.\\
+
+            \subsubsection{Deriving vectors from observation}
+                Having as base layers the information-rich rasters, the operator can draw GIS geometries (\emph{points}, \emph{lines} or \emph{polygons}) to represent the features visible in the data. Notably, this is an interpretation itself: the operator is creating new knowledge starting from available data from different sources, assigning attributes to each feature to identify it (\emph{id}) or to classify it (\emph{road}, \emph{building}, \emph{ditch}). Moreover, geographical attributes are automatically stored in the newly created geometries, and all the GIS software are able to export them in common exchange formats (\emph{ESRI shapefile}, \emph{geoJSON}, etc.).
+
+            \subsubsection{Deriving vectors from analysis}
+                Most GIS suites integrate sets of functions calling algorithms to derive information from available data. E.g., a perimeter can be derived from a subset of all the features, or a buffer geometry can be created from a river basin's perimeter. All these data are geometries and could be saved in a separate layer, enriching the data collection (literature offers a great variety of these operations in a geophysical context \cite[p.~325]{remote-ciminale}). Depending on the GIS software used, functions may be implementations of well known --- published --- algorithms or written by the software's producer and distributed as \emph{proprietary} algorhitms; the latter case is the less advisable for the user, since he will know the results of the calculation without knowing the how the calculation itself has been operated \cite[p.~69]{fronza-informatica}.
+
+        \subsection{GIS data management\label{sec:gis-data-management}}
+            The workflow defined in this chapter has some points of weakness; some of them are related to the operator when deriving vectors from observation, others are limitations of the software suite itself:
+            \begin{description}
+                \item[errors related to magnification] when the GIS user derives vector data (usually polygons) from magnetic prospections, the zoom level set while editing the layer's features is fundamental for an accurate drawing; if the base layers are set at a zoom level lower than the adequate one, a rising of the difference between derived geometries and original raster layers will take place, heavily decreasing the accuracy and precision of the new data.
+                \item[database management] collecting all the abovementioned data types for hundreds of sites will make the database grow heavily, raising the necessity to have an efficient data storage architecture. In the geospatial field, this usually means to stop using ESRI Shapefiles in favour of spatially-enabled database (Spatialite, PostGIS, etc.). The approach to these technologies is not simple most of the times, and lowering the barriers to access geospatial functions in database becomes a priority.
+                %\item[results exportation] 
+                \item[desktop software] most of the analysis process is usually done using functions integrated in a desktop GIS software, making very easy to move data across physical storage devices, but decreasing consistently the data safeness (since data needs to be backed up regularly and the machine itself can be damaged by other people in the laboratory). Moreover, giving external collaborators access to desktop data is very difficult, as well as to manage --- or log --- the access to data from a single person. These disadvantages are well documented in literature (see \cite[p.~19]{fronza-informatica}).
+            \end{description}

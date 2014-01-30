@@ -1,0 +1,137 @@
+\tikzstyle{automated} = [
+    rectangle split,
+    rectangle split horizontal,
+    rectangle split parts=2,
+    rectangle split part fill={White, Yellow!50},
+    draw=MidnightBlue, very thick,
+    text centered, rounded corners,
+    minimum height=2em
+]
+
+\tikzstyle{human_vect} = [
+    rectangle split,
+    rectangle split horizontal,
+    rectangle split parts=2,
+    rectangle split part fill={White, RoyalPurple!50},
+    draw=Black, very thick,
+    text centered, rounded corners,
+    minimum height=2em
+]
+
+\tikzstyle{human_num} = [
+    rectangle, draw=YellowGreen, ultra thick, fill=YellowGreen!50,
+    text centered, rounded corners,
+    minimum height=3em
+]
+
+\tikzstyle{page} = [
+    rectangle, draw=GreenYellow, very thick, fill=GreenYellow!50,
+    text centered, rounded corners,
+    minimum height=2.5em
+]
+
+\tikzstyle{file} = [
+    rectangle split,
+    rectangle split horizontal,
+    rectangle split parts=2,
+    rectangle split part fill={White, Goldenrod!50},
+    draw=Orange, very thin,
+    text centered, rounded corners,
+    minimum height=2.5em,
+    fill=red
+]
+
+\begin{dot2tex}
+    digraph hierarchy {
+        rankdir="TB";
+        ranksep="0.3";
+
+        sit [
+            label="SIT Puglia",
+            lblstyle="automated",
+            texlbl="SIT Puglia\nodepart{two}rs"
+        ]
+
+        aerial [
+            label="Aerial2",
+            lblstyle="automated"
+            texlbl="aerial survey\nodepart{two}rs",
+        ]
+
+        magn [
+            label="Magnetic prospection",
+            lblstyle="automated"
+            texlbl="magnetic prospection\nodepart{two}rs"
+        ]
+
+        ditches [
+            label="ditches",
+            lblstyle="human_vect",
+            texlbl="ditches\nodepart{two}vt"
+        ]
+
+        compounds [
+            label="compounds",
+            lblstyle="human_vect",
+            texlbl="compounds\nodepart{two}vt"
+        ]
+
+        ditches_area [
+            label="ditches area",
+            lblstyle="human_vect",
+            texlbl="ditches area\nodepart{two}vt"
+        ]
+
+        compounds_area [
+            label="compounds area",
+            lblstyle="human_vect",
+            texlbl="compounds area\nodepart{two}vt"
+        ]
+
+        ditches_perimeter [
+            label="ditches perimeter",
+            lblstyle="human_num",
+            texlbl="perimeter"
+        ]
+
+        compounds_perimeter [
+            label="compounds perimeter",
+            lblstyle="human_num",
+            texlbl="perimeter"
+        ]
+
+        compounds_orientation [
+            label="compounds orientation",
+            lblstyle="human_num",
+            texlbl="orientation"
+        ]
+
+        // ranking
+        { rank=source;
+          sit; aerial; magn }        
+        { rank=same; 
+          ditches; compounds }
+        { rank=same;
+          ditches_area;
+          compounds_area }
+        { rank=same; 
+          ditches_perimeter;
+          compounds_perimeter;
+          compounds_orientation }
+
+        // bindings
+        aerial -> ditches [style=bold]
+        aerial -> compounds [style=bold]
+        magn -> ditches [style=bold]
+        magn -> compounds [style=bold]
+        sit -> ditches [style=bold]
+        sit -> compounds [style=bold]
+
+        ditches -> ditches_area [style=bold]
+        compounds -> compounds_orientation [style=bold]
+        compounds -> compounds_area [style=bold]
+
+        ditches_area -> ditches_perimeter [style=dashed]
+        compounds_area -> compounds_perimeter [style=dashed]
+    }
+\end{dot2tex}

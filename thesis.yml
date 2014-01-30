@@ -1,0 +1,11 @@
+session:
+    name: 0
+    windows:
+      - name: "thesis"
+        layout: "762b,194x50,0,0{132x50,0,0,3,61x50,133,0,4}"
+        clear: true
+        root: "/home/fradeve/git/thesis"
+        panes:
+          - cmd: "vim"
+            focus: true
+          - cmd: "asana nerd/arkaddons"

@@ -1,0 +1,140 @@
+%& -shell-escape
+\documentclass[12pt,%                     % corpo del font principale
+               a4paper,twoside,		      % carta A4, fronte
+               titlepage,%                % frontespzio
+               headinclude,,footinclude,% % testatina e pié di pagina
+               numbers=noenddot,%         % niente punto dopo il numero delle sezioni
+               cleardoublepage=empty,%    % pagine vuote senza testatina e pié di pagina
+               abstracton,%
+               appendixprefix=true,%
+               %draft                     % useful for debug
+               ]{scrreprt}                % classe report di KOMA-Script;
+
+%%% font / input %%%%%%%%%%%%
+
+\usepackage[T1]{fontenc}                  % la codifica dei font
+\usepackage[utf8]{inputenc}               % imposta la codifica di input;
+
+%%% language %%%%%%%%%%%%%%%%
+
+\usepackage[italian,english]{babel}       % per scrivere in italiano e in inglese;
+
+%%% document style %%%%%%%%%%
+
+\usepackage[eulerchapternumbers,%         % numeri dei capitoli in Euler
+            subfig,%                      % compatibilità con subfig
+            eulermath,%                   % AMS Euler come font per la matematica
+            %pdfspacing%                  % migliora il riempimento di riga con PDFLaTeX
+            ]{classicthesis}              % lo stile ClassicThesis
+\usepackage{arsclassica}                  % modifica alcuni aspetti di ClassicThesis
+\usepackage{setspace}                     % setting space among lines
+\onehalfspacing
+\KOMAoptions{cleardoublepage=plain}       % the cleardoublepage is empty
+
+%%% bibliography %%%%%%%%%%%%
+
+\usepackage[autostyle]{csquotes}          % useful with biblatex
+\usepackage[backend=biber,                % bibliography
+            bibstyle=alphabetic,          % .
+			citestyle=alphabetic,         % .
+			hyperref,                     % .
+			useprefix,                    % .
+			backref]{biblatex}            % .
+\addbibresource{refs/bibliografia.bib}    % loads bib file
+
+%%% math and science %%%%%%%%%
+
+\usepackage{amsmath,amssymb,amsthm}       % indispensabili per la matematica
+\usepackage{xfrac}                        % slanted bar for fractions
+\usepackage{siunitx}	                  % SI units
+\usepackage{eurosym}                      % euro symbol
+
+%%% layout %%%%%%%%%%%%%%%%%%
+
+\usepackage[{a4paper,                     % margins
+             left=3cm,                    % .
+			 right=2.5cm,                 % .
+             top=3cm,                     % .
+			 bottom=3.5cm,                % .
+             heightrounded,               % .
+			 bindingoffset=1.5cm}]{geometry}
+\usepackage{varioref}                     % riferimenti completi della pagina
+\usepackage[plain]{fancyref}
+%\usepackage{indentfirst}                 % rientra il primo paragrafo di ogni sezione
+\usepackage{minitoc}
+
+%%% tables %%%%%%%%%%%%%%%%%%%
+
+\usepackage{booktabs}			          % migliora la qualità delle tabelle
+\usepackage{tabularx}			          % colonne a spaziatura fissa delle tabelle
+\newcommand{\otoprule}                    % better top rule horizontal line
+    {\midrule[\heavyrulewidth]}           % .
+
+%%% images and graphics %%%%%%
+
+\graphicspath{{img/}}                     % defines images path
+\usepackage{graphicx}                     % basic graphics support
+\usepackage{pdfpages}                     % include pdf
+\usepackage{subfig}                       % sottofigure, sottotabelle
+\usepackage{sidecap}                      % enables captions on the side
+\usepackage[tableposition=top]{caption}   % define captions style
+\usepackage{float}
+\usepackage{parskip}
+
+%% tikz
+\usepackage{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{rotating}
+
+\newcommand\AlCentroPagina[1]{            % generates big b/w logo
+    \AddToShipoutPicture*{\AtPageCenter{  % .
+        \makebox(0,0){\includegraphics    % .
+            [width=0.9\paperwidth]{#1}}   % .
+        }                                 % .
+    }                                     % .
+}                                         % .
+
+%%% text utils %%%%%%%%%%%%%%%
+
+\usepackage{hyphenat}
+\hypersetup{colorlinks=false}		      % commentare se il file non è x la stampa
+\usepackage{acronym}			          % pacchetto per gli acronimi
+
+% generates summary (before starting chapter's first section)
+\newenvironment{chaptersum}
+    {\sffamily\textbf{Sommario}\\\rightskip1in}
+    {}
+
+
+\begin{document}
+    \includepdf[pages={1}]{pages/tesi-front}
+    \cleardoublepage
+    \includepdf[pages={1}]{pages/tesi-post-front}
+    \cleardoublepage
+    %******************************************
+    % Materiale iniziale
+    %******************************************
+    \pagenumbering{Roman}
+    \input{pages/dedication}\cleardoublepage
+    \pagestyle{scrheadings} 
+    \input{pages/index}\cleardoublepage
+    %\input{pages/forewords}\cleardoublepage
+    %******************************************
+    % Materiale principale
+    %******************************************
+    \pagenumbering{arabic}
+    \input{cap/intro}\cleardoublepage
+    \input{cap/case-study}\cleardoublepage
+    \input{cap/results}\cleardoublepage
+    \input{cap/conclusions}\cleardoublepage
+    %******************************************
+    % Materiale finale
+    %******************************************
+    \input{pages/acknowledgments}\cleardoublepage
+    \printbibliography\cleardoublepage
+    \appendix
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+    \addcontentsline{toc}{part}{\appendixname} 
+    \input{cap/code}
+\end{document}
