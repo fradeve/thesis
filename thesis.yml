@@ -6,6 +6,6 @@ session:
         clear: true
         root: "/home/fradeve/git/thesis"
         panes:
-          - cmd: "vim"
+          - cmd: "vim thesis.tex"
             focus: true
-          - cmd: "asana nerd/arkaddons"
+          - cmd: "makelatex"

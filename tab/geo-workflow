@@ -24,23 +24,6 @@
     minimum height=3em
 ]
 
-\tikzstyle{page} = [
-    rectangle, draw=GreenYellow, very thick, fill=GreenYellow!50,
-    text centered, rounded corners,
-    minimum height=2.5em
-]
-
-\tikzstyle{file} = [
-    rectangle split,
-    rectangle split horizontal,
-    rectangle split parts=2,
-    rectangle split part fill={White, Goldenrod!50},
-    draw=Orange, very thin,
-    text centered, rounded corners,
-    minimum height=2.5em,
-    fill=red
-]
-
 \begin{dot2tex}
     digraph hierarchy {
         rankdir="TB";
@@ -65,43 +48,36 @@
         ]
 
         ditches [
-            label="ditches",
             lblstyle="human_vect",
             texlbl="ditches\nodepart{two}vt"
         ]
 
         compounds [
-            label="compounds",
             lblstyle="human_vect",
             texlbl="compounds\nodepart{two}vt"
         ]
 
         ditches_area [
-            label="ditches area",
             lblstyle="human_vect",
             texlbl="ditches area\nodepart{two}vt"
         ]
 
         compounds_area [
-            label="compounds area",
             lblstyle="human_vect",
             texlbl="compounds area\nodepart{two}vt"
         ]
 
         ditches_perimeter [
-            label="ditches perimeter",
             lblstyle="human_num",
             texlbl="perimeter"
         ]
 
         compounds_perimeter [
-            label="compounds perimeter",
             lblstyle="human_num",
             texlbl="perimeter"
         ]
 
         compounds_orientation [
-            label="compounds orientation",
             lblstyle="human_num",
             texlbl="orientation"
         ]

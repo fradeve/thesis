@@ -31,20 +31,79 @@
     \section{The GIS approach to statistics}
         The first step in statistical analysis at any level is to build a suitable set of data. In this case study, vector shapes of ditches and compounds can be considered as \emph{primary} data, while area geometries as \emph{derived} data.
         The statistical and spatial approach to the study of neolithic --- or, in general, prehistoric --- settlements data is well documented in literature \cite{arch-location-model}, and the strict relation between the morphology of the natural environment and the ancient societies enforces the use of GIS systems when deriving data.\\
-        
         Moving from the standard geophysical survey workflow to a spatial analysis context during the study of the settlements has generated some necessities, which need to be added to the critical points already defined in \fref{sec:gis-data-management}:
 
         \begin{description}
-            \item[automate derived data creation] the set of derived data may be generated automatically, since it consists of geometries describing the same characteristic on every shape (e.g. the internal area of a ditch or compound);
+            \item[automate derived data creation] the set of derived data may be generated automatically, since it consists of geometries describing the same characteristic on every shape (e.g. the internal area of a ditch, for all ditches);
             \item[automate calculations] most of the processes operated on data take a feature of the element (e.g. the perimeter), save it in a database field, retrieves all of them and make calculations; this is a repetitive task which could be done more efficiently;
             \item[platform independent results] the results must be reproducible by any researcher on any platform, and the dynamics of calculations must be public; the structure of the project should enable other researchers to contribute and improve the algorithms.
         \end{description}
 
         Given that, some objectives have been defined to improve the current workflow and speed up the process, trying to gain in the same time more precision, accuracy and reproducibility; the following subsections will explain how every objective has been achieved in detail.
 
+        \subsection{Development of the open source webGIS interface}
+
         \subsection{Bulk distinguishing ditches and compounds}
+            In the current approach, ditches and compounds geometries are distinguished by attributes (the \textsf{Ditch\_comp} field in the Shapefile is respectively set to $1$ or $2$), manually added by the operator to each structure in the Shapefile.
+
+            \begin{wrapfigure}{l}{0.5\textwidth}
+                \centering
+                \begin{tikzpicture}[x=1mm,y=1mm,scale=0.005]
+                    \input{tab/flow-map}
+                \end{tikzpicture}
+                \caption[Flow chart: the logic of bulk distinguishing ditches and compounds]{If any of the ditches and compounds are sharing the same color (class), class total number $k$ must be changed. At the end, geometry type is saved as an attribute in the shapefile.}
+                \label{fig:flow-map}
+            \end{wrapfigure}
+
+            This operation has been semi-automated using the Jenks Natural Breaks classification method \cite{jenks1977}. Virtually any classification could have been chosen (quantile, standard deviation), but Jenks Natural Breaks has gained popularity in the last 20 years as a tool for coloring map objects based on objects properties (\emph{choropleth maps}), and it is a well known and tested tool\footnote{Some criticism has recently raised around the use of Jenks Natural Breaks for the classification of \emph{all} kinds of data; alternative solutions have been found for some distributions --- as heavy-tailed ones \cite{jenks-tail} --- but this is not the case, and Jenks has been experimentally proved as the most appropriate choice.}. It aims to present a series of break values that best represent the actual breaks observed in the data as opposed to some arbitrary classificatory scheme (i.e. equal interval); in this way the actual clustering of data values is preserved.
+
+            In the case study, geometries have been classified by perimeter values (calculated and saved automatically from ditches and compounds shapes). The different coloring of the geometries on the map based on the newly created classes (\fref{fig:jenks-color}) helps the user to distinguish ditches from compounds at a glance.
+
+            The process is semi-automated since the user have to manually select the ditches and, if necessary, change the class numbers to have a good fit. The flowchart in \fref{fig:flow-map} reports the logic of the process. At the end, the geometry types are saved as text attribute (literally \textsf{ditch} or \textsf{compound}) in a table containing the results of the processing (one row for each geometry); \fref{tab:jnb-results} shows sample data from the \emph{Anglisano} settlement.
+
+            \begin{figure}[H]
+                \centering
+                \rotatebox{180}{
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.2]
+                        \input{img/jenks}
+                    \end{tikzpicture}
+                }
+                \caption[A choropleth map of \emph{Anglisano} settlement using Jenks Natural Breaks]{A choropleth map of \emph{Anglisano} settlement created using Jenks Natural Breaks algorithm on perimeters automatically derived from geometries (using default value for classes number, 5). Color difference between ditches and compounds is well-rendered.}
+                \label{fig:jenks-color}
+            \end{figure}
+
+            \begin{table}
+                \centering
+                \input{tab/rows-anglisano}
+                \caption[Sample geometry classification results from Anglisano settlements using Jenk Natural Breaks method]{Sample results from the classification of Anglisano settlement's structures by perimeter using the Jenks Natural Breaks method. The kind of structure is saved as text attribute in the \textsf{type} column. The \textsf{shapefile\_id} column binds the geometries to the respective settlement.}
+                \label{tab:jnb-results}
+            \end{table}
+
         \subsection{Derive and measure ditches and compounds areas}
+            After distinguishing ditches from compounds, efforts have been focused on geometric data deriving. One of the most useful operations when analyzing settlements is to calculate the area enclosed in ditches or compounds. Unlike some cases published in literature, facing the area calculation of rectangular shaped \emph{longhouses} \cite{spatial-south-europe}, the present study has to deal with buried, irregularly shaped, rounded compounds.
+
+            The simplest possible approach to compound's area calculation is subtracting from the whole compound area the area occupied by the compound wall, obtaining the extension of the enclosed space. This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp}. Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
+
+            \begin{figure}[H]
+                \centering
+                \subfloat[Compund's wall surface]{
+                    \label{fig:comp-wall}
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.05]
+                        \input{img/comp} 
+                    \end{tikzpicture}
+                }
+                \hspace{0.1\textwidth}
+                \subfloat[Compound's internal surface]{
+                    \label{fig:comp-area}
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.05]
+                        \input{img/comp-area} 
+                    \end{tikzpicture}
+                }
+                \caption[Deriving compound area from difference between total occupied surface and wall surface]{The area derived from the difference between compound's total occupied surface and the wall surface is not suitable for analysis, since doorstep is not set adequately.}
+                \label{fig:comp}
+            \end{figure}
+
         \subsection{Automating compounds orientation discovering}
             % compounds orientation derived from external rectangle orientation
-        \subsection{Plot and present data}
-        \subsection{The open source webGIS interface}
+
+        %\subsection{Inner/outer compounds}
