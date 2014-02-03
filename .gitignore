@@ -1,9 +1,14 @@
+## VIM
+
 .vimrc
-index.rst
+
+## pdf
+
 main.pdf
 tesi-front.pdf
-main.run.xml
-*.fdb_latexmk
+
+## sources
+
 *.bcf
 *.ptc
 *.aux
@@ -29,9 +34,22 @@ main.run.xml
 *.mtc*
 *.out
 *.fls
-*.synctex.gz
 
-*.vimrc
+## latekmk
+
+*.synctex.gz
+*.fdb_latexmk
+main.run.xml
+
+## graphviz
 
 *.dot
 *main*fig*.tex
+
+## gnuplot
+
+*gnuplot*
+
+## misc
+*todo*
+*test*

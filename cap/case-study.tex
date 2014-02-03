@@ -15,14 +15,14 @@
             \subsubsection{Spatial analysis}
 
         \subsection{Modern spatial investigations}
-            \input{tab/layers}
-            After the post-processing, all the data have been placed in a GIS environment, currently containing XXX different raster layers and XXX vector layers (\fref{tab:layers}). These vector layers refer to the latest study in chronological order, carried out by dott.ssa Angela Laterza in 2013,
+            \input{tab/tab-layers}
+            After the post-processing, all the data have been placed in a GIS environment, currently containing XXX different raster layers and a single vector layer (\fref{tab:layers}). These vector layers refer to the latest study in chronological order, carried out by dott.ssa Angela Laterza in 2013,
             % TODO: add bib reference to Angelica's thesis
-            who completely digitized the structures contained in 22 neolithic settlements. The whole digitalization process took as long as 320 hours and consisted in manually tracing the borders of the visible structures (\emph{ditches} and \emph{compounds}) and, as a separate geometry, the respective area for each of them; the operator has been employed for about two months, and has produced about 1300 geometries; \fref{fig:scheme-derive} shows the whole process.
+            who completely digitized the structures contained in 23 neolithic settlements. The whole digitalization process took as long as 320 hours and consisted in manually tracing the borders of the visible structures (\emph{ditches} and \emph{compounds}) and, as a separate geometry, the respective area for each of them; the operator has been employed for about two months, and has produced about 1300 geometries; \fref{fig:scheme-derive} shows the whole process.
 
             \begin{figure}[htb]
                 \resizebox{1.1\textwidth}{!}{%
-                    \input{tab/geo-workflow}
+                    \input{tab/tab-geo-workflow}
                 }
                 \caption[Data deriving workflow for the Tavoliere project]{Data derivation workflow for the case study. Raster layers (\textsf{rs}) are the source of all derived vector data (\textsf{vt}). Bold lines represents a manual process, while dashed ones an automated process. Perimeter as numeric value have been calculated and saved in derived geometries.}
                 \label{fig:scheme-derive}
@@ -49,7 +49,7 @@
             \begin{wrapfigure}{l}{0.5\textwidth}
                 \centering
                 \begin{tikzpicture}[x=1mm,y=1mm,scale=0.005]
-                    \input{tab/flow-map}
+                    \input{tab/dot-flow-map}
                 \end{tikzpicture}
                 \caption[Flow chart: the logic of bulk distinguishing ditches and compounds]{If any of the ditches and compounds are sharing the same color (class), class total number $k$ must be changed. At the end, geometry type is saved as an attribute in the shapefile.}
                 \label{fig:flow-map}
@@ -74,7 +74,7 @@
 
             \begin{table}
                 \centering
-                \input{tab/rows-anglisano}
+                \input{tab/tab-rows-anglisano}
                 \caption[Sample geometry classification results from Anglisano settlements using Jenk Natural Breaks method]{Sample results from the classification of Anglisano settlement's structures by perimeter using the Jenks Natural Breaks method. The kind of structure is saved as text attribute in the \textsf{type} column. The \textsf{shapefile\_id} column binds the geometries to the respective settlement.}
                 \label{tab:jnb-results}
             \end{table}
@@ -83,6 +83,8 @@
             After distinguishing ditches from compounds, efforts have been focused on geometric data deriving. One of the most useful operations when analyzing settlements is to calculate the area enclosed in ditches or compounds. Unlike some cases published in literature, facing the area calculation of rectangular shaped \emph{longhouses} \cite{spatial-south-europe}, the present study has to deal with buried, irregularly shaped, rounded compounds.
 
             The simplest possible approach to compound's area calculation is subtracting from the whole compound area the area occupied by the compound wall, obtaining the extension of the enclosed space. This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp}. Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
+
+            The problem has been solved applying a common analytical geometry procedure, considering the compound's internal surface as the envelope of the compound wall's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the compound's wall and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the compound's wall is registered. This process is far better explained by %\fref{fig:comp-area}
 
             \begin{figure}[H]
                 \centering
