@@ -42,6 +42,10 @@
 			backref]{biblatex}            % .
 \addbibresource{refs/bibliografia.bib}    % loads bib file
 
+\DeclareBibliographyCategory{web}
+\addtocategory{web}{wiki:hull}
+\defbibheading{web}{\subsection*{Online resources}}
+
 %%% math and science %%%%%%%%%
 
 \usepackage{amsmath,amssymb,amsthm}       % indispensabili per la matematica
@@ -135,7 +139,9 @@
     % Materiale finale
     %******************************************
     \input{pages/acknowledgments}\cleardoublepage
-    \printbibliography\cleardoublepage
+    \printbibliography
+    \printbibliography[heading=web,category=web] 
+    \cleardoublepage
     \appendix
     \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
     \addcontentsline{toc}{part}{\appendixname} 

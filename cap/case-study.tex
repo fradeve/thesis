@@ -22,7 +22,7 @@
 
             \begin{figure}[htb]
                 \resizebox{1.1\textwidth}{!}{%
-                    \input{tab/tab-geo-workflow}
+                    \input{tab/dot-geo-workflow}
                 }
                 \caption[Data deriving workflow for the Tavoliere project]{Data derivation workflow for the case study. Raster layers (\textsf{rs}) are the source of all derived vector data (\textsf{vt}). Bold lines represents a manual process, while dashed ones an automated process. Perimeter as numeric value have been calculated and saved in derived geometries.}
                 \label{fig:scheme-derive}
@@ -82,9 +82,15 @@
         \subsection{Derive and measure ditches and compounds areas}
             After distinguishing ditches from compounds, efforts have been focused on geometric data deriving. One of the most useful operations when analyzing settlements is to calculate the area enclosed in ditches or compounds. Unlike some cases published in literature, facing the area calculation of rectangular shaped \emph{longhouses} \cite{spatial-south-europe}, the present study has to deal with buried, irregularly shaped, rounded compounds.
 
-            The simplest possible approach to compound's area calculation is subtracting from the whole compound area the area occupied by the compound wall, obtaining the extension of the enclosed space. This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp}. Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
+            The simplest possible approach to compound's area calculation using standard GIS tools can be summarized as follows:
+            
+            \begin{enumerate}
+                \item generate the convex hull\footnote{In mathematics, the convex hull or convex envelope of a set X of points in the Euclidean plane or Euclidean space is the smallest convex set that contains X \cite{wiki:hull}.} of the compound
+                \item subtract the area occupied by the compound wall from the convex hull area
+                \item get the extent of the new geometry (in effect, the extension of the compound's internal area)
+            \end{enumerate}
 
-            The problem has been solved applying a common analytical geometry procedure, considering the compound's internal surface as the envelope of the compound wall's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the compound's wall and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the compound's wall is registered. This process is far better explained by %\fref{fig:comp-area}
+            This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp}. Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
 
             \begin{figure}[H]
                 \centering
@@ -92,6 +98,13 @@
                     \label{fig:comp-wall}
                     \begin{tikzpicture}[x=1mm,y=1mm,scale=0.05]
                         \input{img/comp} 
+                    \end{tikzpicture}
+                }
+                \hspace{0.1\textwidth}
+                \subfloat[Compound's convex hull]{
+                    \label{fig:comp-hull}
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.2]
+                        \input{img/comp-hull} 
                     \end{tikzpicture}
                 }
                 \hspace{0.1\textwidth}
@@ -105,7 +118,17 @@
                 \label{fig:comp}
             \end{figure}
 
-        \subsection{Automating compounds orientation discovering}
+            The problem has been solved applying a common analytical geometry procedure, considering the compound's internal surface as the envelope of the compound wall's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the compound's wall and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the compound's wall is registered. This process is far better explained by %\fref{fig:comp-area}
+            . A Python algorithm has been used to automate the process, which saves the derived area geometries to database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared}, saved as attributes. A sample table with the compound's area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data.
+            
+            \begin{table}
+                \centering
+                \input{tab/tab-area-anglisano}
+                \caption[Sample results of area geometries derived from compounds and their attributes for the Anglisano settlement.]{Sample results of the derived area geometries for some compounds in the Anglisano settlement. Rows 1, 4 and 16 represent the same compounds as in \fref{tab:jnb-results}, excepted that the perimeter value is calculated from the area geometry and not from the compound's wall geometry as before (the data are not redundant).}
+                \label{tab:tab-area-anglisano}
+            \end{table}
+
+        \subsection{Automating discovering of compounds access and orientation}
             % compounds orientation derived from external rectangle orientation
 
         %\subsection{Inner/outer compounds}
