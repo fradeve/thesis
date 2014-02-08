@@ -20,7 +20,7 @@
             % TODO: add bib reference to Angelica's thesis
             who completely digitized the structures contained in 23 neolithic settlements. The whole digitalization process took as long as 320 hours and consisted in manually tracing the borders of the visible structures (\emph{ditches} and \emph{compounds}) and, as a separate geometry, the respective area for each of them; the operator has been employed for about two months, and has produced about 1300 geometries; \fref{fig:scheme-derive} shows the whole process.
 
-            \begin{figure}[htb]
+            \begin{figure}[htp]
                 \resizebox{1.1\textwidth}{!}{%
                     \input{tab/dot-geo-workflow}
                 }
@@ -34,7 +34,7 @@
         Moving from the standard geophysical survey workflow to a spatial analysis context during the study of the settlements has generated some necessities, which need to be added to the critical points already defined in \fref{sec:gis-data-management}:
 
         \begin{description}
-            \item[automate derived data creation] the set of derived data may be generated automatically, since it consists of geometries describing the same characteristic on every shape (e.g. the internal area of a ditch, for all ditches);
+            \item[automate derived data creation] the set of derived data may be generated automatically, since it consists of geometries describing the same characteristic on every shape (e.g.\ the internal area of a ditch, for all ditches);
             \item[automate calculations] most of the processes operated on data take a feature of the element (e.g. the perimeter), save it in a database field, retrieves all of them and make calculations; this is a repetitive task which could be done more efficiently;
             \item[platform independent results] the results must be reproducible by any researcher on any platform, and the dynamics of calculations must be public; the structure of the project should enable other researchers to contribute and improve the algorithms.
         \end{description}
@@ -42,6 +42,7 @@
         Given that, some objectives have been defined to improve the current workflow and speed up the process, trying to gain in the same time more precision, accuracy and reproducibility; the following subsections will explain how every objective has been achieved in detail.
 
         \subsection{Development of the open source webGIS interface}
+        \pagebreak
 
         \subsection{Bulk distinguishing ditches and compounds}
             In the current approach, ditches and compounds geometries are distinguished by attributes (the \textsf{Ditch\_comp} field in the Shapefile is respectively set to $1$ or $2$), manually added by the operator to each structure in the Shapefile.
@@ -61,17 +62,6 @@
 
             The process is semi-automated since the user have to manually select the ditches and, if necessary, change the class numbers to have a good fit. The flowchart in \fref{fig:flow-map} reports the logic of the process. At the end, the geometry types are saved as text attribute (literally \textsf{ditch} or \textsf{compound}) in a table containing the results of the processing (one row for each geometry); \fref{tab:jnb-results} shows sample data from the \emph{Anglisano} settlement.
 
-            \begin{figure}[H]
-                \centering
-                \rotatebox{180}{
-                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.2]
-                        \input{img/jenks}
-                    \end{tikzpicture}
-                }
-                \caption[A choropleth map of \emph{Anglisano} settlement using Jenks Natural Breaks]{A choropleth map of \emph{Anglisano} settlement created using Jenks Natural Breaks algorithm on perimeters automatically derived from geometries (using default value for classes number, 5). Color difference between ditches and compounds is well-rendered.}
-                \label{fig:jenks-color}
-            \end{figure}
-
             \begin{table}
                 \centering
                 \input{tab/tab-rows-anglisano}
@@ -79,8 +69,72 @@
                 \label{tab:jnb-results}
             \end{table}
 
+            \begin{figure}
+                \centering
+                \rotatebox{180}{
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.22]
+                        \input{img/jenks}
+                    \end{tikzpicture}
+                }
+                \caption[A choropleth map of \emph{Anglisano} settlement using Jenks Natural Breaks]{A choropleth map of \emph{Anglisano} settlement created using Jenks Natural Breaks algorithm on perimeters automatically derived from geometries (using default value for classes number, 5). Color difference between ditches and compounds is well-rendered.}
+                \label{fig:jenks-color}
+            \end{figure}
+            \pagebreak
+
         \subsection{Derive and measure ditches and compounds areas}
-            After distinguishing ditches from compounds, efforts have been focused on geometric data deriving. One of the most useful operations when analyzing settlements is to calculate the area enclosed in ditches or compounds. Unlike some cases published in literature, facing the area calculation of rectangular shaped \emph{longhouses} \cite{spatial-south-europe}, the present study has to deal with buried, irregularly shaped, rounded compounds.
+
+            \begin{wrapfigure}{l}{0.4\textwidth}
+                \centering
+
+                \begin{subfigure}[b]{.33\textwidth}
+                    \centering
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.041]
+                        \input{img/comp} 
+                    \end{tikzpicture}
+                    \caption{Compound's wall surface}
+                    \label{fig:comp-wall}
+                \end{subfigure}
+
+                \vspace{0.02\textheight}
+
+                \begin{subfigure}[b]{.33\textwidth}
+                    \centering
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.17]
+                        \input{img/comp-hull} 
+                    \end{tikzpicture}
+                    \caption{Compound's convex hull}
+                    \label{fig:comp-hull}
+                \end{subfigure}\hfill\\
+
+                \vspace{0.02\textheight}
+
+                \begin{subfigure}[b]{.33\textwidth}
+                    \centering
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.045]
+                        \input{img/comp-area} 
+                    \end{tikzpicture}
+                    \caption{Compound's internal surface}
+                    \label{fig:comp-area}
+                \end{subfigure}\hfill\\
+
+                \vspace{0.02\textheight}
+
+                \begin{subfigure}[b]{.33\textwidth}
+                    \centering
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.07]
+                        \input{img/comp-ang-area} 
+                    \end{tikzpicture}
+                    \caption{Correct internal surface}
+                    \label{fig:comp-ang-area}
+                \end{subfigure}
+
+                \caption[Deriving compound area from difference between total occupied surface and wall surface]{The area derived from the difference between compound's total occupied surface and the wall surface.}
+                \label{fig:comp}
+
+                \vspace{-0.07\textheight}
+            \end{wrapfigure}
+
+            After distinguishing ditches from compounds, efforts have been focused on geometric data deriving. One of the most useful operations when analyzing settlements is to calculate the area enclosed in ditches or compounds. Unlike some cases published in literature (e.g.\ the area calculation of rectangular shaped \emph{longhouses} \cite{spatial-south-europe}), the present study has to deal with buried, irregularly shaped, rounded compounds.
 
             The simplest possible approach to compound's area calculation using standard GIS tools can be summarized as follows:
             
@@ -90,37 +144,35 @@
                 \item get the extent of the new geometry (in effect, the extension of the compound's internal area)
             \end{enumerate}
 
-            This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp}. Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
+            This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp} (compound from the Trecasette settlement). The result shows that it is not suitable for analysis, since doorstep is not set adequately (compare figures \ref{fig:comp-area} and \ref{fig:comp-ang-area}). Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
 
-            \begin{figure}[H]
-                \centering
-                \subfloat[Compund's wall surface]{
-                    \label{fig:comp-wall}
-                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.05]
-                        \input{img/comp} 
+            The problem has been solved applying a common analytical geometry procedure, considering the compound's internal surface as the envelope of the compound wall's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the compound's wall and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the compound's wall is registered. This process is far better explained by \fref{fig:comp-iter}.
+
+            \begin{figure}
+                \begin{subfigure}[b]{.45\columnwidth}
+                    \centering
+                    \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09,remember picture,overlay,shift={(-500,-65)}]
+                        \input{img/comp-iter-1} 
                     \end{tikzpicture}
-                }
-                \hspace{0.1\textwidth}
-                \subfloat[Compound's convex hull]{
-                    \label{fig:comp-hull}
-                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.2]
-                        \input{img/comp-hull} 
+                    \caption{$C$, $B$ and $F$ are calculated.}
+                    \label{fig:comp-iter-1}
+                \end{subfigure}
+                \begin{subfigure}[b]{.45\columnwidth}
+                    \centering
+                    \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09]
+                        \input{img/comp-iter-2} 
                     \end{tikzpicture}
-                }
-                \hspace{0.1\textwidth}
-                \subfloat[Compound's internal surface]{
-                    \label{fig:comp-area}
-                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.05]
-                        \input{img/comp-area} 
-                    \end{tikzpicture}
-                }
-                \caption[Deriving compound area from difference between total occupied surface and wall surface]{The area derived from the difference between compound's total occupied surface and the wall surface is not suitable for analysis, since doorstep is not set adequately.}
-                \label{fig:comp}
+                    \caption{Points $P_n$ on $D$, created from $B$.}
+                    \label{fig:comp-iter-2}
+                \end{subfigure}
+
+                \caption[test]{test}
+                \label{fig:comp-iter}
             \end{figure}
-
-            The problem has been solved applying a common analytical geometry procedure, considering the compound's internal surface as the envelope of the compound wall's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the compound's wall and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the compound's wall is registered. This process is far better explained by %\fref{fig:comp-area}
-            . A Python algorithm has been used to automate the process, which saves the derived area geometries to database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared}, saved as attributes. A sample table with the compound's area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data.
             
+            A Python algorithm has been used to automate the process, which saves the derived area geometries to a database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared}, saved as attributes. A sample table with the compound's area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data % TODO cite angelica
+            .
+
             \begin{table}
                 \centering
                 \input{tab/tab-area-anglisano}

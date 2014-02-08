@@ -1,0 +1,30 @@
+% load base compound path
+\input{img/comp}
+
+% styles
+\tikzset{snap/.style={circle, draw=blue!50, fill=blue!20, inner sep=0, minimum size=4pt}}
+\tikzset{regular/.style={circle, draw=black, fill=white, inner sep=0, minimum size=3pt}}
+
+% nodes
+\node[regular]   (buf)   at  (334.0000,190.0000)    {};
+\node[regular]   (centr) at  (537.0000,298.0000)    {};
+
+% set the polar coordinates center to the (centr) point
+\begin{scope}[shift=(centr)]
+
+    \foreach \name/\idx/\angle in {snap3/4/0, snap2/3/30, snap1/2/60, snap0/1/90}
+    \draw   let
+                \p1 = (buf),
+                \p2 = (centr),
+                \n1 = {veclen((\x2-\x1),(\y2+\y1))}
+            in
+                node[snap] (\name) at (\angle:\n1)          {}
+                node[color=red] at (\angle:\n1 + 80pt) {\scriptsize $P_\idx$};
+\end{scope}
+
+% circle
+\node[draw,circle through=(buf),label=left:{\scriptsize D}] at (centr) {};
+
+% labels
+\node[above=0.5pt] at (centr) {\scriptsize C};
+\node[below=0.5pt] at (buf) {\scriptsize B};

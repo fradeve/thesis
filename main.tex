@@ -22,7 +22,6 @@
 %%% document style %%%%%%%%%%
 
 \usepackage[eulerchapternumbers,%         % numeri dei capitoli in Euler
-            subfig,%                      % compatibilità con subfig
             eulermath,%                   % AMS Euler come font per la matematica
             %pdfspacing%                  % migliora il riempimento di riga con PDFLaTeX
             ]{classicthesis}              % lo stile ClassicThesis
@@ -35,6 +34,7 @@
 
 \usepackage[autostyle]{csquotes}          % useful with biblatex
 \usepackage[backend=biber,                % bibliography
+            babel=hyphen,                 % hyphenate using `hyphen` in bib entry
             bibstyle=alphabetic,          % .
 			citestyle=alphabetic,         % .
 			hyperref,                     % .
@@ -42,9 +42,20 @@
 			backref]{biblatex}            % .
 \addbibresource{refs/bibliografia.bib}    % loads bib file
 
-\DeclareBibliographyCategory{web}
-\addtocategory{web}{wiki:hull}
-\defbibheading{web}{\subsection*{Online resources}}
+\DeclareFieldFormat*[book,inbook,         % removes url from some bib type entries
+                     article,             % .
+                     inproceedings        % .
+                     ]{url}{}             % .
+\DeclareFieldFormat*[book,inbook,         % removes urldate from some bib type entries
+                     article,             % .
+                     inproceedings        % .
+                     ]{urldate}{}         % .
+
+\DeclareBibliographyCategory{online}
+\defbibheading{online}{\section*{Online resources}}
+
+\addtocategory{online}{wiki:aerial}
+\addtocategory{online}{wiki:hull}
 
 %%% math and science %%%%%%%%%
 
@@ -61,12 +72,13 @@
              top=3cm,                     % .
 			 bottom=3.5cm,                % .
              heightrounded,               % .
-			 bindingoffset=1.5cm}]{geometry}
+			 bindingoffset=1.5cm          % .
+             }]{geometry}                 % .
+
 \usepackage{varioref}                     % riferimenti completi della pagina
-\usepackage[plain]{fancyref}
-%\usepackage{indentfirst}                 % rientra il primo paragrafo di ogni sezione
-\usepackage{minitoc}
-\usepackage{wrapfig}
+\usepackage[plain]{fancyref}              % better references to fig, table, etc.
+\usepackage{minitoc}                      % mini-index on chapter start
+\usepackage{wrapfig}                      % wraps text around figures
 
 %%% tables %%%%%%%%%%%%%%%%%%%
 
@@ -80,19 +92,21 @@
 \graphicspath{{img/}}                     % defines images path
 \usepackage{graphicx}                     % basic graphics support
 \usepackage{pdfpages}                     % include pdf
-\usepackage{subfig}                       % sottofigure, sottotabelle
+\usepackage{caption}                      % define captions style
+\usepackage{subcaption}                   
 \usepackage{sidecap}                      % enables captions on the side
-\usepackage[tableposition=top]{caption}   % define captions style
-\usepackage{float}
 \usepackage{parskip}
 
 %% tikz
-\usepackage{dot2texi}
-\usepackage{tikz}
-\usetikzlibrary{shapes,arrows}
-\usepackage{gnuplot-lua-tikz}
-\usepackage{rotating}
-\usepackage[dvipsnames]{xcolor}
+\usepackage{dot2texi}                     % converts GraphViz files to TikZ/LaTeX
+\usepackage{tikz}                         % TikZ main package
+\usetikzlibrary{shapes,                   % .
+                arrows,                   % .
+                through,                  % .
+                calc}                     % .
+\usepackage{gnuplot-lua-tikz}             % imports GNUPlot TikZ plots
+\usepackage{rotating}                     % rotate Tikz figures
+\usepackage[dvipsnames]{xcolor}           % common color names
 
 \newcommand\AlCentroPagina[1]{            % generates big b/w logo
     \AddToShipoutPicture*{\AtPageCenter{  % .
@@ -126,7 +140,7 @@
     \input{pages/dedication}\cleardoublepage
     \pagestyle{scrheadings} 
     \input{pages/index}\cleardoublepage
-    %\input{pages/forewords}\cleardoublepage
+    \input{pages/forewords}\cleardoublepage
     %******************************************
     % Materiale principale
     %******************************************
@@ -139,8 +153,8 @@
     % Materiale finale
     %******************************************
     \input{pages/acknowledgments}\cleardoublepage
-    \printbibliography
-    \printbibliography[heading=web,category=web] 
+    \printbibliography[notcategory=online] 
+    \printbibliography[heading=online,category=online] 
     \cleardoublepage
     \appendix
     \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}

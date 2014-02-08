@@ -24,7 +24,7 @@
     minimum height=3em
 ]
 
-\begin{dot2tex}
+\begin{dot2tex}[file=dot-geo-workflow]
     digraph hierarchy {
         rankdir="TB";
         ranksep="0.3";

@@ -34,7 +34,7 @@
     minimum height=2.5em
 ]
 
-\begin{dot2tex}
+\begin{dot2tex}[file=dot-flow-map]
     digraph {
         rankdir="TB";
         ranksep="0.05";
