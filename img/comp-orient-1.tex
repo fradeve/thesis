@@ -1,0 +1,27 @@
+% load styles
+\input{img/styles}
+
+% load base compound path
+\input{img/comp}
+
+% points of interest
+\draw (537.0000,298.0000) circle (0.5cm) coordinate(centr);
+\node[below right=0.2pt] at (centr) {\scriptsize C};
+
+\node[regular]   (buf)   at  (334.0000,190.0000)    {};
+\node[below=0.5pt] at (buf) {\scriptsize B};
+
+% access points
+\draw[draw=red,fill=red] (379.0000,230.0000) circle (20pt) coordinate(acc-n);
+\draw[draw=red,fill=red] (389.0000,360.0000) circle (20pt) coordinate(acc-s);
+
+\node[right=-0.5pt] at (acc-s) {\scriptsize $a_1$};
+\node[right=-0.5pt] at (acc-n) {\scriptsize $a_2$};
+
+% access line with centroid
+\draw (acc-n) -- (acc-s);
+
+\node[circle,inner sep=0pt,minimum size=3pt,fill=blue
+    %,pin=150:\tiny centroid
+    ] (centroid) at ($ (acc-n)!.5!(acc-s) $) {};
+\node[right] (centroid-label) at (centroid) {\scriptsize $e$};

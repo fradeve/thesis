@@ -1,0 +1,41 @@
+% define styles
+\tikzset{i-1/.style={circle,
+                       draw=blue,
+                       fill=blue,
+                       inner sep=0,
+                       minimum size=3pt,
+                       pin=280:\tiny $i_\s$,
+                       },
+         i-2/.style={circle,
+                       draw=red,
+                       fill=red,
+                       inner sep=0,
+                       minimum size=3pt,
+                       pin=80:\tiny $i_\s$,
+                       }
+}
+
+\begin{scope}
+    [spy using overlays={circle,
+                         blue,
+                         magnification=2,
+                         size=50pt,
+                         connect spies}]
+
+    % load previous graph
+    \input{img/comp-iter-2}
+
+    \begin{scope}[shift=(centr)]
+        % add segment from center to point on external circle
+        \draw [name path=centr-snap3] (centr) -- (snap3);
+
+        % draw nodes on intersections
+        \fill [name intersections={of=centr-snap3 and compound, name=i}]
+        \foreach \s in {1,2}{
+            (i-\s) node[i-\s] {}
+        };
+
+        % add spy magnification
+        \spy on ($ (i-1)!.5!(i-2) $) in node (zoom) [right] at (600,-40);
+    \end{scope}
+\end{scope}

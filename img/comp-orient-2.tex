@@ -1,0 +1,48 @@
+% load styles
+\input{img/styles}
+
+% load base compound path
+\input{img/comp}
+
+% points of interest
+\draw (537.0000,298.0000) circle (0.5cm) coordinate(centr);
+
+% access points
+\draw[] (379.0000,230.0000) circle (20pt) coordinate(acc-n);
+\draw[] (389.0000,360.0000) circle (20pt) coordinate(acc-s);
+
+% access line with centroid
+\draw (acc-n) -- (acc-s);
+\node[circle,inner sep=0pt,minimum size=3pt,fill=blue] (centroid) at ($ (acc-n)!.5!(acc-s) $) {};
+
+% set the polar coordinates center to the (centr) point
+\begin{scope}[shift=(centr)]
+
+    \foreach \name/\angle in {a/45+22.5, b/90+22.5, c/135+22.5, d/180+22.5, e/225+22.5, f/270+22.5, g/315+22.5, h/360+22.5}
+    \draw   let
+                \p1 = (buf),
+                \p2 = (centr),
+                \n1 = {veclen((\x2-\x1),(\y2+\y1))}
+            in
+                node[snap] (\name) at (\angle:\n1)          {}
+                node[color=blue] (ang-\name) at (\angle:\n1 + 80pt) {};
+\end{scope}
+
+% path to draw octagon
+\path[dashed,draw=blue!40]  (a)   edge    node[above,blue]      {\tiny N}   (b)
+                            (b)   edge    node[above left,blue] {\tiny NW}  (c)
+                            (c)   edge    node[left,blue]       {\tiny W}   (d)
+                            (d)   edge    node[below left,blue] {\tiny SW}  (e)
+                            (e)   edge    node[below,blue]      {\tiny S}   (f)
+                            (f)   edge    node[below right,blue]{\tiny SE}  (g)
+                            (g)   edge    node[right,blue]      {\tiny E}   (h)
+                            (h)   edge    node[above right,blue]{\tiny NE}  (a);
+
+% draw octagon's slice
+\path[draw=blue!30] (centr) -- (e);
+\path[draw=blue!30] (centr) -- (f);
+
+\node[below=10pt,blue] (angle) at (centr) {\tiny $\alpha$};
+
+% sample point coordinates
+\node[above right,blue] (sample-coord) at (a) {\tiny $x_p$, $y_p$};

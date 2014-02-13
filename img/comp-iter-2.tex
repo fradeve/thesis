@@ -1,9 +1,8 @@
+% load styles
+\input{img/styles}
+
 % load base compound path
 \input{img/comp}
-
-% styles
-\tikzset{snap/.style={circle, draw=blue!50, fill=blue!20, inner sep=0, minimum size=4pt}}
-\tikzset{regular/.style={circle, draw=black, fill=white, inner sep=0, minimum size=3pt}}
 
 % nodes
 \node[regular]   (buf)   at  (334.0000,190.0000)    {};
@@ -19,12 +18,12 @@
                 \n1 = {veclen((\x2-\x1),(\y2+\y1))}
             in
                 node[snap] (\name) at (\angle:\n1)          {}
-                node[color=red] at (\angle:\n1 + 80pt) {\scriptsize $P_\idx$};
+                node[color=blue] at (\angle:\n1 + 80pt) {\scriptsize $P_\idx$};
 \end{scope}
 
 % circle
-\node[draw,circle through=(buf),label=left:{\scriptsize D}] at (centr) {};
+\node[draw,dashed,circle through=(buf),label=left:{\scriptsize D}] at (centr) {};
 
 % labels
-\node[above=0.5pt] at (centr) {\scriptsize C};
+\node[left=0.5pt] at (centr) {\scriptsize C};
 \node[below=0.5pt] at (buf) {\scriptsize B};

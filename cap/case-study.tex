@@ -79,9 +79,8 @@
                 \caption[A choropleth map of \emph{Anglisano} settlement using Jenks Natural Breaks]{A choropleth map of \emph{Anglisano} settlement created using Jenks Natural Breaks algorithm on perimeters automatically derived from geometries (using default value for classes number, 5). Color difference between ditches and compounds is well-rendered.}
                 \label{fig:jenks-color}
             \end{figure}
-            \pagebreak
 
-        \subsection{Derive and measure ditches and compounds areas}
+        \subsection{Derive and measure ditches and compounds areas\label{sec:comp-area}}
 
             \begin{wrapfigure}{l}{0.4\textwidth}
                 \centering
@@ -89,7 +88,7 @@
                 \begin{subfigure}[b]{.33\textwidth}
                     \centering
                     \begin{tikzpicture}[x=1mm,y=1mm,scale=0.041]
-                        \input{img/comp} 
+                        \input{img/comp-base} 
                     \end{tikzpicture}
                     \caption{Compound's wall surface}
                     \label{fig:comp-wall}
@@ -140,37 +139,78 @@
             
             \begin{enumerate}
                 \item generate the convex hull\footnote{In mathematics, the convex hull or convex envelope of a set X of points in the Euclidean plane or Euclidean space is the smallest convex set that contains X \cite{wiki:hull}.} of the compound
-                \item subtract the area occupied by the compound wall from the convex hull area
+                \item subtract the surface occupied by the compound wall from the convex hull area
                 \item get the extent of the new geometry (in effect, the extension of the compound's internal area)
             \end{enumerate}
 
             This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp} (compound from the Trecasette settlement). The result shows that it is not suitable for analysis, since doorstep is not set adequately (compare figures \ref{fig:comp-area} and \ref{fig:comp-ang-area}). Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
 
-            The problem has been solved applying a common analytical geometry procedure, considering the compound's internal surface as the envelope of the compound wall's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the compound's wall and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the compound's wall is registered. This process is far better explained by \fref{fig:comp-iter}.
+            The problem has been solved applying a common analytical geometry procedure, considering the compound's internal surface as the envelope of the compound wall's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the compound's wall and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the compound's wall is registered. This process is explained in \fref{fig:comp-iter}.
+            
+            In \fref{fig:comp-iter-1} centroid $C$ is calculated using standard GIS tools from compound's convex hull; point $F$ represents the point on the compound's wall with the maximum distance from $C$; point $B$ is obtained applying a buffer to $F$ ($d_{(C,B)} > d_{(C,F)}$). This last step ensures that the circle $D$ created from $B$ --- using $C$ as center --- is outside the compound's geometry (\fref{fig:comp-iter-2}). A set of points is created on $D$ dividing the perimeter by 360, obtaining one point every \SI{1}{\degree}. In detail, given an angle $\alpha$, a circle $D$ with radius $r=d_{(C,B)}$ and center in $C$ ($x_C, y_C$), a general point $P$ ($x_P, y_P$) on $D$ is defined by:
+            %
+            \begin{align}
+                \label{eq:point-circle}
+                x_P &= x_C + r\cdot\cos\alpha\\
+                y_P &= y_C + r\cdot\sin\alpha
+            \end{align}
+            %
+            In \fref{fig:comp-iter-2} the operation has been repeated with $\alpha=\alpha+1$ for 360 times, obtaining the coordinates of 360 $p_n$ points on circle $D$ (the whole set of points is named $P$). Tracing a line between $C$ and any of the points in $P$ will create a segment (in \fref{fig:comp-iter-3} it is named $CP_4$). If an intersection between this segment and the compound's geometry exists, the innermost point is calculated getting its distance from $C$:
+            %
+            \begin{align}
+                \label{eq:innerpoint}
+                d_{i_2 C} < d_{i_1 C}
+            \end{align}
+            %
+            Coordinates of $i_2$ ($x_{i_2}, y_{i_2}$) are saved, since it is the nearest. Iterating this process for all the points $p_n\in P$ will create a new set $I$ of $i_n$ points defining the internal side of the compound's geometry. In a last step (not represented in \fref{fig:comp-iter}) a convex hull is generated using all the points in $I$; this is the compound's inner surface.
 
             \begin{figure}
-                \begin{subfigure}[b]{.45\columnwidth}
+                \centering
+                \begin{subfigure}[b]{.5\columnwidth}
                     \centering
-                    \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09,remember picture,overlay,shift={(-500,-65)}]
+                    \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09
+                            %,overlay,shift={(-500,-65)}
+                            ]
                         \input{img/comp-iter-1} 
                     \end{tikzpicture}
-                    \caption{$C$, $B$ and $F$ are calculated.}
+                    \caption{$C$, $F$ and $B$ are calculated.}
                     \label{fig:comp-iter-1}
-                \end{subfigure}
-                \begin{subfigure}[b]{.45\columnwidth}
+                \end{subfigure}\\
+                \vspace{0.03\textheight}
+                \begin{subfigure}[b]{.5\columnwidth}
                     \centering
                     \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09]
                         \input{img/comp-iter-2} 
                     \end{tikzpicture}
                     \caption{Points $P_n$ on $D$, created from $B$.}
                     \label{fig:comp-iter-2}
+                \end{subfigure}\\
+                \vspace{0.03\textheight}
+                \begin{subfigure}[b]{.5\columnwidth}
+                    \centering
+                    \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09]
+                        \input{img/comp-iter-3} 
+                    \end{tikzpicture}
+                    \caption{Each $P$: save inner intersection ($i_2$).}
+                    \label{fig:comp-iter-3}
+                \end{subfigure}\\
+                \vspace{0.03\textheight}
+                \begin{subfigure}[b]{.5\columnwidth}
+                    \centering
+                    \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09
+                            %,overlay,shift={(-500,130)}
+                            ]
+                        \input{img/comp-iter-4} 
+                    \end{tikzpicture}
+                    \caption{$i_n\in I$ inner intersection points.}
+                    \label{fig:comp-iter-4}
                 \end{subfigure}
 
-                \caption[test]{test}
+                \caption[Derivation of compound's internal surface using analytical geometry]{Derivation of compound's internal surface in 4 steps, using analytical geometry.}
                 \label{fig:comp-iter}
             \end{figure}
             
-            A Python algorithm has been used to automate the process, which saves the derived area geometries to a database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared}, saved as attributes. A sample table with the compound's area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data % TODO cite angelica
+            A Python algorithm has been used to automate the process, which saves the derived area geometries to a database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared} (they are saved as attributes). A sample table with the compound's area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data % TODO cite angelica
             .
 
             \begin{table}
@@ -181,6 +221,94 @@
             \end{table}
 
         \subsection{Automating discovering of compounds access and orientation}
-            % compounds orientation derived from external rectangle orientation
+
+            The current method used to describe compounds' orientation consists of a visual check of the compound's access position relatively to a set of 8 cardinal points (N, NE, E, SE, S, SW, W, NW) % TODO cite angelica
+            . The operator had to visually recognize the orientation of the access and write the relative number (from 1 to 8) as an attribute in a Shapefile's field created on purpose; this lead to manually writing a number for each one of the compounds for all the sites. It is a time-consuming activity that could be automated.
+
+            Literature reports few cases in which orientation has been calculated automatically using GIS methods. In most cases, the analyzed settlements present \emph{houses} more than \emph{compounds}: these have a nearly regular --- mostly rectangular --- shape, in which the orientation can be easily taken as the angle between cardinal north and house's longest axis \cite[p.~53]{spatial-south-europe}. Unfortunately, this is not the case, since compounds have a really irregular shape and in most cases the geometry's longer axis is not meaningful.
+
+            The orientation of an object with respect of a cardinal point can be defined as the angle between the cardinal north and a representative feature of the object (e.g.\ the main axis). When analyzing compounds, this characteristic is the access.
+
+            \subsubsection{Finding the compound's access}
+
+                \begin{wrapfigure}{r}{0.45\textwidth}
+                    \centering
+                    \begin{tikzpicture}[x=1mm,y=1mm,scale=0.005]
+                        \input{tab/dot-flow-access}
+                    \end{tikzpicture}
+                    \caption[Logic process to determine the compound's access.]{Determination of the compound access. The flow exits when the last point of the $I$ set is reached: $d$ contains the longest side. $T$ means \emph{true}, while $F$ \emph{false}.}
+                    \label{fig:flow-access}
+                    \vspace{-0.08\textheight}
+                \end{wrapfigure}
+
+                The proposed approach depends entirely from the derived areas geometries (\fref{sec:comp-area}): the observation led to consider as an access the longest straight side of the geometry. In other words, the farthest couple of points will identify compound's access (as it is easy to observe in \fref{fig:comp-iter-4}).
+                
+                The solution consists of an iteration on all the points in the above mentioned $I$ set of points, testing each couple of points for their distance with respect of the previous one. The longest distance is registered. This process is better explained in \fref{fig:flow-access}: starting with a default distance of $d=0$, if the distance between the current point and the next is more than $d$, this value is assigned to $d$ itself. Then, the current point is shifted to the next and the next one is taken, and the process is repeated. When the last point in the $I$ set is reached, $d$ will contain the maximum registered distance (the compound's access).
+
+            \subsubsection{Finding the access orientation}
+
+                Since the access (or doorstep) of a compound is the segment joining the two farthest points in its internal surface, we can derive compound's orientation as the orientation of this segment. Many approaches are possible; we have chosen to calculate the cardinal point that ``contains'' the access; unfortunately, some compounds have a very large access, so we need to reduce the access to a smaller geometry: for this reason we considered the access segment's centroid.
+
+                %\begin{figure}
+                \begin{wrapfigure}{r}{0.45\textwidth}
+                    \centering
+                    \begin{subfigure}[b]{.4\columnwidth}
+                        \centering
+                        \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09]
+                            \input{img/comp-orient-1} 
+                        \end{tikzpicture}
+                        \caption{Centroid $e$ is derived from access segment using GIS tools.}
+                        \label{fig:comp-orient-1}
+                    \end{subfigure}\\
+                    \vspace{0.02\textheight}
+                    \begin{subfigure}[b]{.4\columnwidth}
+                        \centering
+                        \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09]
+                            \input{img/comp-orient-2}
+                        \end{tikzpicture}
+                        \caption{Cardinal points with $\alpha=\sfrac{360}{8}=\SI{45}{\degree}$, built from $B$.}
+                        \label{fig:comp-orient-2}
+                    \end{subfigure}
+                    \vspace{0.02\textheight}
+                    \begin{subfigure}[b]{.4\columnwidth}
+                        \centering
+                        \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09]
+                            \input{img/comp-orient-3}
+                        \end{tikzpicture}
+                        \caption{$e$ is contained in $W$ area.}
+                        \label{fig:comp-orient-3}
+                    \end{subfigure}
+                    \vspace{0.02\textheight}
+                    \begin{subfigure}[b]{.4\columnwidth}
+                        \centering
+                        \begin{tikzpicture}[x=2.5pt,y=2.5pt,scale=0.09]
+                            \input{img/comp-orient-4}
+                        \end{tikzpicture}
+                        \caption{An numerical index is assigned to every cardinal point (in this case, $W=4$.}
+                        \label{fig:comp-orient-4}
+                    \end{subfigure}
+
+                    \caption[Graphical rapresentation of the steps to derive compound's access orientation.]{Derivation of the orientation for a single compound's access segment. While $a_1, a_2 \in I$, $e$ is derived using GIS.}
+                    \label{fig:comp-orient}
+                \end{wrapfigure}
+
+                The calculation consisted in building an octagon using the 8 above mentioned cardinal points as sides. Every triangular slice of the octagon represents the area for that cardinal point. Then, a simple \emph{spatial} check of which triangle contains the access segment's centroid allows to define the orientation of the access. This process details are represented in \fref{fig:comp-orient}: the buffered point $B$ (see \fref{fig:comp-iter-1}) is used to draw points in \fref{fig:comp-orient-2}; a generic cardinal point $p$ is calculated as:
+                %
+                \begin{align}
+                    \label{eq:point-cardinal}
+                    x_P &= x_C + d_{(C,B)}\cdot\cos{(\SI{360}{\degree}/8)}\\
+                    y_P &= y_C + d_{(C,B)}\cdot\sin{(\SI{360}{\degree}/8)}
+                \end{align}
+                %
+                in a way similar to \fref{eq:point-circle}. The last step, in \fref{fig:comp-orient-3} uses a standard \emph{contains} GIS function to determine in which triangle the centroid $e$ is contained, iterating over all triangles; the example returns a western orientation.
+
+                To store the results, a new table is created; for each compounds the table registers the original Shapefile's ID, the compound's ID, the length of the access segment (automatically calculated as $d_{(a_1, a_2)}$, and the orientation (as number from $0$ to $7$). Sample results for the Anglisano settlements are shown in \fref{tab:tab-access-anglisano}.
+                %
+                \begin{table}
+                    \centering
+                    \input{tab/tab-access-anglisano}
+                    \caption[Sample results of access calculations for the compounds in the Anglisano settlement.]{Sample results of access calculations for the compounds in the Anglisano settlement.}
+                    \label{tab:tab-access-anglisano}
+                \end{table}
 
         %\subsection{Inner/outer compounds}

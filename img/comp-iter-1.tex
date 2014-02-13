@@ -5,6 +5,8 @@
 \draw (359.0000,210.0000) circle (0.5cm) coordinate(far);
 \draw (334.0000,190.0000) circle (0.5cm) coordinate(buf);
 
-\node[above=-0.5pt] at (centr) {\scriptsize C};
+\node[left=-0.5pt] at (centr) {\scriptsize C};
 \node[above] at (far) {\scriptsize F};
 \node[below=0.5pt] at (buf) {\scriptsize B};
+
+\draw (far) -- (buf);

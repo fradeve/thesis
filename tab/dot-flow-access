@@ -1,0 +1,68 @@
+\input{tab/dot-styles}
+\footnotesize{
+    \begin{dot2tex}[file=dot-flow-access]
+        digraph {
+            rankdir="TB";
+            ranksep="0.03";
+
+            start [
+                style="extreme",
+                texlbl="$i_n~(x_{i_n}, y_{i_n})\in I\mid n=1$"
+            ]
+
+            distance [
+                style="elaboration",
+                texlbl="$d=0$"
+            ]
+
+            next_pt [
+                style="decision",
+                texlbl="get $i_{n+1}$"
+            ]
+
+            diff [
+                style="decision",
+                texlbl="$d_{i_n, i_{n+1}} > d$"
+            ]
+
+            assign_d [
+                style="elaboration",
+                texlbl="$d = d_{i_n, i_{n+1}}$"
+            ]
+
+            assign_i [
+                style="elaboration",
+                texlbl="$i_n = i_{n+1}$"
+            ]
+
+            save [
+                style="extreme",
+                texlbl="register $d$"
+            ]
+
+            { rank=sink; save }
+            { rank=same; assign_i }
+
+            // bindings
+            start -> distance -> next_pt
+            next_pt -> diff [
+                label="T",
+                lblstyle="above left,rounded corners,fill=black!10"
+            ]
+            diff -> assign_d [
+                label="T",
+                lblstyle="right,rounded corners,fill=black!10"
+            ]
+            diff -> assign_i [
+                label="F",
+                lblstyle="above,rounded corners,fill=black!10"
+                ]
+            assign_d -> assign_i -> next_pt
+            next_pt -> save [
+                label="F",
+                lblstyle="right,rounded corners,fill=black!8"
+            ]
+
+        }
+    \end{dot2tex}
+}

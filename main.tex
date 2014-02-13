@@ -103,8 +103,14 @@
 \usetikzlibrary{shapes,                   % .
                 arrows,                   % .
                 through,                  % .
-                calc}                     % .
+                calc,                     % .
+                intersections,            % .
+                spy,                      % .
+                decorations.pathreplacing,% .
+                decorations.pathmorphing, % .
+                decorations.markings}     % .
 \usepackage{gnuplot-lua-tikz}             % imports GNUPlot TikZ plots
+\usepackage{xifthen}                      % better if-then-else
 \usepackage{rotating}                     % rotate Tikz figures
 \usepackage[dvipsnames]{xcolor}           % common color names
 

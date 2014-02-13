@@ -1,0 +1,21 @@
+\input{img/comp-orient-3}
+
+\path[dashed,draw=blue!40]  (a)   edge    node[above,blue]      {\scriptsize 2}   (b)
+                            (b)   edge    node[above left,blue] {\scriptsize 3}  (c)
+                            (c)   edge    node[left=6pt,blue,fill=YellowGreen!40,rounded corners]       {\scriptsize 4}   (d)
+                            (d)   edge    node[below left,blue] {\scriptsize 5}  (e)
+                            (e)   edge    node[below,blue]      {\scriptsize 6}   (f)
+                            (f)   edge    node[below right,blue]{\scriptsize 7}  (g)
+                            (g)   edge    node[right,blue]      {\scriptsize 0}   (h)
+                            (h)   edge    node[above right,blue]{\scriptsize 1}  (a);
+
+\begin{pgfonlayer}{background}
+    \fill[YellowGreen!40] (c) -- (centr) -- (d) -- (c) -- cycle;
+    \fill[white] (a) -- (centr) -- (b) -- (a) -- cycle;
+    \fill[white] (b) -- (centr) -- (c) -- (b) -- cycle;
+    \fill[white] (d) -- (centr) -- (e) -- (d) -- cycle;
+    \fill[white] (e) -- (centr) -- (f) -- (e) -- cycle;
+    \fill[white] (f) -- (centr) -- (g) -- (f) -- cycle;
+    \fill[white] (g) -- (centr) -- (h) -- (g) -- cycle;
+    \fill[white] (h) -- (centr) -- (a) -- (h) -- cycle;
+\end{pgfonlayer}

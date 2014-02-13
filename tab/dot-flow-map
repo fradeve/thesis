@@ -1,87 +1,54 @@
-\tikzstyle{extreme} = [
-    rectangle,
-    draw=GreenYellow,
-    very thick,
-    text centered,
-    rounded corners,
-    minimum height=2.5em
-]
+\input{tab/dot-styles}
+\footnotesize{
+    \begin{dot2tex}[file=dot-flow-map]
+        digraph {
+            rankdir="TB";
+            ranksep="0.05";
 
-\tikzstyle{elaboration} = [
-    rectangle,
-    draw=GreenYellow,
-    very thick,
-    align=center,
-    minimum height=2.5em
-]
+            default [
+                style="extreme",
+                texlbl="default $k=5$"
+            ]
 
-\tikzstyle{io} = [
-    trapezium,
-    trapezium left angle=70,
-    trapezium right angle=-70,
-    draw=GreenYellow,
-    very thick,
-    align=center,
-    minimum height=1em
-]
+            calc_classes [
+                style="elaboration",
+                texlbl="calculate\\breaks\\for $k$"
+            ]
 
-\tikzstyle{decision} = [
-    diamond, 
-    aspect=2,
-    align=center,
-    draw=GreenYellow,
-    very thick,
-    minimum height=2.5em
-]
+            show_map [
+                style="io",
+                texlbl="show color map"
+            ]
 
-\begin{dot2tex}[file=dot-flow-map]
-    digraph {
-        rankdir="TB";
-        ranksep="0.05";
+            evaluate [
+                style="decision",
+                texlbl="colors?",
+            ]
 
-        default [
-            style="extreme",
-            texlbl="default $k=5$"
-        ]
+            new_class [
+                style="io",
+                texlbl="set\\$k$"
+            ]
 
-        calc_classes [
-            style="elaboration",
-            texlbl="calculate\\breaks\\for $k$"
-        ]
+            select_ditch [
+                style="io",
+                texlbl="select ditches"
+            ]
 
-        show_map [
-            style="io",
-            texlbl="show map"
-        ]
+            confirm [
+                style="elaboration",
+                texlbl="save\\attribute"
+            ]
 
-        evaluate [
-            style="decision",
-            texlbl="colors?",
-        ]
+            { rank=same; select_ditch; new_class }
 
-        new_class [
-            style="io",
-            texlbl="set\\$k$"
-        ]
+            // bindings
+            default -> calc_classes -> show_map -> evaluate
+            evaluate -> new_class [label="same"]
+            new_class -> calc_classes
+            evaluate -> select_ditch [label="different"]
+            select_ditch -> confirm
 
-        select_ditch [
-            style="io",
-            texlbl="select ditches"
-        ]
-
-        confirm [
-            style="elaboration",
-            texlbl="save\\attribute"
-        ]
-
-        { rank=same; select_ditch; new_class }
-
-        // bindings
-        default -> calc_classes -> show_map -> evaluate
-        evaluate -> new_class [label="same"]
-        new_class -> calc_classes
-        evaluate -> select_ditch [label="different"]
-        select_ditch -> confirm
-
-    }
-\end{dot2tex}
+        }
+    \end{dot2tex}
+}

@@ -1,0 +1,49 @@
+% load styles
+\input{img/styles}
+
+% load base compound path
+\input{img/comp}
+
+% points of interest
+\draw (537.0000,298.0000) circle (0.5cm) coordinate(centr);
+
+% access points
+\draw[] (379.0000,230.0000) circle (20pt) coordinate(acc-n);
+\draw[] (389.0000,360.0000) circle (20pt) coordinate(acc-s);
+
+% access line with centroid
+\draw (acc-n) -- (acc-s);
+\node[circle,inner sep=0pt,minimum size=3pt,fill=blue] (centroid) at ($ (acc-n)!.5!(acc-s) $) {};
+
+% set the polar coordinates center to the (centr) point
+\begin{scope}[shift=(centr)]
+
+    \foreach \name/\angle in {a/45+22.5, b/90+22.5, c/135+22.5, d/180+22.5, e/225+22.5, f/270+22.5, g/315+22.5, h/360+22.5}
+    \draw   let
+                \p1 = (buf),
+                \p2 = (centr),
+                \n1 = {veclen((\x2-\x1),(\y2+\y1))}
+            in
+                node[] (\name) at (\angle:\n1)          {}
+                node[color=blue] (ang-\name) at (\angle:\n1 + 80pt) {};
+\end{scope}
+
+\path[dashed,draw=blue!40]  (a)   edge    node[above,blue]      {}   (b)
+                            (b)   edge    node[above left,blue] {}  (c)
+                            (c)   edge    node[left=6pt,blue,fill=YellowGreen!40,rounded corners]       {\tiny W}   (d)
+                            (d)   edge    node[below left,blue] {}  (e)
+                            (e)   edge    node[below,blue]      {}   (f)
+                            (f)   edge    node[below right,blue]{}  (g)
+                            (g)   edge    node[right,blue]      {}   (h)
+                            (h)   edge    node[above right,blue]{}  (a);
+
+\begin{pgfonlayer}{background}
+    \fill[YellowGreen!40] (c) -- (centr) -- (d) -- (c) -- cycle;
+    \fill[red!30] (a) -- (centr) -- (b) -- (a) -- cycle;
+    \fill[red!30] (b) -- (centr) -- (c) -- (b) -- cycle;
+    \fill[red!30] (d) -- (centr) -- (e) -- (d) -- cycle;
+    \fill[red!30] (e) -- (centr) -- (f) -- (e) -- cycle;
+    \fill[red!30] (f) -- (centr) -- (g) -- (f) -- cycle;
+    \fill[red!30] (g) -- (centr) -- (h) -- (g) -- cycle;
+    \fill[red!30] (h) -- (centr) -- (a) -- (h) -- cycle;
+\end{pgfonlayer}
