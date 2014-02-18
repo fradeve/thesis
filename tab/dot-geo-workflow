@@ -1,28 +1,4 @@
-\tikzstyle{automated} = [
-    rectangle split,
-    rectangle split horizontal,
-    rectangle split parts=2,
-    rectangle split part fill={White, Yellow!50},
-    draw=MidnightBlue, very thick,
-    text centered, rounded corners,
-    minimum height=2em
-]
-
-\tikzstyle{human_vect} = [
-    rectangle split,
-    rectangle split horizontal,
-    rectangle split parts=2,
-    rectangle split part fill={White, RoyalPurple!50},
-    draw=Black, very thick,
-    text centered, rounded corners,
-    minimum height=2em
-]
-
-\tikzstyle{human_num} = [
-    rectangle, draw=YellowGreen, ultra thick, fill=YellowGreen!50,
-    text centered, rounded corners,
-    minimum height=3em
-]
+\input{tab/dot-styles}
 
 \begin{dot2tex}[file=dot-geo-workflow]
     digraph hierarchy {
@@ -77,6 +53,11 @@
             texlbl="perimeter"
         ]
 
+        compounds_access [
+            lblstyle="human_num",
+            texlbl="access"
+        ]
+
         compounds_orientation [
             lblstyle="human_num",
             texlbl="orientation"
@@ -103,9 +84,9 @@
         sit -> ditches [style=bold]
         sit -> compounds [style=bold]
 
-        ditches -> ditches_area [style=bold]
-        compounds -> compounds_orientation [style=bold]
-        compounds -> compounds_area [style=bold]
+        ditches -> ditches_area [style=bold,color=red]
+        compounds -> compounds_access -> compounds_orientation [style=bold,color=red]
+        compounds -> compounds_area [style=bold,color=red]
 
         ditches_area -> ditches_perimeter [style=dashed]
         compounds_area -> compounds_perimeter [style=dashed]

@@ -11,14 +11,14 @@
 % set the polar coordinates center to the (centr) point
 \begin{scope}[shift=(centr)]
 
-    \foreach \name/\idx/\angle in {snap3/4/0, snap2/3/30, snap1/2/60, snap0/1/90}
+    \foreach \name/\idx/\angle in {snap3/1/0, snap2/2/30, snap1/3/60, snap0/4/90}
     \draw   let
                 \p1 = (buf),
                 \p2 = (centr),
                 \n1 = {veclen((\x2-\x1),(\y2+\y1))}
             in
                 node[snap] (\name) at (\angle:\n1)          {}
-                node[color=blue] at (\angle:\n1 + 80pt) {\scriptsize $P_\idx$};
+                node[color=blue] (p\idx) at (\angle:\n1 + 85pt) {\scriptsize $P_\idx$};
 \end{scope}
 
 % circle

@@ -1,0 +1,68 @@
+% all the content of this file is inside `tikzpicture` because we define
+% other commands after the dot2tex ambient
+
+\input{tab/dot-styles}
+
+\begin{dot2tex}[dot,tikz,codeonly,file=dot-geo-workflow-def]
+    digraph hierarchy {
+        rankdir="LR";
+        ranksep="0.1";
+
+        sit [
+            label="SIT Puglia",
+            lblstyle="automated",
+            texlbl="SIT Puglia\nodepart{two}rs"
+        ]
+
+        aerial [
+            label="Aerial2",
+            lblstyle="automated"
+            texlbl="aerial survey\nodepart{two}rs",
+        ]
+
+        magn [
+            label="Magnetic prospection",
+            lblstyle="automated"
+            texlbl="magnetic prospection\nodepart{two}rs"
+        ]
+
+        ditches_comp [
+            lblstyle="table_vect5",
+            texlbl="features\nodepart{two}vt\nodepart{three}perimeter\nodepart{four}class\nodepart{five}type"
+        ]
+
+        ditches_comp_area [
+            lblstyle="table_vect6",
+            texlbl="area features\nodepart{two}vt\nodepart{three}perimeter\nodepart{four}area\nodepart{five}type\nodepart{six}open"
+        ]
+
+        access [
+            lblstyle="table_vect4",
+            texlbl="access features\nodepart{two}vt\nodepart{three}length\nodepart{four}orientation"
+        ]
+
+        // bindings
+        aerial -> ditches_comp [style=bold]
+        magn -> ditches_comp [style=bold]
+        sit -> ditches_comp [style=bold]
+
+        ditches_comp -> ditches_comp_area -> access
+
+    }
+\end{dot2tex}
+
+\node[below=2cm] at (ditches_comp_area.south) (features) {
+    \begin{tikzpicture}[scale=0.01]
+        \input{img/comp-simple}
+    \end{tikzpicture}
+};
+
+\node[below=63pt,xshift=-5pt] at (ditches_comp_area.south) (area) {
+        \begin{scope}
+            \begin{tikzpicture}[scale=0.009]
+                \input{img/comp-ang-area-simple}
+            \end{tikzpicture}
+        \end{scope}
+};
+
+\draw[->,>=*,dotted] (ditches_comp.south) to [bend right=20] ([xshift=-36pt,yshift=19pt]features);

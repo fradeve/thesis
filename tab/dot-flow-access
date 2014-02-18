@@ -7,7 +7,7 @@
 
             start [
                 style="extreme",
-                texlbl="$i_n~(x_{i_n}, y_{i_n})\in I\mid n=1$"
+                texlbl="$\{i_n~(x_{i_n}, y_{i_n})\mid i_n\in I$ and $n=1\}$"
             ]
 
             distance [
@@ -37,7 +37,7 @@
 
             save [
                 style="extreme",
-                texlbl="register $d$"
+                texlbl="register $d$, $i_n$"
             ]
 
             { rank=sink; save }
