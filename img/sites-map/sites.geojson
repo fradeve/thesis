@@ -1,0 +1,28 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32633" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "site_name": "ANG", "analyzed": 1 }, "geometry": { "type": "Point", "coordinates": [ 538910.556517077726312, 4590334.148472105152905 ] } },
+{ "type": "Feature", "properties": { "Id": 1, "site_name": "CRL", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 558619.611555402399972, 4560813.708735061809421 ] } },
+{ "type": "Feature", "properties": { "Id": 2, "site_name": "IPPO", "analyzed": 1 }, "geometry": { "type": "Point", "coordinates": [ 547007.028584515443072, 4589766.520579184405506 ] } },
+{ "type": "Feature", "properties": { "Id": 3, "site_name": "MLR", "analyzed": 1 }, "geometry": { "type": "Point", "coordinates": [ 536378.60075937549118, 4590089.425479068420827 ] } },
+{ "type": "Feature", "properties": { "Id": 4, "site_name": "MTA", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 527590.755263475235552, 4584738.107182495296001 ] } },
+{ "type": "Feature", "properties": { "Id": 5, "site_name": "MCV", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 512506.485587138216943, 4596208.413436997681856 ] } },
+{ "type": "Feature", "properties": { "Id": 6, "site_name": "MTO", "analyzed": 1 }, "geometry": { "type": "Point", "coordinates": [ 529249.870464619249105, 4584275.2712725661695 ] } },
+{ "type": "Feature", "properties": { "Id": 7, "site_name": "PLM", "analyzed": 1 }, "geometry": { "type": "Point", "coordinates": [ 537311.372647978714667, 4599176.660325116477907 ] } },
+{ "type": "Feature", "properties": { "Id": 8, "site_name": "PNT", "analyzed": 1 }, "geometry": { "type": "Point", "coordinates": [ 547116.422648774925619, 4586858.439743902534246 ] } },
+{ "type": "Feature", "properties": { "Id": 9, "site_name": "SLN", "analyzed": 1 }, "geometry": { "type": "Point", "coordinates": [ 535679.39270203653723, 4597342.119676630012691 ] } },
+{ "type": "Feature", "properties": { "Id": 10, "site_name": "SLV", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 554685.140497721731663, 4557702.318090162239969 ] } },
+{ "type": "Feature", "properties": { "Id": 11, "site_name": "SCF", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 535249.518822354963049, 4598665.048989014700055 ] } },
+{ "type": "Feature", "properties": { "Id": 12, "site_name": "SPT", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 574232.005391691694967, 4606790.455995778553188 ] } },
+{ "type": "Feature", "properties": { "Id": 13, "site_name": "STN", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 559880.22179343434982, 4564505.104550143703818 ] } },
+{ "type": "Feature", "properties": { "Id": 14, "site_name": "MSV", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 531779.43463843932841, 4582772.195488611236215 ] } },
+{ "type": "Feature", "properties": { "Id": 15, "site_name": "TRB", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 536788.762672100798227, 4586259.871804931201041 ] } },
+{ "type": "Feature", "properties": { "Id": 16, "site_name": "TCS", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 562977.739559297449887, 4563177.302610037848353 ] } },
+{ "type": "Feature", "properties": { "Id": 17, "site_name": "SS17", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 539322.452706395997666, 4592158.27136349119246 ] } },
+{ "type": "Feature", "properties": { "Id": 18, "site_name": "CFL", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 536245.284966846229509, 4588048.601217616349459 ] } },
+{ "type": "Feature", "properties": { "Id": 19, "site_name": "SP_82", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 560035.338360213907436, 4561486.59465241804719 ] } },
+{ "type": "Feature", "properties": { "Id": 20, "site_name": "SLP", "analyzed": 0 }, "geometry": { "type": "Point", "coordinates": [ 583332.15284436265938, 4583580.687797026708722 ] } }
+]
+}

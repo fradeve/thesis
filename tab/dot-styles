@@ -57,6 +57,36 @@
     minimum height=2em
 ]
 
+%% not-flowchart normal nodes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tikzstyle{sourcelabel} = [
+    rectangle,
+    draw=MidnightBlue,
+    ultra thick,
+    fill=black!0,
+    text centered, rounded corners,
+    minimum height=1.5em
+]
+
+\tikzstyle{datalabel} = [
+    rectangle,
+    draw=black,
+    ultra thick,
+    fill=black!0,
+    text centered, rounded corners,
+    minimum height=1.5em
+]
+
+\tikzstyle{derivedlabel} = [
+    rectangle,
+    draw=YellowGreen!50,
+    ultra thick,
+    fill=black!0,
+    text centered, rounded corners,
+    minimum height=1.5em
+]
+
 %% standard flow chart nodes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -1,4 +1,14 @@
 %& -shell-escape
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%  Howto
+%%
+%% To compile this document
+%% pdflatex pages/tesi-front.tex
+%% pdflatex pages/tesi-post-front.tex
+%% pdflatex --shell-escape main.tex
+
 \documentclass[12pt,%                     % corpo del font principale
                a4paper,twoside,		      % carta A4, fronte
                titlepage,%                % frontespzio
@@ -79,6 +89,7 @@
 \usepackage[plain]{fancyref}              % better references to fig, table, etc.
 \usepackage{minitoc}                      % mini-index on chapter start
 \usepackage{wrapfig}                      % wraps text around figures
+\usepackage{float}                        % adds H option to image positioning
 
 %%% tables %%%%%%%%%%%%%%%%%%%
 
@@ -100,12 +111,16 @@
 %% tikz
 \usepackage{dot2texi}                     % converts GraphViz files to TikZ/LaTeX
 \usepackage{tikz}                         % TikZ main package
-\usetikzlibrary{shapes,                   % .
+\usetikzlibrary{                          % TikZ libraries
+                scopes,                   % .
+                shapes,                   % .
                 arrows,                   % .
                 through,                  % .
                 calc,                     % .
                 intersections,            % .
                 spy,                      % .
+                matrix,                   % .
+                chains,                   % .
                 decorations.pathreplacing,% .
                 decorations.pathmorphing, % .
                 decorations.markings}     % .

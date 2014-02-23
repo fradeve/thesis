@@ -1,0 +1,137 @@
+\input{tab/dot-styles}
+
+\begin{scope}[
+        point/.style={coordinate},>=stealth',thick,%draw=black!50,
+        tip/.style={->,shorten >=1pt},
+        every join/.style={rounded corners},
+        hv path/.style={to path={-| (\tikztotarget)}},
+        hv-dash path/.style={to path={-| (\tikztotarget)},dashed},
+        vh path/.style={to path={|- (\tikztotarget)}},
+        vh-dash path/.style={to path={|- (\tikztotarget)},dashed}
+]
+
+    \matrix[
+        column  sep=4mm,
+        row     sep=6mm
+    ] {
+        % row %%%%%%%%%%%%%%%%%%
+        \node[sourcelabel] (aerial) {aerial photography};   % col 1
+        &
+                                                        % col 2
+        &
+        \node (p1-1) [point] {};                        % col 3
+        &
+                                                        % col 4
+        &
+                                                        % col 5
+        &
+                                                        % col 6
+        &
+                                                        % col 7
+        &
+                                                        % col 8
+        &
+                                                        % col 9
+        &
+                                                        % col 10
+        &
+        \node[derivedlabel,draw=red] (database) {database};\\   % col 11
+
+        % row %%%%%%%%%%%%%%%%%%%%%
+        \node (p2-test) [point] {};                     % col 1
+        &
+        \node[sourcelabel] (sit) {SIT};                 % col 2
+        &
+                                                        % col 3
+        &
+        \node (p2-1) [point] {};                        % col 4
+        &
+        \node[datalabel] (vector) {vector};             % col 5
+        &
+        \node (p2-2) [point] {};                        % col 6
+        &
+        \node[derivedlabel] (derived) {derived data};   % col 7
+        &
+        \node (p2-3) [point] {};                        % col 8
+        &
+                                                        % col 9
+        &
+        \node (p2-4) [point] {};                        % col 10
+        &
+        \node[derivedlabel] (statistics) {statistics};  % col 11
+        &
+        \node (p2-5) [point] {};\\                      % col 12
+
+        % row %%%%%%%%%%%%%%%%%%
+                                                        % col 1
+        &
+        \node[sourcelabel] (magn) {magnetometry};       % col 2
+        &
+        \node (p3-1) [point] {};                        % col 3
+        &
+                                                        % col 4
+        &
+                                                        % col 5
+        &
+                                                        % col 6
+        &
+                                                        % col 7
+        &
+        \node (p3-2) [point] {};                        % col 8
+        &
+        \node[derivedlabel,draw=red] (auto) {autom.\ stats};    % col 9
+        &
+        \node (p3-3) [point] {};                        % col 10
+        & \\                                            % col 11
+
+        % row %%%%%%%%%%%%%%%%%%
+        \node (p4-1) [point] {};                        % col 1
+        &
+                                                        % col 2
+        &
+                                                        % col 3
+        &
+                                                        % col 4
+        &
+        \node[datalabel] (draw) {drawing};              % col 5
+        &
+                                                        % col 6
+        &
+                                                        % col 7
+        &
+        \node (p4-2) [point] {};                        % col 8
+        & \\};
+        % matrix always needs to end with a new line before closing brackets!
+
+    {   [start chain]
+        {   [start branch=aerial]
+            \chainin (aerial);
+            {   [start branch=draw]
+                \chainin (p2-test)  [join=by {dashed}];
+                \chainin (draw)     [join=by {vh-dash path,tip}];   
+                \chainin (p4-2)     [join=by {dashed}];
+            }
+            \chainin (p1-1)     [join];
+            \chainin (p2-1)     [join=by {hv path}];
+        }
+        {   [start branch=magn]
+            \chainin (magn);
+            \chainin (p3-1)     [join];
+            \chainin (p2-1)     [join=by {hv path}];
+        }
+        \chainin (sit);
+        \chainin (p2-1)     [join];
+        \chainin (vector)   [join=by tip];
+        \chainin (p2-2)     [join];
+        \chainin (derived)  [join=by tip];
+        {   [start branch=auto]
+            \chainin (p3-2)     [join=by {vh path,red}];
+            \chainin (auto)     [join=by {red}];
+            \chainin (p3-3)     [join=by {red}];
+        }
+        \chainin (p2-3)     [join];
+        \chainin (p2-4)     [join];
+        \chainin (statistics)   [join=by tip,join=with p4-2 by {hv-dash path,tip},join=with p3-3 by {hv path,tip,red}];
+        \chainin (database) [join=by {red,tip}];
+    }
+\end{scope}

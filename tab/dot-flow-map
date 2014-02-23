@@ -27,7 +27,7 @@
 
             new_class [
                 style="io",
-                texlbl="set\\$k$"
+                texlbl="edit\\$k$"
             ]
 
             select_ditch [

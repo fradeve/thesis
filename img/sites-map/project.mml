@@ -1,0 +1,117 @@
+{
+  "bounds": [
+    14.9963,
+    41.0586,
+    16.2103,
+    41.8348
+  ],
+  "center": [
+    15.6116,
+    41.5415,
+    8
+  ],
+  "format": "png24",
+  "interactivity": {
+    "fields": []
+  },
+  "minzoom": 0,
+  "maxzoom": 22,
+  "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "Stylesheet": [
+    "style.mss"
+  ],
+  "Layer": [
+    {
+      "geometry": "polygon",
+      "extent": [
+        14.3520045,
+        39.8958079,
+        17.4005536,
+        42.1436466
+      ],
+      "id": "bound-reg",
+      "class": "",
+      "Datasource": {
+        "file": "/home/fradeve/git/thesis/img/sites-map/osm-reg.geojson",
+        "layer": "OGRGeoJSON",
+        "id": "bound-reg",
+        "project": "tavoliere",
+        "srs": ""
+      },
+      "layer": "OGRGeoJSON",
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "bound-reg"
+    },
+    {
+      "geometry": "polygon",
+      "extent": [
+        14.8039096,
+        40.9148479,
+        16.4687189,
+        42.0218423
+      ],
+      "id": "bound-province",
+      "class": "",
+      "Datasource": {
+        "file": "/home/fradeve/git/thesis/img/sites-map/osm-province.geojson",
+        "layer": "OGRGeoJSON",
+        "id": "bound-province",
+        "project": "tavoliere",
+        "srs": ""
+      },
+      "layer": "OGRGeoJSON",
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "bound-province"
+    },
+    {
+      "geometry": "point",
+      "extent": [
+        15.330944777635553,
+        41.2671900693774,
+        15.908009626426455,
+        41.67804151674276
+      ],
+      "id": "cities",
+      "class": "",
+      "Datasource": {
+        "file": "/home/fradeve/git/thesis/img/sites-map/cities.geojson",
+        "layer": "OGRGeoJSON"
+      },
+      "layer": null,
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "cities"
+    },
+    {
+      "geometry": "point",
+      "extent": [
+        15.149091974210892,
+        41.17056437112747,
+        16.000099638816618,
+        41.60847813234841
+      ],
+      "id": "sites",
+      "class": "",
+      "Datasource": {
+        "file": "/home/fradeve/git/thesis/img/sites-map/sites.geojson",
+        "layer": "OGRGeoJSON"
+      },
+      "layer": null,
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "sites"
+    }
+  ],
+  "scale": 1.1,
+  "metatile": 1,
+  "name": "tavoliere",
+  "description": "",
+  "attribution": "",
+  "legend": ""
+}

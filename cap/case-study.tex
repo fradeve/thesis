@@ -4,32 +4,47 @@
         Sommario in italiano
     \end{chaptersum}
 
-    The geostatistical system described in this chapter has been structured using the processed spatial data collected during almost ten years of surveying of the settlements in the Tavoliere plain. The existence of buried settlements ranging from neolithic period to middle ages has been proved by field and aerial surveys and by historical records. Given the variety and widespread distribution of the settlements across about \SI{150}{\hectare}, aerial and geophysical methods assured the best results, and heavily contributed to collect the data useful to an accurate landscape archaeology study \cite[pp.~45--48]{remote-ciminale}.
+    The geostatistical system described in this chapter has been structured using the processed spatial data collected during almost ten years of surveying of the settlements in the Tavoliere plain. The existence of buried settlements ranging from neolithic period to middle ages has been proved by field and aerial surveys and by historical records.
 
     \section{General features of the settlements}
         As extensively reported in literature \cite{intro-tavoliere}, the 256 sites form one of the densest concentrations of prehistoric settlements in Europe, lying within a plain approximately \SI{50}{\kilo\meter} by \SI{80}{\kilo\meter} at its broadest and longest points. The natural boundaries of this area are marked from rivers Fortore and Ofanto --- north and south --- and the Gulf of Manfredonia and Appennine foothills --- east and west.\\
         The settlements are large or small villages, normally surrounded by one or more ditches, with the interior generally filled with a number of internal compounds. The majority of the sites occupied level ground. Refer to published materials for further details.
 
-        \subsection{Published data and the work of J. D. B. Jones}
+        \subsection{Published data and the work of J. D. B. Jones\label{sec:jones}}
 
             \subsubsection{Spatial analysis}
 
         \subsection{Modern spatial investigations}
-            \input{tab/tab-layers}
-            After the post-processing, all the data have been placed in a GIS environment, currently containing XXX different raster layers and a single vector layer (\fref{tab:layers}). These vector layers refer to the latest study in chronological order, carried out by dott.ssa Angela Laterza in 2013,
+            Given the variety and widespread distribution of the settlements across about \SI{150}{\hectare}, aerial and geophysical methods assured the best results, and heavily contributed to collect the data useful to an accurate landscape archaeology study \cite[pp.~45--48]{remote-ciminale}. After the post-processing, all the data have been placed in a GIS environment, currently containing 7 different raster layers and 2 vector layers (\fref{tab:layers}). These vector layers refer to the latest study in chronological order, carried out by dott.ssa Angela Laterza in 2013,
             % TODO: add bib reference to Angelica's thesis
-            who completely digitized the structures contained in 23 neolithic settlements. The whole digitalization process took as long as 320 hours and consisted in manually tracing the borders of the visible structures (\emph{ditches} and \emph{compounds}) and, as a separate geometry, the respective area for each of them; the operator has been employed for about two months, and has produced about 1300 geometries; \fref{fig:scheme-derive} shows the whole process.
+            who completely digitized the structures contained in 23 neolithic settlements. 
+            %
+            \input{tab/tab-layers}
+            %
+            The whole digitalization process took as long as 320 hours and consisted in manually tracing the borders of the visible structures (\emph{ditches} and \emph{compounds}) and, as a separate geometry, the respective area for each of them; the operator has been employed for about two months, and has produced about 1300 geometries; \fref{fig:scheme-derive} shows the whole process.
 
-            \begin{figure}[htp]
+            \begin{figure}[H]
                 \resizebox{1.1\textwidth}{!}{%
-                    \input{tab/dot-geo-workflow}
+                    \begin{tikzpicture}[remember picture]
+                        \input{tab/dot-geo-workflow}
+                    \end{tikzpicture}
                 }
                 \caption[Data deriving workflow for the Tavoliere project]{Data derivation workflow for the case study. Raster layers (\textsf{rs}) are the source of all derived vector data (\textsf{vt}). Bold lines represents a manual process, while dashed ones an automated process. Red lines define the area of intervention of the current work.}
                 \label{fig:scheme-derive}
             \end{figure}
 
+            The current work is based on these data and uses 11 of the 23 digitized settlements (\fref{tab:sites}). The settlements have been randomly selected, so various configurations are possible: some of the settlements do not have compounds, some have few, some have compounds regularly spread across all the area, and even some intermediate cases among these are possible; this enriches the range of possibilities, not limiting the analysis to ``simplest'' cases. The map in \fref{fig:sites-map} shows the position of the analyzed sites (points with a site code), of all the settlements in the Tavoliere project (yellow marks) and of the major cities.
+            \input{tab/tab-sites}
+
+            \begin{figure}[H]
+                \includegraphics[width=1\textwidth]{sites-map/tavoliere.pdf}
+                \caption[Analyzed settlments positions in Foggia province]{The position of the analyzed settlements (biggest dots) in the Foggia province. All the settlements in the Tavoliere project are contained in 7 municipalities, colored with a gradient based on settlements concentration (map \copyright~OpenStreetMap contributors).}
+                \label{fig:sites-map}
+            \end{figure}
+
+
     \section{The GIS approach to statistics}
-        The first step in statistical analysis at any level is to build a suitable set of data. In this case study, vector shapes of ditches and compounds can be considered as \emph{primary} data, while area geometries as \emph{derived} data.
+        The first step in statistical analysis at any level is to build a suitable set of data. In this case study, vector shapes of ditches and compounds can be considered as \emph{primary} data, while area geometries as \emph{derived} data (see \fref{fig:scheme-derive}).\\
         The statistical and spatial approach to the study of neolithic --- or, in general, prehistoric --- settlements data is well documented in literature \cite{arch-location-model}, and the strict relation between the morphology of the natural environment and the ancient societies enforces the use of GIS systems when deriving data.\\
         Moving from the standard geophysical survey workflow to a spatial analysis context during the study of the settlements has generated some necessities, which need to be added to the critical points already defined in \fref{sec:gis-data-management}:
 
@@ -42,7 +57,7 @@
         Given that, some objectives have been defined to improve the current workflow and speed up the process, trying to gain in the same time more precision, accuracy and reproducibility; the following subsections will explain how every objective has been achieved in detail.
 
         \subsection{Bulk distinguishing ditches and compounds}
-            In the current approach, ditches and compounds geometries are distinguished by attributes (the \textsf{Ditch\_comp} field in the Shapefile is respectively set to $1$ or $2$), manually added by the operator to each structure in the Shapefile.
+            In the current approach, ditches and compounds geometries are distinguished by attributes (the \textsf{Ditch\_comp} field in the Shapefile is respectively set to $1$ or $2$), manually added by the operator to each structure in the Shapefile. Limiting the features to those analyzed in this work, the operator manually edited the attributes in 199 different geometries.
 
             \begin{wrapfigure}{l}{0.5\textwidth}
                 \centering
@@ -59,18 +74,9 @@
 
             In the case study, geometries have been classified by perimeter values (calculated and saved automatically from ditches and compounds shapes). The different coloring of the geometries on the map based on the newly created classes (\fref{fig:jenks-color}) helps the user to distinguish ditches from compounds at a glance.
 
-            The process is semi-automated since the user have to manually select the ditches and, if necessary, change the class numbers to have a good fit. The flowchart in \fref{fig:flow-map} reports the logic of the process. At the end, the geometry types are saved as text attribute (literally \textsf{ditch} or \textsf{compound}) in a table containing the results of the processing (one row for each geometry); \fref{tab:jnb-results} shows sample data from the \emph{Anglisano} settlement.
-
-            \begin{table}
+            \begin{figure}[H]
                 \centering
-                \input{tab/tab-rows-anglisano}
-                \caption[Sample geometry classification results from Anglisano settlements using Jenk Natural Breaks method]{Sample results from the classification of Anglisano settlement's structures by perimeter using the Jenks Natural Breaks method. The kind of structure is saved as text attribute in the \textsf{type} column. The \textsf{shapefile\_id} column binds the geometries to the respective settlement.}
-                \label{tab:jnb-results}
-            \end{table}
-
-            \begin{figure}
-                \centering
-                \rotatebox{180}{
+                \scalebox{1}[-1]{ % mirror image
                     \begin{tikzpicture}[x=1mm,y=1mm,scale=0.22]
                         \input{img/jenks}
                     \end{tikzpicture}
@@ -78,6 +84,16 @@
                 \caption[A choropleth map of \emph{Anglisano} settlement using Jenks Natural Breaks]{A choropleth map of \emph{Anglisano} settlement created using Jenks Natural Breaks algorithm on perimeters automatically derived from geometries (using default value for classes number, 5). Color difference between ditches and compounds is well-rendered.}
                 \label{fig:jenks-color}
             \end{figure}
+
+            The process is semi-automated since the user have to manually select the ditches and, if necessary, change the class numbers to have a good fit. The flowchart in \fref{fig:flow-map} reports the logic of the process. At the end, the geometry types are saved as text attribute (literally \textsf{ditch} or \textsf{compound}) in a table containing the results of the processing (one row for each geometry); \fref{tab:jnb-results} shows sample data from the \emph{Anglisano} settlement.
+
+            \begin{table}[!htb]
+                \centering
+                \input{tab/tab-rows-anglisano}
+                \caption[Sample geometry classification results from Anglisano settlements using Jenk Natural Breaks method]{Sample results from the classification of Anglisano settlement's structures by perimeter using the Jenks Natural Breaks method. The kind of structure is saved as text attribute in the \textsf{type} column. The \textsf{shapefile\_id} column binds the geometries to the respective settlement.}
+                \label{tab:jnb-results}
+            \end{table}
+
 
             \pagebreak
         \subsection{Derive and measure ditches and compounds areas\label{sec:comp-area}}
@@ -334,7 +350,7 @@
 
                 To store the results, a new table is created; for each compounds the table registers the original Shapefile's ID, the compound's ID, the length of the access segment (automatically calculated as $d_{a_1, a_2}$, and the orientation index (between $0$ and $7$). Sample results for the Anglisano settlements are shown in \fref{tab:tab-access-anglisano}.
                 %
-                \begin{table}
+                \begin{table}[!htb]
                     \centering
                     \input{tab/tab-access-anglisano}
                     \caption[Sample results of access calculations for the compounds in the Anglisano settlement.]{Sample results of access calculations for the compounds in the Anglisano settlement.}
@@ -343,7 +359,7 @@
 
         \subsection{Development of the open source webGIS interface}
 
-            \begin{figure}[htp]
+            \begin{figure}[H]
                 \centering
                 \resizebox{0.9\textwidth}{!}{%
                     \begin{tikzpicture}[remember picture]

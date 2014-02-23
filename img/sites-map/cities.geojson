@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32633" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "site_name": "San Severo", "id": 0 }, "geometry": { "type": "Point", "coordinates": [ 531914.166701903217472, 4614428.779392990283668 ] } },
+{ "type": "Feature", "properties": { "site_name": "Lucera", "id": 1 }, "geometry": { "type": "Point", "coordinates": [ 527862.386202352819964, 4594739.755691654980183 ] } },
+{ "type": "Feature", "properties": { "site_name": "Foggia", "id": 2 }, "geometry": { "type": "Point", "coordinates": [ 545316.756571826175787, 4590134.530936191789806 ] } },
+{ "type": "Feature", "properties": { "site_name": "Manfredonia", "id": 3 }, "geometry": { "type": "Point", "coordinates": [ 575577.440122461179271, 4608331.737953700125217 ] } },
+{ "type": "Feature", "properties": { "site_name": "Troia", "id": 4 }, "geometry": { "type": "Point", "coordinates": [ 527720.281760471872985, 4580039.414062488824129 ] } },
+{ "type": "Feature", "properties": { "site_name": "Cerignola", "id": 5 }, "geometry": { "type": "Point", "coordinates": [ 574975.884405940305442, 4568471.188037870451808 ] } },
+{ "type": "Feature", "properties": { "site_name": "Orta Nova", "id": 6 }, "geometry": { "type": "Point", "coordinates": [ 564493.370877290726639, 4570887.611611033789814 ] } }
+]
+}

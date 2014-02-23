@@ -51,13 +51,13 @@
     }
 \end{dot2tex}
 
-\node[below=2cm] at (ditches_comp_area.south) (features) {
+\node[below=43pt] at (ditches_comp_area.south) (features) {
     \begin{tikzpicture}[scale=0.01]
         \input{img/comp-simple}
     \end{tikzpicture}
 };
 
-\node[below=63pt,xshift=-5pt] at (ditches_comp_area.south) (area) {
+\node[below=49pt,xshift=-5pt] at (ditches_comp_area.south) (area) {
         \begin{scope}
             \begin{tikzpicture}[scale=0.009]
                 \input{img/comp-ang-area-simple}
@@ -65,4 +65,12 @@
         \end{scope}
 };
 
+% access points
+\draw[draw=red,fill=red] (12.48,-2.18) circle (1pt) coordinate(acc-n);
+\draw[draw=red,fill=red] (12.58,-3.2) circle (1pt) coordinate(acc-s);
+\draw[draw=red,fill=red,thick] (acc-n) -- (acc-s);
+
+% arrows from table
 \draw[->,>=*,dotted] (ditches_comp.south) to [bend right=20] ([xshift=-36pt,yshift=19pt]features);
+\draw[->,>=*,dotted] (ditches_comp_area.south) to (area.center);
+\draw[->,>=*,dotted] (access.south) to [bend left=65] ($ (acc-n)!.5!(acc-s) $);

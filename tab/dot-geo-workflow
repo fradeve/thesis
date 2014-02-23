@@ -63,12 +63,32 @@
             texlbl="orientation"
         ]
 
+        label_sources [
+            lblstyle="sourcelabel",
+            texlbl="sources"
+        ]
+
+        label_data [
+            lblstyle="datalabel",
+            texlbl="primary",
+        ]
+
+        label_derived [
+            lblstyle="derivedlabel",
+            texlbl="derived"
+        ]
+
         // ranking
         { rank=source;
-          sit; aerial; magn }        
+          label_sources;
+          sit;
+          aerial;
+          magn }        
         { rank=same; 
+          label_data;
           ditches; compounds }
         { rank=same;
+          label_derived;
           ditches_area;
           compounds_area }
         { rank=same; 
@@ -77,6 +97,8 @@
           compounds_orientation }
 
         // bindings
+        label_sources -> label_data -> label_derived;
+
         aerial -> ditches [style=bold]
         aerial -> compounds [style=bold]
         magn -> ditches [style=bold]
