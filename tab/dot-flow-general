@@ -38,7 +38,7 @@
         \node[derivedlabel,draw=red] (database) {database};\\   % col 11
 
         % row %%%%%%%%%%%%%%%%%%%%%
-        \node (p2-test) [point] {};                     % col 1
+        \node (p2-0) [point] {};                        % col 1
         &
         \node[sourcelabel] (sit) {SIT};                 % col 2
         &
@@ -104,10 +104,10 @@
         % matrix always needs to end with a new line before closing brackets!
 
     {   [start chain]
+        \chainin (aerial);
         {   [start branch=aerial]
-            \chainin (aerial);
             {   [start branch=draw]
-                \chainin (p2-test)  [join=by {dashed}];
+                \chainin (p2-0)     [join=by {dashed}];
                 \chainin (draw)     [join=by {vh-dash path,tip}];   
                 \chainin (p4-2)     [join=by {dashed}];
             }

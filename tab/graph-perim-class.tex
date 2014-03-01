@@ -1,0 +1,19 @@
+\pgfplotstableread[col sep=comma]{tab/raw/perim-class.csv}{\loadedtable}
+\small
+
+\begin{axis}[
+    width=0.5\textwidth,
+    height=0.5\textwidth,
+    ybar,
+    ymin=0,
+    enlarge x limits,
+    xlabel=perimeter classes,
+    xlabel shift=-5pt,
+    ylabel=frequency,
+    xtick={1,...,5},   % indicates xticks going from 1 to 11
+    xticklabels from table={\loadedtable}{class},
+    xticklabel style={font=\scriptsize},
+    xticklabel shift=3pt
+]
+    \addplot table[x=id, y=freq] from \loadedtable;
+\end{axis}

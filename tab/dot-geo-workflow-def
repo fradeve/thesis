@@ -58,11 +58,9 @@
 };
 
 \node[below=49pt,xshift=-5pt] at (ditches_comp_area.south) (area) {
-        \begin{scope}
-            \begin{tikzpicture}[scale=0.009]
-                \input{img/comp-ang-area-simple}
-            \end{tikzpicture}
-        \end{scope}
+    \begin{tikzpicture}[scale=0.009]
+        \input{img/comp-ang-area-simple}
+    \end{tikzpicture}
 };
 
 % access points

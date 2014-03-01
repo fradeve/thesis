@@ -1,0 +1,22 @@
+\pgfplotstableread{tab/raw/number-comp}{\loadedtable}
+\small
+
+\begin{axis}[
+    width=1\textwidth,
+    height=0.5\textwidth,
+    ybar,
+    ymin=0,
+    enlarge x limits,
+    xlabel=settlements,
+    xlabel shift=-5pt,
+    ylabel=compounds,
+    xtick={1,...,11},   % indicates xticks going from 1 to 11
+    xticklabels from table={\loadedtable}{set},
+    xticklabel style={rotate=45,font=\scriptsize},
+    xticklabel shift=-3pt,
+    legend style={font=\footnotesize,draw=black!40}
+]
+    \addplot table[x=id, y=laterza] from \loadedtable;
+    \addplot table[x=id, y=current] from \loadedtable;
+    \legend{Laterza 2013,current}
+\end{axis}

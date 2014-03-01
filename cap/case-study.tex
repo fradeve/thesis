@@ -57,7 +57,7 @@
 
         Given that, some objectives have been defined to improve the current workflow and speed up the process, trying to gain in the same time more precision, accuracy and reproducibility; the following subsections will explain how every objective has been achieved in detail.
 
-        \subsection{Bulk distinguishing ditches and compounds}
+        \subsection{Bulk distinguishing ditches and compounds\label{sec:distinguish}}
             In the current approach, ditches and compounds geometries are distinguished by attributes (the \textsf{Ditch\_comp} field in the Shapefile is respectively set to $1$ or $2$), manually added by the operator to each structure in the Shapefile. Limiting the features to those analyzed in this work, the operator manually edited the attributes in 199 different geometries.
 
             This operation has been semi-automated using the Jenks Natural Breaks classification method \cite{jenks1977}. Virtually any classification could have been chosen (quantile, standard deviation), but Jenks Natural Breaks has gained popularity in the last 20 years as a tool for coloring map objects based on objects properties (\emph{choropleth maps}), and it is a well known and tested tool\footnote{Some criticism has recently raised around the use of Jenks Natural Breaks for the classification of \emph{all} kinds of data; alternative solutions have been found for some distributions --- as heavy-tailed ones \cite{jenks-tail} --- but this is not the case, and Jenks has been experimentally proved as the most appropriate choice.}. It aims to present a series of break values that best represent the actual breaks observed in the data as opposed to some arbitrary classificatory scheme (i.e.\ equal interval); in this way the actual clustering of data values is preserved.
@@ -261,7 +261,7 @@
                 \label{tab:tab-area-anglisano}
             \end{table}
 
-        \subsection{Automating discovering of compounds access and orientation}
+        \subsection{Automating discovering of compounds access and orientation\label{sec:orientation}}
 
             The current method used to describe compounds' orientation consists of a visual check of the compound's access position relatively to a set of 8 cardinal points (N, NE, E, SE, S, SW, W, NW) % TODO cite angelica
             . The operator had to visually recognize the orientation of the access and write the relative number (from 1 to 8) as an attribute in a Shapefile's field created on purpose; this lead to manually writing a number for each one of the compounds for all the sites. It is a time-consuming activity that could be automated.
@@ -363,16 +363,8 @@
                     \label{tab:tab-access-anglisano}
                 \end{table}
 
-        \subsection{Development of the open source webGIS interface}
-            Having defined all the algorithms to derive geometries and data from the input vectors, the next step concerned a way to make these tool accessible to the operator, even ones with less experience. To ease the development of a standard compliant interface the Django \emph{framework} has been used (version 1.6); both the framework and the algorithms share the same open source programming language, Python.
-            Django enables the development of web-based products; this means that the whole set of functions described in the previous sections is easily accessible using a web browser. The developed web interface consists of few pages (to avoid confusion when navigating); briefly listed:
-
-            \begin{description}
-                \item[Shapefiles list] the start page, lists all the uploaded Shapefiles and has a button redirecting to the upload page;
-                \item[upload page] enables the user to upload a new Shapefile, which is consequently saved to the software's internal database;
-                \item[Shapefile details] the most relevant page, shows a map of the selected Shapefile on the left and a list of all possible statistics on the right; every statistic has its own button, which starts the calculation when clicked; if a statistic has been calculated, the relevant row has a green background, or red on the contrary; the upper right part of the page contains buttons to manage the current Shapefile, enabling the deletion, statistics plotting or downloading;
-                \item[Jenks classification] while all other algorithms do not need any interaction with the user, the Jenks Natural Breaks classification sometimes needs the number of classes $k$ to be redefined by the operator; for this purpose a wizard has been created; it is launched pressing the button associated with the row containing the number of ditches or compounds in the Shapefile details page; the user can change the $k$ value and the colored map representing classified values is refreshed on the fly.
-            \end{description}
+        \subsection{Saving and access data}
+            All the algorithms described above store derived data in a different database table, easing the information retrieving in order to present them on the web interface. A scheme of where data are stored for each compound is presented in \fref{fig:scheme-derive-2}.
 
             \begin{figure}[H]
                 \centering
@@ -385,4 +377,6 @@
                 \label{fig:scheme-derive-2}
             \end{figure}
 
+            Having defined all the algorithms to derive geometries and data from the input vectors, the next step concerned a way to make these tool accessible to the operator, even ones with less experience. To ease the development of a standard compliant interface the Django \emph{framework} has been used (version 1.6); both the framework and the algorithms share the same open source programming language, Python.
+            Django enables the development of web-based products; this means that the whole set of functions described in the previous sections is easily accessible using a web browser (further details about the webGIS interface will be given in \fref{sec:webgis}).
         %\subsection{Inner/outer compounds}
