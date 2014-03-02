@@ -3,7 +3,7 @@
 
 \begin{axis}[
     width=1\textwidth,
-    height=0.7\textwidth,
+    height=0.6\textwidth,
     ybar,
     ymin=0,
     enlarge x limits,
@@ -14,9 +14,9 @@
     xticklabels from table={\loadedtable}{set},
     xticklabel style={rotate=45,font=\scriptsize},
     xticklabel shift=-3pt,
-    legend style={font=\footnotesize,draw=black!40}
+    legend style={font=\scriptsize,draw=black!40}
 ]
     \addplot table[x=id, y=laterza] from \loadedtable;
     \addplot table[x=id, y=current] from \loadedtable;
-    \legend{Laterza 2013,current}
+    \legend{Lat13,current}
 \end{axis}

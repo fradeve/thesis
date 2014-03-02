@@ -1,15 +1,16 @@
-\pgfplotstableread[col sep=comma]{tab/raw/orient.csv}{\loadedtable}
+\pgfplotstableread[col sep=comma]{tab/raw/orient-jones.csv}{\loadedtable}
 \small
 
 \begin{axis}[
     width=1\textwidth,
     height=0.5\textwidth,
+    bar width=7pt,
     ybar,
     ymin=0,
     enlarge x limits,
     xlabel=orientation,
     xlabel shift=-5pt,
-    ylabel=frequency $(n)$,
+    ylabel=percentage $(\%)$,
     xtick={1,...,8},   % indicates xticks going from 1 to 11
     xticklabels from table={\loadedtable}{orient},
     xticklabel style={rotate=45,font=\scriptsize},
@@ -18,5 +19,6 @@
 ]
     \addplot table[x=id, y=laterza] from \loadedtable;
     \addplot table[x=id, y=current] from \loadedtable;
-    \legend{Lat13,current}
+    \addplot table[x=id, y=jones] from \loadedtable;
+    \legend{Lat13,current,JST87}
 \end{axis}

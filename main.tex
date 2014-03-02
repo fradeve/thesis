@@ -103,9 +103,10 @@
 \graphicspath{{img/}}                     % defines images path
 \usepackage{graphicx}                     % basic graphics support
 \usepackage{pdfpages}                     % include pdf
-\usepackage{caption}                      % define captions style
+\usepackage[format=plain]{caption}        % define captions style
 \usepackage{subcaption}                   
 \usepackage{sidecap}                      % enables captions on the side
+\sidecaptionvpos{figure}[c]               % configure sidecap vertical alignment
 \usepackage{parskip}
 
 %% tikz
@@ -153,8 +154,10 @@
 
 \begin{document}
     \includepdf[pages={1}]{pages/tesi-front}
+    \thispagestyle{empty}
     \cleardoublepage
     \includepdf[pages={1}]{pages/tesi-post-front}
+    \thispagestyle{empty}
     \cleardoublepage
     %******************************************
     % Materiale iniziale

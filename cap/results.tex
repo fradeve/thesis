@@ -7,7 +7,7 @@
 
     \section{Statistical results}
         \subsection{Ditches and compounds classification}
-            The method described in \fref{sec:distinguish} has enabled the operator to write once all the attributes in every ditch and compound, distinguishing them. The procedure requires around \SI{1}{\minute} for each settlements, compared to nearly \SI{1}{\hour} in a non-automatized approach (depending on the number of geometries in the settlement). The whole set of 11 settlements containing 199 geometries has been analyzed in around 10 minutes. The plots in \fref{fig:graph-num-compound} and \fref{fig:graph-num-ditch} compare the number of ditches and compounds distinguished as such from the human brain-eye system as reported in \cite{laterza} and the calculated values, showing a perfect matching between the two datasets. The settlements are described using their site code (see \fref{tab:layers}).
+            The method described in \fref{sec:distinguish} has enabled the operator to write once all the attributes in every ditch and compound, distinguishing them. The procedure requires around \SI{1}{\minute} for each settlements, compared to nearly \SI{1}{\hour} in a non-automatized approach (depending on the number of geometries in the settlement). The whole set of 11 settlements containing 199 geometries has been analyzed in around \SI{10}{\minute}. The plots in \fref{fig:graph-num-compound} and \fref{fig:graph-num-ditch} compare the number of compounds and ditches distinguished as such from the human brain-eye system --- as reported in \cite{laterza} --- and the values calculated in the current work, showing a perfect matching between the two datasets. The settlements are described using their site code (see \fref{tab:layers}).
 
             \begin{figure}[H]
                 \centering
@@ -23,67 +23,82 @@
                 \begin{tikzpicture}
                     \input{tab/graph-num-ditch}
                 \end{tikzpicture}
-                \caption[The number of ditches in \cite{laterza} compared to the results of the proposed method.]{The number of compounds automatically calculated for all the analyzed settlements, compared with the results reported in \cite{laterza}.}
+                \caption[The number of ditches in \cite{laterza} compared to the results of the proposed method.]{The number of ditches automatically calculated for all the analyzed settlements, compared with the results reported in \cite{laterza}.}
                 \label{fig:graph-num-ditch}
             \end{figure}
 
             Having all the statistics registered in a database, is very easy to extract further data; the \fref{fig:graph-perim-class}, for example, shows the frequency of perimeter's classes for all the compounds; it si evident that most of the analyzed compounds are contained in the first class of perimeters, ranging from \SI{96.6}{\meter} to \SI{103}{\meter}.
 
-            \begin{figure}[H]
-                \centering
+            \begin{SCfigure}
+                \caption[Frequency of all the analyzed compounds for each perimeter class, with $k=5$.]{Frequency of all the analyzed compounds for each perimeter class, with the default number of classes $k=5$. Class $6$ has been removed since only ditches belong to it.}
                 \begin{tikzpicture}
                     \input{tab/graph-perim-class}
                 \end{tikzpicture}
-                \caption[test]{test}
                 \label{fig:graph-perim-class}
-            \end{figure}
+            \end{SCfigure}
 
         \subsection{Derived areas}
-            % misc stats:
             % min, max, avg area
 
             The method described in \fref{sec:comp-area} has produced the results shown in the rightmost column of \fref{fig:graph-area} for each analyzed settlement. The results obtained with the automated method are accurate enough to be closely compared with ones drawn by hand using GIS tools from the operator, as published in \cite{laterza}.
-            As will be reported in the next section, the \emph{Salerno 13} settlement shows a small discordance with the previously published data.
+            As will be reported in the next section, the \emph{Salerno 13} settlement shows a small discordance with the previously published data (although not conspicuous).
 
             \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
                     \input{tab/graph-area}
                 \end{tikzpicture}
-                \caption[test]{test}
+                \caption[Areas of all the analyzed settlements compared with ones published in \cite{laterza}.]{Areas of all the analyzed settlements, compared to ones defined in \cite{laterza}. The proposed values fit well with published data.}
                 \label{fig:graph-area}
             \end{figure}
 
         \subsection{Derived perimeters}
-            % misc stats
             % mix, max, avg perimeter
             
-            As explained in \fref{sec:comp-area}, the perimeter for each compound is directly derived from the geometry of its area. The error seen in the previous section for the \emph{Salerno 13} settlement has repercussions on the perimeter. This behavior can be attributed to an error in the area derivation using the automated method: this prevented the construction of the area geometry for 8 compounds (out of 36), modifying the total area value for the settlement (and the relative derived perimeter). This is the only known error in the proposed method.
+            As explained in \fref{sec:comp-area}, the perimeter for each compound is directly derived from the geometry of its area, to reproduce the results obtained by \cite{laterza}. The error seen in the previous section for the \emph{Salerno 13} settlement has repercussions on the perimeter. This behavior can be attributed to an error in the area derivation using the automated method: this prevented the construction of the area geometry for 8 compounds (out of 36, for that settlement), modifying the total area value for the settlement (and the relative derived perimeter). This is the only known error in the proposed method.
 
             \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
                     \input{tab/graph-perim}
                 \end{tikzpicture}
-                \caption[test]{test}
+                \caption[Comparison of published perimeters with ones obtained with the proposed method.]{Comparison of the total perimeters obtained for all the compounds in each analyzed settlement with the values published in \cite{laterza}, showing a good correspondence.}
                 \label{fig:graph-perim}
             \end{figure}
 
+            Minor dissimilarities with some settlements (\emph{Anglisano 2}, \emph{Lore 2}) depend on the nature of the derivation method itself: in respect to the flaws listed in \fref{sec:gis-data-management}, the difference between geometries traced by hand (subject to magnification errors) and computed using the algorithm is amplified when single differences are summed up to produce data referred to the whole settlement.
+
+            % statistical difference between perimeters of single compounds in one settlement (anglisano?)
+
         \subsection{Orientation discovering}
-            % misc stats
-            % all open compounds = 155
             % min, max, avg access length
             % is there any relation between orientation and access length?
 
-            Automating the discovering of the compounds' orientations has been the hardest task, since involves the derivation of multiple geometries for each compound (see \fref{sec:orientation}). The plotted results in \fref{fig:graph-orient} show a general trend in the orientations calculated in this work, very similar to the one published in \cite{laterza}. However, the significance of this calculation can be improved, since presenting each orientation as an interval of values (e.g.\ NE contains all the values ranging from $0$ to \SI{45}{\degree}) is an operation of classification itself, and has caused a loss of detail. This has been done to register values comparable to the ones defined in \cite{laterza}. At the current status, nothing can be done to prove which measurement is nearest to reality, but the assumption that both datasets share the same trends seems a result good enough to state that the automated method is fully functional.
+            Automating the discovering of the compounds' orientations has been the hardest task, since involves the derivation of multiple geometries for each compound (see \fref{sec:orientation}).
+            The information about compounds' orientation for 155 compounds in all the analyzed sites has been automatically calculated and required less than \SI{4}{\minute} to generate and save the relevant data to the database, while manually defining an orientation index as for a ``normal'' approach requires several days of work.
+            
+            The results plotted in \fref{fig:graph-orient} show that the general trend in the orientations calculated in this work is very similar to the one published in \cite{laterza}. However, the significance of this calculation can be improved, since presenting each orientation as an interval of values (e.g.\ NE contains all the values ranging from \SI{0}{\degree} to \SI{45}{\degree}) is an operation of classification itself, and has caused a loss of detail. This has been done to register values comparable to the ones defined in \cite{laterza}. At the current status, nothing can be done to prove which measurement is nearest to reality, but the assumption that both datasets share the same trends seems a result good enough to state that the automated method is fully functional.
 
             \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
                     \input{tab/graph-orient}
                 \end{tikzpicture}
-                \caption[test]{test}
+                \caption[Orientation of compounds for all the settlements calculated in this work compared with know data.]{Compounds' orientation calculated using automated algorithm compared to manually derived data.}
                 \label{fig:graph-orient}
+            \end{figure}
+
+            Before the work of dott.ssa Laterza in 2013, the only available data about the compounds' orientation of the Tavoliere settlements were in \textcite[appx.~IV]{jones-tavoliere}, reported as data tables and derived drawing by hand on graph paper, on top of aerial photos. The orientation data contained in the tables refers to the ``average orientation'' of compounds in some settlements, and have not been calculated for each compound. Thus, comparing these general values to \emph{atomized} data obtained from calculation on every single compound as done so far in this work, may appear risky from the scientific point of view. Nonetheless, a graphical comparison may still be useful to visually find some trends --- if any. 
+
+            \cite{jones-tavoliere} reports orientation data of 24 settlements, and just few of these are referable to the set analyzed in this work. Thus, orientation data from all the sources (\cite{laterza}, \cite{jones-tavoliere} and this work) have been calculated as percentage referred to the total of all analyzed compounds. Results are shown in \fref{fig:graph-orient-jones}.
+
+            \begin{figure}[H]
+                \centering
+                \begin{tikzpicture}
+                    \input{tab/graph-orient-jones}
+                \end{tikzpicture}
+                \caption[Comparison of automatically derived orientation data with the other sources.]{Comparison of the orientation data, from left: manually derived by \citeauthor{laterza}, automatically calculated in the current work and derived by hand by \citeauthor{jones-tavoliere} in 1987. The latter refers to average settlements' orientation, while the others to average compounds' orientation.}
+                \label{fig:graph-orient-jones}
             \end{figure}
 
         \subsection{The web interface structure\label{sec:webgis}}
