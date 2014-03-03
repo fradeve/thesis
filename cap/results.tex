@@ -2,8 +2,10 @@
 
     \vspace{0.06\textheight}
     \begin{chaptersum}
-        Sommario in italiano
+        \blindtext[2]
     \end{chaptersum}
+
+    To ensure the correctness of the proposed methods, all the results obtained will be compared to the most up to date informations published by dott.ssa Angela Laterza in 2013 \cite{laterza}. Most of the comparisons show a good correspondence among datasets; this result is more impressive when related with the time employed to automatically generate the data, which in most cases is at least one order of magnitude less than the manual method. The last section of this chapter presents one of the fundamental components of the proposed system, the web interface, which connects all the functions, methods and algorithms previously described with an interface conceived to be clear and simple for the end user.
 
     \section{Statistical results}
         \subsection{Ditches and compounds classification}
@@ -40,7 +42,7 @@
         \subsection{Derived areas}
             % min, max, avg area
 
-            The method described in \fref{sec:comp-area} has produced the results shown in the rightmost column of \fref{fig:graph-area} for each analyzed settlement. The results obtained with the automated method are accurate enough to be closely compared with ones drawn by hand using GIS tools from the operator, as published in \cite{laterza}.
+            The method described in \fref{sec:comp-area} has produced the results shown in the rightmost column of \fref{fig:graph-area} for each analyzed settlement. The results obtained in few minutes with the automated method are accurate enough to be closely compared with ones drawn by hand using GIS tools from the operator during several days of work, as published in \cite{laterza}.
             As will be reported in the next section, the \emph{Salerno 13} settlement shows a small discordance with the previously published data (although not conspicuous).
 
             \begin{figure}[H]
@@ -55,7 +57,7 @@
         \subsection{Derived perimeters}
             % mix, max, avg perimeter
             
-            As explained in \fref{sec:comp-area}, the perimeter for each compound is directly derived from the geometry of its area, to reproduce the results obtained by \cite{laterza}. The error seen in the previous section for the \emph{Salerno 13} settlement has repercussions on the perimeter. This behavior can be attributed to an error in the area derivation using the automated method: this prevented the construction of the area geometry for 8 compounds (out of 36, for that settlement), modifying the total area value for the settlement (and the relative derived perimeter). This is the only known error in the proposed method.
+            As explained in \fref{sec:comp-area}, the perimeter for each compound is directly derived from the geometry of its area, to reproduce the results obtained in \cite{laterza}. The error seen in the previous section for the \emph{Salerno 13} settlement has repercussions on the perimeter. This behavior can be attributed to an error in the area derivation using the automated method: this prevented the construction of the area geometry for 8 compounds (out of 36, for that settlement), modifying the total area value for the settlement (and the relative derived perimeter). This is the only known error in the proposed method.
 
             \begin{figure}[H]
                 \centering
@@ -90,7 +92,7 @@
 
             Before the work of dott.ssa Laterza in 2013, the only available data about the compounds' orientation of the Tavoliere settlements were in \textcite[appx.~IV]{jones-tavoliere}, reported as data tables and derived drawing by hand on graph paper, on top of aerial photos. The orientation data contained in the tables refers to the ``average orientation'' of compounds in some settlements, and have not been calculated for each compound. Thus, comparing these general values to \emph{atomized} data obtained from calculation on every single compound as done so far in this work, may appear risky from the scientific point of view. Nonetheless, a graphical comparison may still be useful to visually find some trends --- if any. 
 
-            \cite{jones-tavoliere} reports orientation data of 24 settlements, and just few of these are referable to the set analyzed in this work. Thus, orientation data from all the sources (\cite{laterza}, \cite{jones-tavoliere} and this work) have been calculated as percentage referred to the total of all analyzed compounds. Results are shown in \fref{fig:graph-orient-jones}.
+            \cite{jones-tavoliere} reports orientation data of 24 settlements, and just few of these are referable to the set analyzed in this work. Thus, orientation data from all the sources (\cite{laterza}, \cite{jones-tavoliere} and this work) have been calculated as percentage referred to the total analyzed compounds. Results are shown in \fref{fig:graph-orient-jones}.
 
             \begin{figure}[H]
                 \centering
@@ -102,16 +104,100 @@
             \end{figure}
 
         \subsection{The web interface structure\label{sec:webgis}}
-            The developed web interface consists of few pages (to avoid confusion when navigating); briefly listed:
+            Having defined all the algorithms to derive geometries and data from the input vectors, the next step concerned a way to make these tool accessible to the operator, even ones with less experience. To ease the development of a standard compliant interface the Django \emph{framework} has been used; both the framework and the algorithms share the same open source programming language, Python.
+            Django enables the development of web-based products; thus, the whole set of statistical tools described in this work are accessible as a web service, simply connecting to the web address using a normal web browser.
 
-                \begin{description}
-                    \item[Shapefiles list] the start page, lists all the uploaded Shapefiles and has a button redirecting to the upload page; if no Shapefile has been uploaded, the list is empty;
-                    \item[upload page] enables the user to upload a new Shapefile, which is consequently saved to the software's internal database;
-                    \item[Shapefile details] the most relevant page, shows a map of the selected Shapefile on the left and a list of all possible statistics on the right; every statistic has its own button, which starts the calculation when clicked; if a statistic has been calculated, the relevant row has a green background, or red on the contrary; the upper right part of the page contains buttons to manage the current Shapefile, enabling the deletion, statistics plotting or downloading.
+            Very little effort is required to start with calculations on a settlement. The web interface is password protected, thus each operator have to access with his own credentials. After, the user just have to open an ESRI Shapefile containing vector data of a single settlement in a GIS software suite, and clean it from all the geometries but those representing ditches and compounds. To ease the upload, the operator have to enclose the abovementioned Shapefile in a compressed archive (\emph{.zip} is the preferred format). This process guarantees a fast upload using the web interface shown in \fref{fig:shp-upload}.
+            
+            The developed web interface consists of few pages; briefly listed:
 
-                    \item[Jenks classification] while all other algorithms do not need any interaction with the user, the Jenks Natural Breaks classification sometimes needs the number of classes $k$ to be redefined by the operator; for this purpose a wizard has been created; it is launched pressing the button associated with the row containing the number of ditches or compounds in the Shapefile details page; the user can change the $k$ value and the colored map representing classified values is refreshed on the fly.
-                \end{description}
+            \begin{description}
+                \item[Shapefiles list] the start page, lists all the uploaded Shapefiles and has a button redirecting to the upload page; if no Shapefile has been uploaded, the list is empty (\fref{fig:shp-list});
+                \item[upload page] enables the user to upload a new Shapefile, which is consequently saved to the software's internal database (\fref{fig:shp-upload});
+                \item[Shapefile details] the most relevant page, shows a map of the selected Shapefile on the left and a list of all possible statistics on the right (\fref{fig:shp-details}); every statistic has its own button, which starts the calculation when clicked; if a statistic has been calculated, the relevant row has a green background, or red on the contrary; the upper right part of the page contains buttons to manage the current Shapefile, enabling the deletion, statistics plotting or downloading.
+                \item[Jenks classification] while all other algorithms do not need any interaction with the user, the Jenks Natural Breaks classification sometimes needs the number of classes $k$ to be redefined by the operator; for this purpose a wizard has been created (\fref{fig:shp-wizard}); it is launched pressing the button associated with the row containing the number of ditches or compounds in the Shapefile details page; the user can change the $k$ value and the colored map representing classified values is refreshed on the fly.
+            \end{description}
 
-        \subsection{Implementation specifications}
-            \subsubsection{Data processing: operator-driven vs automated GIS methods}
-            \subsubsection{Scientific reproducibility: the open source approach advantage}
+            \pagebreak
+
+            \vfill
+
+            \begin{figure}[H]
+                \caption[Screenshots of the main tools of the software created to automate statistical calculations.]{Main tools included in the software used to automate statistical calculations of the data presented in this work. The calculation functions are accessible from buttons on the interface. All the images show example calculations operated on the \emph{Anglisano 1} settlement.}
+                \label{fig:screenshots}
+            \end{figure}
+
+            \vfill
+
+            \begin{figure}[H]
+                \ContinuedFloat
+                \begin{subfigure}[b]{1\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{img/shp-list}
+                    \caption{The start page lists all the uploaded ESRI Shapefiles, one for each settlement; the button on the upper left redirects to the upload file page. The rightmost column of the list shows an automatically generated sum of all the geometries contained in the loaded Shapefiles.}
+                    \label{fig:shp-list}
+                \end{subfigure}
+            \end{figure}
+
+            \vfill
+
+            \begin{figure}[H]
+                \ContinuedFloat
+                \begin{subfigure}[b]{1\textwidth}
+                    \centering
+                    \includegraphics[width=1\textwidth]{img/shp-upload}
+                    \caption{Using the upload page, the user can upload a new settlement's ESRI Shapefile; a description, character encoding and cartographic projection for the file can be specified; when the loading is completed, all the geometries are saved in an internal database.}
+                    \label{fig:shp-upload}
+                \end{subfigure}
+
+            \end{figure}
+
+            \pagebreak
+
+            \vfill
+
+            \begin{figure}[H]
+                \ContinuedFloat
+                \begin{subfigure}[b]{1\textwidth}
+                    \centering
+                    \includegraphics[width=0.95\textwidth]{img/shp-details}
+                    \caption{Shapefile details page; the map shows the base layer and some more layers with data automatically derived from statistical calculations; the respective values for the statistics are shown in the table on the right.}
+                    \label{fig:shp-details}
+                \end{subfigure}
+            \end{figure}
+
+            \vfill
+
+            \begin{figure}[H]
+                \ContinuedFloat
+                \begin{subfigure}[b]{1\textwidth}
+                    \centering
+                    \includegraphics[width=0.95\textwidth]{img/shp-wizard}
+                    \caption{The wizard used to show compounds geometries classified using the Jenks Natural Breaks, with slider to redefine the number of $k$ classes to find the best fit with perimeters.}
+                    \label{fig:shp-wizard}
+                \end{subfigure}
+            \end{figure}
+
+            \vfill
+
+        \section{Achieved results}
+            % automated time consuming operations
+            % avoided magnification errors, improved precision
+            % boosted reproducibility
+            % standard format data export -- csv
+            % pleasant interface
+
+        \section{Software technical specifications}
+            From the technical point of view, the software has been implemented using the Django framework, version 1.6 and the relative geographic extension (\emph{GeoDjango}); this offers a granular user access control system, and powerful tools to write object-oriented code to manage the single Shapefiles during calculations. The most important parts of the presented algorithms have been realized using the GEOS components of the GeoDjango extension.
+
+            The webGIS interface has been built using the LeafletJS JavaScript library, which receives geoJSON formatted outputs from Django when a layer is called pressing the relative button. All the graphical components are provided by the Twitter Bootstrap tools collection, boosting the usability of the website.
+            
+            The software relies on the SpatiaLite geographical database to register, manage and do some queries with the processed data; it has been chosen since it is a full-featured, self-contained database, very easily manageable when working with Python, since it is included in all the standard GNU/Linux repositories and does not require any particular configuration or setup; moreover, it can also be shipped as a normal file when distributing the software.
+
+            \subsection{Scientific reproducibility: the open source approach advantage}
+                % only open source software
+                % free software definition
+                % best control of calculation processes
+                % open to contribution from scientific community
+                % low cost
+

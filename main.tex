@@ -90,6 +90,7 @@
 \usepackage{minitoc}                      % mini-index on chapter start
 \usepackage{wrapfig}                      % wraps text around figures
 \usepackage{float}                        % adds H option to image positioning
+\usepackage{blindtext}                    % generates lorem ipsum
 
 %%% tables %%%%%%%%%%%%%%%%%%%
 
@@ -106,7 +107,7 @@
 \usepackage[format=plain]{caption}        % define captions style
 \usepackage{subcaption}                   
 \usepackage{sidecap}                      % enables captions on the side
-\sidecaptionvpos{figure}[c]               % configure sidecap vertical alignment
+\sidecaptionvpos{figure}{c}
 \usepackage{parskip}
 
 %% tikz
@@ -149,7 +150,7 @@
 % generates summary (before starting chapter's first section)
 \newenvironment{chaptersum}
     {\sffamily\textbf{Sommario}\\\rightskip1in}
-    {}
+    {\vspace{0.1\textwidth}}
 
 
 \begin{document}

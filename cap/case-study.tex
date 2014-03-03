@@ -1,7 +1,7 @@
 \chapter{Case study: geostatistics on neolithic settlements in Tavoliere}
 
     \begin{chaptersum}
-        Sommario in italiano
+        \blindtext[2]
     \end{chaptersum}
 
     The geostatistical system described in this chapter has been structured using the processed spatial data collected during almost ten years of surveying of the settlements in the Tavoliere plain. The existence of buried settlements ranging from neolithic period to middle ages has been proved by field and aerial surveys and by historical records.
@@ -16,9 +16,7 @@
 
         \pagebreak
         \subsection{Modern spatial investigations}
-            Given the variety and widespread distribution of the settlements across about \SI{150}{\hectare}, aerial and geophysical methods assured the best results, and heavily contributed to collect the data useful to an accurate landscape archaeology study \cite[pp.~45--48]{remote-ciminale}. After the post-processing, all the data have been placed in a GIS environment, currently containing 7 different raster layers and 2 vector layers (\fref{tab:layers}). These vector layers refer to the latest study in chronological order, carried out by dott.ssa Angela Laterza in 2013,
-            % TODO: add bib reference to Angelica's thesis
-            who completely digitized the structures contained in 23 neolithic settlements. 
+            Given the variety and widespread distribution of the settlements across about \SI{150}{\hectare}, aerial and geophysical methods assured the best results, and heavily contributed to collect the data useful to an accurate landscape archaeology study \cite[pp.~45--48]{remote-ciminale}. After the post-processing, all the data have been placed in a GIS environment, currently containing 7 different raster layers and 2 vector layers (\fref{tab:layers}). These vector layers refer to the latest study in chronological order, carried out by dott.ssa Angela Laterza in 2013, who completely digitized the structures contained in 23 neolithic settlements \cite{laterza}. 
             %
             \input{tab/tab-layers}
             %
@@ -90,9 +88,7 @@
                 \label{fig:jenks-color}
             \end{figure}
 
-            The perimeters calculated and presented in \fref{tab:jnb-results} are not suitable for any other calculation different from classification, since the approach adopted in
-            \ldots % cite Angelica 2013
-            refers to another derived geometry (this process will be furher explained in \fref{sec:comp-area}).
+            The perimeters calculated and presented in \fref{tab:jnb-results} are not suitable for any other calculation different from classification, since the approach adopted in the refernce data \cite{laterza} refers to another derived geometry (this process will be furher explained in \fref{sec:comp-area}).
 
             \begin{table}[!htb]
                 \centering
@@ -165,8 +161,7 @@
                 \item get the extent of the new geometry (in effect, the extension of the compound's internal area)
             \end{enumerate}
 
-            This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp} (compound from the Trecasette settlement). The result shows that it is not suitable for analysis, since doorstep is not set adequately (compare \fref{fig:comp-area} with the \ref{fig:comp-ang-area} from % TODO cite angelica
-            ). Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
+            This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp} (compound from the Trecasette settlement). The result shows that it is not suitable for analysis, since doorstep is not set adequately (compare \fref{fig:comp-area} with the \ref{fig:comp-ang-area} from \cite{laterza}). Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
 
             The problem has been solved applying a common analytic geometry procedure, considering the compound's internal surface as the envelope of the compound wall's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the compound's wall and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the compound's wall is registered. This process is explained in \fref{fig:comp-iter}.
             
@@ -251,8 +246,7 @@
             
             In a last step (not represented in \fref{fig:comp-iter}) a convex hull is generated using all the points in $I$; this is the compound's inner surface.
 
-            A Python algorithm has been used to automate the process, which saves the derived area geometries to a database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared} (they are saved as attributes). A sample table with the compound's area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data % TODO cite angelica
-            .
+            A Python algorithm has been used to automate the process, which saves the derived area geometries to a database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared} (they are saved as attributes). A sample table with the compound's area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data \cite{laterza}.
 
             \begin{table}[!htb]
                 \centering
@@ -263,8 +257,7 @@
 
         \subsection{Automating discovering of compounds access and orientation\label{sec:orientation}}
 
-            The current method used to describe compounds' orientation consists of a visual check of the compound's access position relatively to a set of 8 cardinal points (N, NE, E, SE, S, SW, W, NW) % TODO cite angelica
-            . The operator had to visually recognize the orientation of the access and write the relative number (from 1 to 8) as an attribute in a Shapefile's field created on purpose; this lead to manually writing a number for each one of the compounds for all the sites. It is a time-consuming activity that could be automated.
+            The normal method used to describe compounds' orientation consists of a visual check of the compound's access position relatively to a set of 8 cardinal points (N, NE, E, SE, S, SW, W, NW) \cite{laterza}. The operator had to visually recognize the orientation of the access and write the relative number (from 1 to 8) as an attribute in a Shapefile's field created on purpose; this lead to manually writing a number for each one of the compounds for all the sites. It is a time-consuming activity that could be automated.
 
             Literature reports few cases in which orientation has been calculated automatically using GIS methods. In most cases, the analyzed settlements present \emph{houses} more than \emph{compounds}: these have a nearly regular --- mostly rectangular --- shape, in which the orientation can be easily taken as the angle between cardinal north and house's longest axis \cite[p.~53]{spatial-south-europe}. Unfortunately, this is not the case, since compounds have a really irregular shape and in most cases the geometry's longer axis is not meaningful.
 
@@ -377,6 +370,6 @@
                 \label{fig:scheme-derive-2}
             \end{figure}
 
-            Having defined all the algorithms to derive geometries and data from the input vectors, the next step concerned a way to make these tool accessible to the operator, even ones with less experience. To ease the development of a standard compliant interface the Django \emph{framework} has been used (version 1.6); both the framework and the algorithms share the same open source programming language, Python.
-            Django enables the development of web-based products; this means that the whole set of functions described in the previous sections is easily accessible using a web browser (further details about the webGIS interface will be given in \fref{sec:webgis}).
+            The stored data are accessible using a dedicated web user interface, developed on purpose, which will be described in \fref{sec:webgis}.
+
         %\subsection{Inner/outer compounds}
