@@ -1,7 +1,11 @@
 \chapter{Case study: geostatistics on neolithic settlements in Tavoliere}
 
     \begin{chaptersum}
-        \blindtext[2]
+        Sono stati scritti alcuni algoritmi per automatizzare la derivazione di dati statistici da layer GIS vettoriali esistenti. I dati di riferimento per i test su 11 siti (\fref{tab:sites}) sono stati ottenuti e pubblicati nel 2013 dalla dott.ssa Laterza \cite{laterza}.\\
+        È stata realizzata una procedura per la distinzione automatica di \emph{ditches} e \emph{compounds} utilizzando il metodo di classificazione degli intervalli naturali di Jenks (\fref{fig:jenks-color}); questo ha permesso, per ogni insediamento, di scrivere automaticamente in tutte le geometrie gli indici numerici che le distinguono in qualche minuto di lavoro, laddove l'operatore ha impiegato diversi giorni.\\
+        Algoritmi che fanno uso di principi di geometria analitica hanno permesso di derivare automaticamente le aree delle strutture senza ricorrere al disegno manuale (\fref{fig:comp-iter}); per ogni compound viene calcolata l'intersezione interna di un segmento tracciato tra il suo centroide ed una serie circolare di 360 punti esterni; la successione delle intersezioni interne è il luogo geometrico dei punti che definiscono l'area interna; tale processo richiede meno di un minuto per ogni insediamento, a fronte di diversi giorni necessari disegnando manualmente le geometrie nel GIS. Dalla geometrie dell'area vengono ricavati automaticamente i perimetri delle stesse.\\
+        È stata automatizzata la ricerca dell'orientazione dei compound rispetto ai punti cardinali, basata sulla posizione dell'accesso. Questo viene calcolato reiterando la ricerca del segmento retto più lungo che compone la geometria dell'area su tutti i compound di un insiediamento (\fref{fig:flow-access}). Di ogni accesso viene calcolato il punto medio, ed una query spaziale individua in quale delle superfici relative ai singoli punti cardinali esso è contenuto (\fref{fig:comp-orient}). Il processo viene completato automaticamente in meno di un minuto per ogni insediamento, laddove le tradizionali procedure manuali hanno impiegato diverse ore di lavoro.\\
+        Tutti i dati derivati e le statistiche ottenute sono stati registrati in un database appositamente studiato per contenerle (\fref{fig:scheme-derive-2}).
     \end{chaptersum}
 
     The geostatistical system described in this chapter has been structured using the processed spatial data collected during almost ten years of surveying of the settlements in the Tavoliere plain. The existence of buried settlements ranging from neolithic period to middle ages has been proved by field and aerial surveys and by historical records.
@@ -262,7 +266,9 @@
             Literature reports few cases in which orientation has been calculated automatically using GIS methods. In most cases, the analyzed settlements present \emph{houses} more than \emph{compounds}: these have a nearly regular --- mostly rectangular --- shape, in which the orientation can be easily taken as the angle between cardinal north and house's longest axis \cite[p.~53]{spatial-south-europe}. Unfortunately, this is not the case, since compounds have a really irregular shape and in most cases the geometry's longer axis is not meaningful.
 
             The orientation of an object with respect of a cardinal point can be defined as the angle between the cardinal north and a representative feature of the object (e.g.\ the main axis). When analyzing compounds, this feature is the access.
+
             \subsubsection{Finding the compound's access}
+
                 \begin{wrapfigure}{r}{0.45\textwidth}
                     \vspace{-0.08\textheight}
                     \centering

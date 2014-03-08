@@ -1,8 +1,10 @@
 \chapter{Results: statistical data and webGIS interface}
 
-    \vspace{0.06\textheight}
     \begin{chaptersum}
-        \blindtext[2]
+        Il confronto tra dati vettoriali e statistiche calcolati automaticamente con gli algoritmi proposti e i dati pubblicati dalla dott.ssa Laterza \cite{laterza} mostra la quasi totale assenza di discrepanze tra le due metodologie. \emph{Ditches} e \emph{compounds} vengono classificati correttamente dall'algoritmo che fa uso del metodo Jenks. L'utilizzo di un database apposito per la gestione dei dati statistici permette di estrarre rapidamente ulteriori statistiche, che aiutano la ricerca di nuovi significati nei dati ottenuti.\\
+        In un solo sito, minime differenze nei valori delle aree delle strutture calcolate con i due metodi, hanno avuto ripercussioni più ampie nel calcolo dei perimetri; ciò a causa dell'errata gestione (da parte dell'algoritmo) di 8 compound su 36; questo rimane l'unico errore riscontrato: il metodo proposto elabora correttamente il $96\%$ delle geometrie.\\
+        Il confronto tra i dati delle orientazioni evidenzia una imprecisione in entrambi gli insiemi, introdotta dalla classificazione forzata dei valori in 8 categorie relative ai punti cardinali; tuttavia, entrambi gli insiemi condividono la stessa distribuzione, dimostrando l'aderenza di entrambi alla realtà. Il confronto con le uniche ricerche analoghe mai effettuate sugli stessi siti \cite{jones-tavoliere} evidenzia alcune convergenze, ma la scarsa qualità dei dati editi negli anni Ottanta del XX secolo non consente ulteriori considerazioni.\\
+        La realizzazione di una inferfaccia web, alla quale è possibile accedere via internet, ha permesso all'operatore (anche non esperto) di utilizzare tutti gli algoritmi descritti e di osservarne i risultati su un webGIS. Tra i vantaggi del sistema implementato rispetto alle procedure tradizionali: l'enorme riduzione dei tempi di derivazione e calcolo di dati e statistiche, la maggiore precisione, riproducibilità (dovuta all'utilizzo di software \emph{open source} e di formati di esportazione standard). L'uso di solo \emph{software libero} per la costruzione del sistema proposto consente lo studio del metodo da parte della comunità scientifica, che potrà apportare modifiche senza alcun vincolo. La realizzazione del software è costata \EUR{0}, grazie all'assenza di costi di licenza.
     \end{chaptersum}
 
     To ensure the correctness of the proposed methods, all the results obtained will be compared to the most up to date informations published by dott.ssa Angela Laterza in 2013 \cite{laterza}. Most of the comparisons show a good correspondence among datasets; this result is more impressive when related with the time employed to automatically generate the data, which in most cases is at least one order of magnitude less than the manual method. The last section of this chapter presents one of the fundamental components of the proposed system, the web interface, which connects all the functions, methods and algorithms previously described with an interface conceived to be clear and simple for the end user.
@@ -123,7 +125,7 @@
             \vfill
 
             \begin{figure}[H]
-                \caption[Screenshots of the main tools of the software created to automate statistical calculations.]{Main tools included in the software used to automate statistical calculations of the data presented in this work. The calculation functions are accessible from buttons on the interface. All the images show example calculations operated on the \emph{Anglisano 1} settlement.}
+                \caption[Screenshots of the main tools of the software created to automate statistical calculations.]{Main tools included in the software used to automate statistical calculations of the data presented in this work. The calculation functions are accessible from buttons on the interface. All the images show sample calculations operated on the \emph{Anglisano 1} settlement.}
                 \label{fig:screenshots}
             \end{figure}
 
@@ -181,23 +183,36 @@
             \vfill
 
         \section{Achieved results}
-            % automated time consuming operations
-            % avoided magnification errors, improved precision
-            % boosted reproducibility
-            % standard format data export -- csv
-            % pleasant interface
+            The proposed software approach to the problem of deriving numerical information from existing neolithic settlements data presents some strengths making its use advisable in other similar context; a brief description of these results follows.
+
+            \begin{description}
+                \item[time consuming operations have been automated]\hfill\\most of the operations described (deriving area geometries, perimeters, orientation) are conceived today as manual operations on data with a low grade of regularity. The definition of a set of analytical geometry operations has enabled the writing of algorithms to automate the data derivation, and the use of a database to store information contributed to keep the system flexible; the time employed to create new datasets from existing Shapefiles is usually lesser than one tenth compared to manual procedure, maintaining a reasonable level of detail.
+                \item[improved precision]\hfill\\referring to the weaknesses in \fref{sec:gis-data-management}, the automatic approach avoids all errors related to the human-brain recognition system, like the lack of precision or constance when drawing to derive vector data (as when deriving area geometries from ditches or compounds); GIS algorithms work always at the maximum possible precision level, since with modern processors computational power is not a problem anymore.
+                \item[boosted reproducibility]\hfill\\the previous consideration leads to another important observation: the possibility to have a mathematically derived set of data for every geometry in the database reduces to the lowest possible level any aleatory component; this has a fundamental consequence: any researcher or operator, analyzing the same set of data with the same software (or algorithm) will obtain the same results. Introducing almost perfect reproducibility in a field that is usually run by manual processing methods opens to more effective results when comparing data among researchers, and in general contributes to maintain the research sticked with the scientific method.
+                \item[standard format data export]\hfill\\the presented web interface can export the generated data and statistics for each settlement as \emph{comma separated value} file (CSV), which is a rather common exchange format for numerical values, enabling the researcher to easily move data across platforms and between colleagues, as well as to publish them on internet data repositories.
+                \item[lowered barrier to GIS analysis]\hfill\\the web interface has been structured to be as clear and usable as possible, focusing on simplicity and removing every unnecessary component; some tests among the researchers at University of Bari have empirically proved that even people with less knowledge or less used to work with GIS have been able to successfully accomplish analysis on the considered datasets.
+            \end{description}
 
         \section{Software technical specifications}
             From the technical point of view, the software has been implemented using the Django framework, version 1.6 and the relative geographic extension (\emph{GeoDjango}); this offers a granular user access control system, and powerful tools to write object-oriented code to manage the single Shapefiles during calculations. The most important parts of the presented algorithms have been realized using the GEOS components of the GeoDjango extension.
 
-            The webGIS interface has been built using the LeafletJS JavaScript library, which receives geoJSON formatted outputs from Django when a layer is called pressing the relative button. All the graphical components are provided by the Twitter Bootstrap tools collection, boosting the usability of the website.
+            The webGIS interface has been built using the LeafletJS JavaScript library, which receives geoJSON formatted outputs from Django when a layer is called pressing the relative button. All the graphical components are provided by the Twitter Bootstrap tools collection, boosting the usability of the website. The web components are served by the open source NginX web server.
             
             The software relies on the SpatiaLite geographical database to register, manage and do some queries with the processed data; it has been chosen since it is a full-featured, self-contained database, very easily manageable when working with Python, since it is included in all the standard GNU/Linux repositories and does not require any particular configuration or setup; moreover, it can also be shipped as a normal file when distributing the software.
 
-            \subsection{Scientific reproducibility: the open source approach advantage}
-                % only open source software
-                % free software definition
-                % best control of calculation processes
-                % open to contribution from scientific community
-                % low cost
+            \subsection{Advantages of the open source GIS ecosystem}
+                As stated before --- see \fref{sec:webgis} --- only \emph{FLOSS4G} software (Free Libre Open Source Software for Geography) has been used to manage the GIS vector data and build the statistical software. According to the Free Software Foundation, % cite en.wiki
+                a free software offers the following freedoms:
+                \begin{itemize}
+                    \item use the software for any purpose;
+                    \item access to the internal structure of the software (source code), to study and modify it;
+                    \item distribute modifications to the source code in an unlimited number of copies.
+                \end{itemize}
+                During the last 30 years, the international free software community has developed great tools to work with geographical data, leading to the definition of the FLOSS4G, as an ecosystem of software, processes, exchange formats and \emph{de facto} standards with increasing levels of complexity and completeness. Today, great FLOSS projects like GRASS GIS or Quantum GIS offers a number of functions and tools comparable to proprietary platforms like ESRI ArcGIS.
 
+                The choice to use only free software and open source tools, while maintaining an high level of scientific precision (as clearly showed by the statistical results in this chapter) has given us some advantages over proprietary GIS suites, briefly listed:
+                \begin{description}
+                    \item[control of the calculation process] the whole process of analysis is transparent and can be clearly dissected reading the source code of the used software; thus, can be studied, analyzed by any researcher, without any limitation;
+                    \item[openess to contribution] anyone studying or using the software is entitled to modify the source code, improving some aspects of the calculations or simply adding functions; this enables open scientific collaboration and is the highest expression of the scientific method;
+                    \item[low cost] the whole set of software used is freely accessible from the Internet, and all the results achieved and reported in this work have had a total license cost of $0\euro$; moreover, as for the free software definition, the modifications to the code must be distributed with the same software license of the code they came from; this enables the low cost redistribution of the software.
+                \end{description}

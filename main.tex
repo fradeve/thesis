@@ -149,7 +149,10 @@
 
 % generates summary (before starting chapter's first section)
 \newenvironment{chaptersum}
-    {\sffamily\textbf{Sommario}\\\rightskip1in}
+    {
+    \selectlanguage{italian}
+    \sffamily\textbf{Sommario}\\
+    }
     {\vspace{0.1\textwidth}}
 
 

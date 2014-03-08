@@ -1,0 +1,13 @@
+\begin{tikzpicture}[
+    path image/.style={
+        path picture={
+            \node at (path picture bounding box.center) {
+            \includegraphics[height=5cm]{#1}
+            };
+        }
+    }
+]
+    \draw [path image=salerno-a,draw=black!70,thick] (0,0) circle (2.5cm) (aer);
+    \draw [path image=salerno-c,draw=black!70,thick] (0,-6) circle (2.5cm) (magn);
+    \draw [path image=salerno-d,draw=black!70,thick] (0,-12) circle (2.5cm) (vett);
+\end{tikzpicture}
