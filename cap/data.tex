@@ -1,3 +1,163 @@
 \chapter{Data tables}
 
-test data
+\pgfplotstableset{
+    col sep=comma,
+    %every even row/.style={before row={\rowcolor[gray]{0.9}}},
+    every head row/.style={
+        before row=\toprule,
+        after row=\otoprule
+    },
+    every last row/.style={after row=\bottomrule},
+    columns/shapefile-id/.style={column name={Shp ID}},
+    columns/struct-id/.style={column name={Struct. ID}},
+    columns/struct-type/.style={string type,column name={Type}},
+    columns/struct-perim/.style={column name={Perimeter (\si{\meter})}},
+    columns/perim-class/.style={column name={Class}},
+    columns/struct-area/.style={column name={Area (\si{\meter\squared})}},
+    columns/struct-area-perim/.style={column name={Area perim. (\si{\meter})}},
+    columns/struct-open/.style={string type,column name={Open}},
+    columns/access-length/.style={column name={Access (\si{\meter})}},
+    columns/compound-orient/.style={string type,column name={Orient.}}
+}
+
+\vspace{-0.15\textwidth}
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset{tab/raw/settl-data/export_1.csv}
+    \caption{Automatically derived data and statistics for the \emph{Anglisano 1} settlement.}
+    \label{tab:data-site-1}
+\end{sidewaystable}
+
+\pagebreak
+
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset{tab/raw/settl-data/export_2.csv}
+    \caption{Automatically derived data and statistics for the \emph{Anglisano 2} settlement.}
+    \label{tab:data-site-2}
+
+    \hfill
+
+    \pgfplotstabletypeset{tab/raw/settl-data/export_3.csv}
+    \caption{Automatically derived data and statistics for the \emph{Ippodromo} settlement.}
+    \label{tab:data-site-3}
+
+    \hfill
+
+    \pgfplotstabletypeset{tab/raw/settl-data/export_4.csv}
+    \caption{Automatically derived data and statistics for the \emph{Lore 1} settlement.}
+    \label{tab:data-site-4}
+\end{sidewaystable}
+
+\pagebreak
+
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset{tab/raw/settl-data/export_5.csv}
+    \caption{Automatically derived data and statistics for the \emph{Lore 2} settlement.}
+    \label{tab:data-site-5}
+
+    \hfill
+
+    \pgfplotstabletypeset{tab/raw/settl-data/export_6.csv}
+    \caption{Automatically derived data and statistics for the \emph{Montedoro} settlement.}
+    \label{tab:data-site-6}
+\end{sidewaystable}
+
+\pagebreak
+
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        skip rows between index={25}{90}
+    ]{tab/raw/settl-data/export_7.csv}
+    \caption{Automatically derived data and statistics for the \emph{Palmori 10} settlement.}
+    \label{tab:data-site-7-1}
+\end{sidewaystable}
+
+\pagebreak
+
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        skip rows between index={0}{25},
+        skip rows between index={50}{90}
+    ]{tab/raw/settl-data/export_7.csv}
+    \caption{Automatically derived data and statistics for the \emph{Palmori 10} settlement; continues from the previous page.}
+    \label{tab:data-site-7-2}
+\end{sidewaystable}
+
+\pagebreak
+
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        skip rows between index={0}{50},
+        skip rows between index={75}{90}
+    ]{tab/raw/settl-data/export_7.csv}
+    \caption{Automatically derived data and statistics for the \emph{Palmori 10} settlement; continues from the previous page.}
+    \label{tab:data-site-7-3}
+\end{sidewaystable}
+\pagebreak
+
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        skip rows between index={0}{75}
+    ]{tab/raw/settl-data/export_7.csv}
+    \caption{Automatically derived data and statistics for the \emph{Palmori 10} settlement; continues from the previous page.}
+    \label{tab:data-site-7-4}
+\end{sidewaystable}
+
+\pagebreak
+
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset{tab/raw/settl-data/export_8.csv}
+    \caption{Automatically derived data and statistics for the \emph{Palmori 11} settlement.}
+    \label{tab:data-site-8}
+
+    \hfill
+
+    \pgfplotstabletypeset{tab/raw/settl-data/export_9.csv}
+    \caption{Automatically derived data and statistics for the \emph{Pantano} settlement.}
+    \label{tab:data-site-9}
+\end{sidewaystable}
+
+\pagebreak
+
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        skip rows between index={26}{39}
+    ]{tab/raw/settl-data/export_10.csv}
+    \caption{Automatically derived data and statistics for the \emph{Salerno 13} settlement.}
+    \label{tab:data-site-10-1}
+\end{sidewaystable}
+
+\pagebreak
+
+\begin{sidewaystable}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        skip rows between index={0}{26}
+    ]{tab/raw/settl-data/export_10.csv}
+    \caption{Automatically derived data and statistics for the \emph{Salerno 13} settlement; continues from the previous page.}
+    \label{tab:data-site-10-2}
+
+    \hfill
+
+    \pgfplotstabletypeset{tab/raw/settl-data/export_11.csv}
+    \caption{Automatically derived data and statistics for the \emph{Salerno 14} settlement.}
+    \label{tab:data-site-11}
+\end{sidewaystable}

@@ -1,5 +1,6 @@
 \chapter{Case study: geostatistics on neolithic settlements in Tavoliere}
 
+    \vspace{0.05\textheight}
     \begin{chaptersum}
         Sono stati scritti alcuni algoritmi per automatizzare la derivazione di dati statistici da layer GIS vettoriali esistenti. I dati di riferimento per i test su 11 siti (\fref{tab:sites}) sono stati ottenuti e pubblicati nel 2013 dalla dott.ssa Laterza \cite{laterza}.\\
         È stata realizzata una procedura per la distinzione automatica di \emph{ditches} e \emph{compounds} utilizzando il metodo di classificazione degli intervalli naturali di Jenks (\fref{fig:jenks-color}); questo ha permesso, per ogni insediamento, di scrivere automaticamente in tutte le geometrie gli indici numerici che le distinguono in qualche minuto di lavoro, laddove l'operatore ha impiegato diversi giorni.\\
@@ -75,7 +76,7 @@
                 \vspace{-0.03\textheight}
             \end{wrapfigure}
 
-            In the case study, geometries have been classified by perimeter values (calculated and saved automatically from ditches and compounds shapes). The different coloring of the geometries on the map based on the newly created classes (\fref{fig:jenks-color}) helps the user to distinguish ditches from compounds at a glance.
+            In the case study, geometries have been classified by perimeter values (calculated and saved automatically from ditches and compounds shapes; see app.~\ref{sec:code-jenks} for code). The different coloring of the geometries on the map based on the newly created classes (\fref{fig:jenks-color}) helps the user to distinguish ditches from compounds at a glance.
 
             The process is semi-automated since the user have to manually select the ditches and, if necessary, change the class numbers to have a good fit. The flowchart in \fref{fig:flow-map} reports the logic of the process. At the end, the geometry types are saved as text attribute (literally \textsf{ditch} or \textsf{compound}) in a table containing the results of the processing (one row for each geometry); \fref{tab:jnb-results} shows sample data from the \emph{Anglisano} settlement.
 
@@ -177,7 +178,7 @@
                 y_P &= y_C + r\cdot\sin\alpha
             \end{align}
             %
-            In \fref{fig:comp-iter-2} the operation has been repeated with $\alpha=\alpha+1$ for 360 times, obtaining the coordinates of 360 $p_n$ points on circle $D$ (the whole set of points is named $P$). Tracing a line between $C$ and any of the points in $P$ will create a segment (in \fref{fig:comp-iter-3} it is named $CP_1$). If an intersection between this segment and the compound's geometry exists, the innermost point is calculated getting its distance from $C$:
+            In \fref{fig:comp-iter-2} the operation has been repeated with $\alpha=\alpha+1$ for 360 times, obtaining the coordinates of 360 $p_n$ points on circle $D$ (the code for this operation is in app.\ref{sec:code-vertexes}; the whole set of points is named $P$). Tracing a line between $C$ and any of the points in $P$ will create a segment (in \fref{fig:comp-iter-3} it is named $CP_1$). If an intersection between this segment and the compound's geometry exists, the innermost point is calculated getting its distance from $C$ (see code in app.~\ref{sec:code-intersection}):
             %
             \begin{align}
                 \label{eq:innerpoint}
@@ -248,7 +249,7 @@
                 \label{fig:comp-iter}
             \end{figure}
             
-            In a last step (not represented in \fref{fig:comp-iter}) a convex hull is generated using all the points in $I$; this is the compound's inner surface.
+            In a last step (not represented in \fref{fig:comp-iter}) a convex hull is generated using all the points in $I$; this is the compound's inner surface (the algorithm code is in app.~\ref{sec:code-area}).
 
             A Python algorithm has been used to automate the process, which saves the derived area geometries to a database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared} (they are saved as attributes). A sample table with the compound's area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data \cite{laterza}.
 
@@ -351,7 +352,7 @@
                     y_P &= y_C + d_{C,B}\cdot\sin{(\SI{360}{\degree}/8)}
                 \end{align}
                 
-                The last step, in \fref{fig:comp-orient-3} uses a standard \emph{contains} GIS function to determine in which triangle the centroid $e$ is contained, iterating over all triangles; the example returns a western orientation. To ease the statistical approach, a numerical index has been attributed to each cardinal point (e.g.\ $W = 4$ in \fref{fig:comp-orient-4}).
+                The last step, in \fref{fig:comp-orient-3} uses a standard \emph{contains} GIS function to determine in which triangle the centroid $e$ is contained, iterating over all triangles; the example returns a western orientation. To ease the statistical approach, a numerical index has been attributed to each cardinal point (e.g.\ $W = 4$ in \fref{fig:comp-orient-4}); the relevant code for this operation is in app.~\ref{sec:code-access}.
 
                 To store the results, a new table is created; for each compounds the table registers the original Shapefile's ID, the compound's ID, the length of the access segment (automatically calculated as $d_{a_1, a_2}$, and the orientation index (between $0$ and $7$). Sample results for the Anglisano settlements are shown in \fref{tab:tab-access-anglisano}.
                 %

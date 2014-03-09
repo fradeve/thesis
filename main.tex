@@ -92,13 +92,6 @@
 \usepackage{float}                        % adds H option to image positioning
 \usepackage{blindtext}                    % generates lorem ipsum
 
-%%% tables %%%%%%%%%%%%%%%%%%%
-
-\usepackage{booktabs}			          % migliora la qualità delle tabelle
-\usepackage{tabularx}			          % colonne a spaziatura fissa delle tabelle
-\newcommand{\otoprule}                    % better top rule horizontal line
-    {\midrule[\heavyrulewidth]}           % .
-
 %%% images and graphics %%%%%%
 
 \graphicspath{{img/}}                     % defines images path
@@ -127,11 +120,13 @@
                 decorations.pathmorphing, % .
                 decorations.markings}     % .
 \usepackage{pgfplots}                     % TikZ plots
+\usepackage{pgfplotstable}                % TikZ tables from CSV
 \pgfplotsset{compat=1.3}                  % activates `xlabel shift` for pgfplots
 \usepackage{gnuplot-lua-tikz}             % imports GNUPlot TikZ plots
 \usepackage{xifthen}                      % better if-then-else
 \usepackage{rotating}                     % rotate Tikz figures
 \usepackage[dvipsnames]{xcolor}           % common color names
+\usepackage{colortbl}                     % common color names
 
 \newcommand\AlCentroPagina[1]{            % generates big b/w logo
     \AddToShipoutPicture*{\AtPageCenter{  % .
@@ -141,11 +136,20 @@
     }                                     % .
 }                                         % .
 
+%%% tables %%%%%%%%%%%%%%%%%%%
+
+\usepackage{booktabs}			          % migliora la qualità delle tabelle
+\usepackage{tabularx}			          % colonne a spaziatura fissa delle tabelle
+\newcommand{\otoprule}                    % better top rule horizontal line
+    {\midrule[\heavyrulewidth]}           % .
+\usepackage{rotfloat}                     % adds [H] option to sidewaystable
+
 %%% text utils %%%%%%%%%%%%%%%
 
 \usepackage{hyphenat}
 \hypersetup{colorlinks=false}		      % commentare se il file non è x la stampa
 \usepackage{acronym}			          % pacchetto per gli acronimi
+\usepackage{listings}                     % code
 
 % generates summary (before starting chapter's first section)
 \newenvironment{chaptersum}
@@ -189,6 +193,6 @@
     \appendix
     \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
     \addcontentsline{toc}{part}{\appendixname} 
-    \input{cap/code}
     \input{cap/data}
+    \input{cap/code}
 \end{document}
