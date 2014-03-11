@@ -7,11 +7,13 @@
         La realizzazione di una inferfaccia web, alla quale è possibile accedere via internet, ha permesso all'operatore (anche non esperto) di utilizzare tutti gli algoritmi descritti e di osservarne i risultati su un webGIS. Tra i vantaggi del sistema implementato rispetto alle procedure tradizionali: l'enorme riduzione dei tempi di derivazione e calcolo di dati e statistiche, la maggiore precisione, riproducibilità (dovuta all'utilizzo di software \emph{open source} e di formati di esportazione standard). L'uso di solo \emph{software libero} per la costruzione del sistema proposto consente lo studio del metodo da parte della comunità scientifica, che potrà apportare modifiche senza alcun vincolo. La realizzazione del software è costata \EUR{0}, grazie all'assenza di costi di licenza.
     \end{chaptersum}
 
-    To ensure the correctness of the proposed methods, all the results obtained will be compared to the most up to date informations published by dott.ssa Angela Laterza in 2013 \cite{laterza}. Most of the comparisons show a good correspondence among datasets; this result is more impressive when related with the time employed to automatically generate the data, which in most cases is at least one order of magnitude less than the manual method. The last section of this chapter presents one of the fundamental components of the proposed system, the web interface, which connects all the functions, methods and algorithms previously described with an interface conceived to be clear and simple for the end user.
+    To ensure the correctness of the proposed methods, all the results obtained will be compared to the most up to date information published by dott.ssa Angela Laterza in 2013 \cite{laterza}. Most of the comparisons show a good correspondence among datasets; this result is more impressive when related with the time employed to automatically generate the data, which in most cases is at least one order of magnitude less than the manual method.
+    
+    The last section of this chapter presents one of the fundamental components of the proposed system, the web interface, which connects all the functions, the methods and the algorithms previously described with an interface conceived to be clear and simple for the end user.
 
     \section{Statistical results}
         \subsection{Ditches and compounds classification}
-            The method described in \fref{sec:distinguish} has enabled the operator to write once all the attributes in every ditch and compound, distinguishing them. The procedure requires around \SI{1}{\minute} for each settlements, compared to nearly \SI{1}{\hour} in a non-automatized approach (depending on the number of geometries in the settlement). The whole set of 11 settlements containing 199 geometries has been analyzed in around \SI{10}{\minute}. The plots in \fref{fig:graph-num-compound} and \fref{fig:graph-num-ditch} compare the number of compounds and ditches distinguished as such from the human brain-eye system --- as reported in \cite{laterza} --- and the values calculated in the current work, showing a perfect matching between the two datasets. The settlements are described using their site code (see \fref{tab:layers}).
+            The method described in \fref{sec:distinguish} has enabled the operator to write once all the attributes in every ditch and compound, distinguishing them. The procedure requires around \SI{1}{\minute} for each settlement, compared to nearly \SI{1}{\hour} in a non-automatized approach (depending on the number of geometries in the settlement). The whole set of 11 settlements containing 199 geometries has been analyzed in around \SI{10}{\minute}. The plots in \fref{fig:graph-num-compound} and \fref{fig:graph-num-ditch} compare the number of compounds and ditches distinguished as such from the human brain-eye system --- as reported in \cite{laterza} --- and the values calculated in the current work, showing a perfect matching between the two datasets. The settlements are described using their site code (see \fref{tab:sites}).
 
             \begin{figure}[H]
                 \centering
@@ -31,7 +33,7 @@
                 \label{fig:graph-num-ditch}
             \end{figure}
 
-            Having all the statistics registered in a database, is very easy to extract further data; the \fref{fig:graph-perim-class}, for example, shows the frequency of perimeter's classes for all the compounds; it si evident that most of the analyzed compounds are contained in the first class of perimeters, ranging from \SI{96.6}{\meter} to \SI{103}{\meter}.
+            Having all the statistics registered in a database, the extraction of further data is very easy; the \fref{fig:graph-perim-class}, for example, shows the frequency of perimeter's classes for all the compounds; it is evident that most of the analyzed compounds are contained in the first class of perimeters, ranging from \SI{96.6}{\meter} to \SI{103}{\meter}.
 
             \begin{SCfigure}
                 \caption[Frequency of all the analyzed compounds for each perimeter class, with $k=5$.]{Frequency of all the analyzed compounds for each perimeter class, with the default number of classes $k=5$. Class $6$ has been removed since only ditches belong to it.}
@@ -45,7 +47,7 @@
             % min, max, avg area
 
             The method described in \fref{sec:comp-area} has produced the results shown in the rightmost column of \fref{fig:graph-area} for each analyzed settlement. The results obtained in few minutes with the automated method are accurate enough to be closely compared with ones drawn by hand using GIS tools from the operator during several days of work, as published in \cite{laterza}.
-            As will be reported in the next section, the \emph{Salerno 13} settlement shows a small discordance with the previously published data (although not conspicuous).
+            As will be explained in detail in the next section, the \emph{sln1} settlement shows a small discordance with the previously published data (although not conspicuous).
 
             \begin{figure}[H]
                 \centering
@@ -59,7 +61,7 @@
         \subsection{Derived perimeters}
             % mix, max, avg perimeter
             
-            As explained in \fref{sec:comp-area}, the perimeter for each compound is directly derived from the geometry of its area, to reproduce the results obtained in \cite{laterza}. The error seen in the previous section for the \emph{Salerno 13} settlement has repercussions on the perimeter. This behavior can be attributed to an error in the area derivation using the automated method: this prevented the construction of the area geometry for 8 compounds (out of 36, for that settlement), modifying the total area value for the settlement (and the relative derived perimeter). This is the only known error in the proposed method.
+            As explained in \fref{sec:comp-area}, the perimeter for each compound is directly derived from the geometry of its area, to reproduce the results obtained in \cite{laterza}. The error seen in the previous section for the \emph{sln1} settlement has repercussions on the perimeter (\fref{fig:graph-perim}). This behavior can be attributed to an error in the area derivation using the automated method: this prevented the construction of the area geometry for 8 compounds (out of 36, for that settlement), modifying the total area value for the settlement (and the relative derived perimeter). This is the only known error in the proposed method.
 
             \begin{figure}[H]
                 \centering
@@ -70,7 +72,7 @@
                 \label{fig:graph-perim}
             \end{figure}
 
-            Minor dissimilarities with some settlements (\emph{Anglisano 2}, \emph{Lore 2}) depend on the nature of the derivation method itself: in respect to the flaws listed in \fref{sec:gis-data-management}, the difference between geometries traced by hand (subject to magnification errors) and computed using the algorithm is amplified when single differences are summed up to produce data referred to the whole settlement.
+            Minor dissimilarities with some settlements (\emph{ang2}, \emph{mlr2}) also depend on the nature of the derivation method itself: in respect to the flaws listed in \fref{sec:gis-data-management}, the difference between geometries traced by hand (subject to magnification errors) and computed using the algorithm is amplified when single differences are summed up to produce data referred to the whole settlement.
 
             % statistical difference between perimeters of single compounds in one settlement (anglisano?)
 
@@ -78,21 +80,21 @@
             % min, max, avg access length
             % is there any relation between orientation and access length?
 
-            Automating the discovering of the compounds' orientations has been the hardest task, since involves the derivation of multiple geometries for each compound (see \fref{sec:orientation}).
-            The information about compounds' orientation for 155 compounds in all the analyzed sites has been automatically calculated and required less than \SI{4}{\minute} to generate and save the relevant data to the database, while manually defining an orientation index as for a ``normal'' approach requires several days of work.
+            Automating the compound orientation discovering has been the hardest task, since involved the derivation of multiple geometries for each compound (see \fref{sec:orientation}).
+            The information about compound orientation for 155 compounds in all the analyzed sites has been automatically calculated and required less than \SI{4}{\minute} to generate and save the relevant data to the database, while manually defining an orientation index as for a ``normal'' approach requires several days of work.
             
-            The results plotted in \fref{fig:graph-orient} show that the general trend in the orientations calculated in this work is very similar to the one published in \cite{laterza}. However, the significance of this calculation can be improved, since presenting each orientation as an interval of values (e.g.\ NE contains all the values ranging from \SI{0}{\degree} to \SI{45}{\degree}) is an operation of classification itself, and has caused a loss of detail. This has been done to register values comparable to the ones defined in \cite{laterza}. At the current status, nothing can be done to prove which measurement is nearest to reality, but the assumption that both datasets share the same trends seems a result good enough to state that the automated method is fully functional.
+            The results plotted in \fref{fig:graph-orient} show that the general trend in the orientations calculated in this work is very similar to the one published in \cite{laterza}. However, the significance of this calculation can be improved, since presenting each orientation as an interval of values (e.g.\ NE contains all the values ranging from \SI{0}{\degree} to \SI{45}{\degree}) is an operation of classification itself and has caused a loss of detail. This has been done to register values comparable to the ones defined in \cite{laterza}. At the current status, nothing can be done to prove which measurement is nearest to reality, but the assumption that both datasets share the same trends seems a result good enough to state that the automated method is fully functional.
 
             \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
                     \input{tab/graph-orient}
                 \end{tikzpicture}
-                \caption[Orientation of compounds for all the settlements calculated in this work compared with know data.]{Compounds' orientation calculated using automated algorithm compared to manually derived data.}
+                \caption[Orientation of compounds for all the settlements calculated in this work compared with know data.]{Compounds' orientation calculated using the automated algorithm compared to manually derived data.}
                 \label{fig:graph-orient}
             \end{figure}
 
-            Before the work of dott.ssa Laterza in 2013, the only available data about the compounds' orientation of the Tavoliere settlements were in \textcite[appx.~IV]{jones-tavoliere}, reported as data tables and derived drawing by hand on graph paper, on top of aerial photos. The orientation data contained in the tables refers to the ``average orientation'' of compounds in some settlements, and have not been calculated for each compound. Thus, comparing these general values to \emph{atomized} data obtained from calculation on every single compound as done so far in this work, may appear risky from the scientific point of view. Nonetheless, a graphical comparison may still be useful to visually find some trends --- if any. 
+            Before the work of dott.ssa Laterza in 2013, the only available data about the compound orientation of the Tavoliere settlements were in \textcite[appx.~IV]{jones-tavoliere}, reported as data tables and derived drawing by hand on graph paper, on top of aerial photos. The orientation data contained in the tables refer to the ``average orientation'' of compounds in some settlements and have not been calculated for each compound. Thus, comparing these general values to \emph{atomized} data obtained from calculation on every single compound as done so far in this work, may appear risky from the scientific point of view. Nonetheless, a graphical comparison may still be useful to visually find some trends --- if any. 
 
             \cite{jones-tavoliere} reports orientation data of 24 settlements, and just few of these are referable to the set analyzed in this work. Thus, orientation data from all the sources (\cite{laterza}, \cite{jones-tavoliere} and this work) have been calculated as percentage referred to the total analyzed compounds. Results are shown in \fref{fig:graph-orient-jones}.
 
@@ -109,14 +111,14 @@
             Having defined all the algorithms to derive geometries and data from the input vectors, the next step concerned a way to make these tool accessible to the operator, even ones with less experience. To ease the development of a standard compliant interface the Django \emph{framework} has been used; both the framework and the algorithms share the same open source programming language, Python.
             Django enables the development of web-based products; thus, the whole set of statistical tools described in this work are accessible as a web service, simply connecting to the web address using a normal web browser.
 
-            Very little effort is required to start with calculations on a settlement. The web interface is password protected, thus each operator have to access with his own credentials. After, the user just have to open an ESRI Shapefile containing vector data of a single settlement in a GIS software suite, and clean it from all the geometries but those representing ditches and compounds. To ease the upload, the operator have to enclose the abovementioned Shapefile in a compressed archive (\emph{.zip} is the preferred format). This process guarantees a fast upload using the web interface shown in \fref{fig:shp-upload}.
+            Very little effort is required to start with calculations on a settlement. The web interface is password protected, thus each operator has to access with his own credentials. After, the user just has to open an ESRI Shapefile containing vector data of a single settlement in a GIS software suite, and clean it from all the geometries but those representing ditches and compounds. To ease the upload, the operator has to enclose the abovementioned Shapefile in a compressed archive (\emph{.zip} is the preferred format). This process guarantees a fast upload using the web interface shown in \fref{fig:shp-upload}.
             
             The developed web interface consists of few pages; briefly listed:
 
             \begin{description}
-                \item[Shapefiles list] the start page, lists all the uploaded Shapefiles and has a button redirecting to the upload page; if no Shapefile has been uploaded, the list is empty (\fref{fig:shp-list});
-                \item[upload page] enables the user to upload a new Shapefile, which is consequently saved to the software's internal database (\fref{fig:shp-upload});
-                \item[Shapefile details] the most relevant page, shows a map of the selected Shapefile on the left and a list of all possible statistics on the right (\fref{fig:shp-details}); every statistic has its own button, which starts the calculation when clicked; if a statistic has been calculated, the relevant row has a green background, or red on the contrary; the upper right part of the page contains buttons to manage the current Shapefile, enabling the deletion, statistics plotting or downloading.
+                \item[Shapefiles list] the start page, lists all the uploaded Shapefiles and has a button redirecting to the upload page; if no Shapefile has been uploaded, the list will be empty (\fref{fig:shp-list});
+                \item[upload page] enables the user to upload a new Shapefile, which is consequently saved to the software internal database (\fref{fig:shp-upload});
+                \item[Shapefile details] the most relevant page, shows a map of the selected Shapefile on the left and a list of all possible statistics on the right (\fref{fig:shp-details}); every statistic has its own button, which starts the calculation when clicked; if a statistic has been calculated, the relevant row will have a green background, or red on the contrary; the upper right part of the page contains buttons to manage the current Shapefile, enabling the deletion, statistics plotting or downloading.
                 \item[Jenks classification] while all other algorithms do not need any interaction with the user, the Jenks Natural Breaks classification sometimes needs the number of classes $k$ to be redefined by the operator; for this purpose a wizard has been created (\fref{fig:shp-wizard}); it is launched pressing the button associated with the row containing the number of ditches or compounds in the Shapefile details page; the user can change the $k$ value and the colored map representing classified values is refreshed on the fly.
             \end{description}
 
@@ -125,7 +127,7 @@
             \vfill
 
             \begin{figure}[H]
-                \caption[Screenshots of the main tools of the software created to automate statistical calculations.]{Main tools included in the software used to automate statistical calculations of the data presented in this work. The calculation functions are accessible from buttons on the interface. All the images show sample calculations operated on the \emph{Anglisano 1} settlement.}
+                \caption[Screenshots of the main tools of the software created to automate statistical calculations.]{Main tools included in the software used to automate statistical calculations of the data presented in this work. The calculation functions are accessible from buttons on the interface. All the images show sample calculations operated on the \emph{ang1} settlement.}
                 \label{fig:screenshots}
             \end{figure}
 
@@ -148,7 +150,7 @@
                 \begin{subfigure}[b]{1\textwidth}
                     \centering
                     \includegraphics[width=1\textwidth]{img/shp-upload}
-                    \caption{Using the upload page, the user can upload a new settlement's ESRI Shapefile; a description, character encoding and cartographic projection for the file can be specified; when the loading is completed, all the geometries are saved in an internal database.}
+                    \caption{Using the upload page, the user can upload a new settlement ESRI Shapefile; a description, character encoding and cartographic projection for the file can be specified; when the loading is completed, all the geometries are saved in an internal database.}
                     \label{fig:shp-upload}
                 \end{subfigure}
 
@@ -188,7 +190,7 @@
             \begin{description}
                 \item[time consuming operations have been automated]\hfill\\most of the operations described (deriving area geometries, perimeters, orientation) are conceived today as manual operations on data with a low grade of regularity. The definition of a set of analytical geometry operations has enabled the writing of algorithms to automate the data derivation, and the use of a database to store information contributed to keep the system flexible; the time employed to create new datasets from existing Shapefiles is usually lesser than one tenth compared to manual procedure, maintaining a reasonable level of detail.
                 \item[improved precision]\hfill\\referring to the weaknesses in \fref{sec:gis-data-management}, the automatic approach avoids all errors related to the human-brain recognition system, like the lack of precision or constance when drawing to derive vector data (as when deriving area geometries from ditches or compounds); GIS algorithms work always at the maximum possible precision level, since with modern processors computational power is not a problem anymore.
-                \item[boosted reproducibility]\hfill\\the previous consideration leads to another important observation: the possibility to have a mathematically derived set of data for every geometry in the database reduces to the lowest possible level any aleatory component; this has a fundamental consequence: any researcher or operator, analyzing the same set of data with the same software (or algorithm) will obtain the same results. Introducing almost perfect reproducibility in a field that is usually run by manual processing methods opens to more effective results when comparing data among researchers, and in general contributes to maintain the research sticked with the scientific method.
+                \item[boosted reproducibility]\hfill\\the previous consideration leads to another important observation: the possibility to have a mathematically derived set of data for every geometry in the database reduces to the lowest possible level any aleatory component. This has a fundamental consequence: any researcher or operator, analyzing the same set of data with the same software (or algorithm) will obtain the same results. Introducing almost perfect reproducibility in a field that is usually run by manual processing methods opens to more effective results when comparing data among researchers, and in general contributes to maintain the research sticked with the scientific method.
                 \item[standard format data export]\hfill\\the presented web interface can export the generated data and statistics for each settlement as \emph{comma separated value} file (CSV), which is a rather common exchange format for numerical values, enabling the researcher to easily move data across platforms and between colleagues, as well as to publish them on internet data repositories.
                 \item[lowered barrier to GIS analysis]\hfill\\the web interface has been structured to be as clear and usable as possible, focusing on simplicity and removing every unnecessary component; some tests among the researchers at University of Bari have empirically proved that even people with less knowledge or less used to work with GIS have been able to successfully accomplish analysis on the considered datasets.
             \end{description}
@@ -214,5 +216,5 @@
                 \begin{description}
                     \item[control of the calculation process] the whole process of analysis is transparent and can be clearly dissected reading the source code of the used software; thus, can be studied, analyzed by any researcher, without any limitation;
                     \item[openess to contribution] anyone studying or using the software is entitled to modify the source code, improving some aspects of the calculations or simply adding functions; this enables open scientific collaboration and is the highest expression of the scientific method;
-                    \item[low cost] the whole set of software used is freely accessible from the Internet, and all the results achieved and reported in this work have had a total license cost of $0\euro$; moreover, as for the free software definition, the modifications to the code must be distributed with the same software license of the code they came from; this enables the low cost redistribution of the software.
+                    \item[low cost] the whole set of software used is freely accessible from the Internet, and all the results achieved and reported in this work have had a total license cost of $0\euro$; moreover, as for the free software definition, the modifications to the code must be distributed with the same software license of the code they come from; this enables the low cost redistribution of the software.
                 \end{description}
