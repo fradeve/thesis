@@ -1,0 +1,95 @@
+\chapter{Statistics: raw data}
+
+\pgfplotstableset{
+    %every even row/.style={before row={\rowcolor[gray]{0.9}}},
+    every head row/.style={
+        before row=\toprule,
+        after row=\otoprule
+    },
+    every last row/.style={after row=\bottomrule},
+    columns/id/.style={column name={Shp ID}},
+    columns/set/.style={string type,column name={Settl.}},
+    columns/laterza/.style={column name={\cite{laterza}}},
+    columns/current/.style={column name={Current}},
+    columns/orient/.style={string type,column name={Orientation}},
+    columns/class/.style={column name={Class}},
+    columns/freq/.style={column name={Frequency ($n$)}}
+}
+
+\begin{table}[!htb]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset{tab/raw/number-comp}
+    \caption[Total number of compounds registered with the automated method, compared with previous results]{Total compounds number for each settlement registered with the automated method, compared with previous results.}
+    \label{tab:raw-tab-compound}
+\end{table}
+
+\begin{table}[!htb]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset{tab/raw/number-ditch}
+    \caption[Total number of ditches registered with the automated method, compared with previous results]{Total ditches number for each settlement registered with the automated method, compared with previous results.}
+    \label{tab:raw-tab-ditch}
+\end{table}
+
+\begin{table}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        col sep=comma,
+        columns={class,freq}
+    ]{tab/raw/perim-class.csv}
+    \caption[Frequency of the perimeters' classes extracted from the database generated with automated methods]{Frequency of the perimeters' classes extracted from the database generated with automated methods.}
+    \label{tab:raw-tab-perim-class}
+\end{table}
+
+\begin{table}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        col sep=comma,
+        columns/laterza/.style={column name={\cite{laterza} (\si{\meter\squared})}},
+        columns/current/.style={column name={Current (\si{\meter\squared})}}
+    ]{tab/raw/aree.csv}
+    \caption[Total area for each settlement as published by \cite{laterza} and calculated with automated methods]{Total area for each settlement as published by \cite{laterza} and calculated with automated methods.}
+    \label{tab:raw-tab-area}
+\end{table}
+
+\begin{table}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        col sep=comma,
+        columns/laterza/.style={column name={\cite{laterza} (\si{\meter})}},
+        columns/current/.style={column name={Current (\si{\meter})}}
+    ]{tab/raw/perim.csv}
+    \caption[Total perimeter for each settlement as published by \cite{laterza} and calculated with automated methods]{Total perimeter for each settlement as published by \cite{laterza} and calculated with automated methods.}
+    \label{tab:raw-tab-perim}
+\end{table}
+
+\begin{table}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        col sep=comma,
+        columns={orient,laterza,current},
+        columns/laterza/.style={column name={\cite{laterza} ($n$)}},
+        columns/current/.style={column name={Current ($n$)}}
+    ]{tab/raw/orient.csv}
+    \caption[Compounds' orientation as published by \cite{laterza}, compared with results from automated methods]{Number of compounds ordered by cardinal point as published by \cite{laterza}, compared with results from automated methods.}
+    \label{tab:raw-tab-orient}
+\end{table}
+
+\begin{table}[H]
+    \footnotesize
+    \centering
+    \pgfplotstabletypeset[
+        col sep=comma,
+        columns={orient,laterza,current,jones},
+        columns/laterza/.style={column name={\cite{laterza} ($\%$)}},
+        columns/current/.style={column name={Current ($\%$)}},
+        columns/jones/.style={column name={\cite{jones-tavoliere} ($\%$)}}
+    ]{tab/raw/orient-jones.csv}
+    \caption[Compounds' orientation calculated in percentage extracted from published works, compared with results from automated methods]{Compounds' orientation calculated in percentage extracted from published works (\cite{jones-tavoliere}, \cite{laterza}) compared with results from automated methods.}
+    \label{tab:raw-tab-orient-jones}
+\end{table}

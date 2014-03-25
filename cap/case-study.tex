@@ -16,11 +16,20 @@
         The settlements are large or small villages, normally surrounded by one or more ditches, with the interior generally filled with a number of internal compounds. The majority of the sites occupied level ground. Refer to published materials for further details.
 
         \subsection{Published data and the work of J. D. B. Jones\label{sec:jones}}
+            One of most comprehensive works of the XX century on the Tavoliere settlements has been done by Barry Jones. It is the first systematic analysis of the aerial photos collected by John Bradford (archaeologist and former RAF pilot) during the WWII (which in turn has been the first wide aerial archaeology campaign in Italy, continued during the Fifties \cite[pp.~x-xi]{jones-tavoliere}). In his work, Jones adopted a truly multidisciplinary approach, integrating aerial photos with on site surveys, cartography, statistics and an analogical example of spatial analysis techniques \cite[p.~188]{jones-tavoliere}. This has been the base for all the work that followed, ranging from 1998 to 2006.
 
             \subsubsection{Spatial analysis}
+                Jones' interest in spatial analysis is evident by the effort taken to derive, sort and make sense of all the statistical data concerning the Tavoliere settlements. This topic is of particular interest in the context of the current work, since this chapter will describe some computational methods to automate the deriving of some statistics Jones did by hand. Among the statistics proposed by Jones, there are:
+                \begin{itemize}
+                    \item sites ranking and classification
+                    \item settlements types
+                    \item settlements diameter and area
+                    \item compounds orientations
+                \end{itemize}
+                In a old-fashioned way, the latest studies on neolithic settlements have done with GIS software what Jones did by hand: most of the vector geometries have been hand-traced, manually derived \cite{laterza}.
+                The current work can be considered the natural evolution of the methods defined by Jones and subsequently applied in the last years, and aims to automate the last two abovementioned Jones' analysis, plus some other statistics published in the last years.
 
-        \pagebreak
-        \subsection{Modern spatial investigations}
+        \subsection{Modern spatial investigations and data gathering}
             Given the variety and widespread distribution of the settlements across about \SI{150}{\hectare}, aerial and geophysical methods assured the best results, and heavily contributed to collect the data useful to an accurate landscape archaeology study \cite[pp.~45--48]{remote-ciminale}. After the post-processing, all the data have been placed in a GIS environment, currently containing 7 different raster layers and 2 vector layers (\fref{tab:layers}). These vector layers refer to the latest study in chronological order, carried out by dott.ssa Angela Laterza in 2013, who completely digitized the structures contained in 23 neolithic settlements \cite{laterza}. 
             %
             \input{tab/tab-layers}
@@ -37,8 +46,20 @@
                 \label{fig:scheme-derive}
             \end{figure}
 
-            The current work is based on these data and uses 11 of the 23 digitized settlements (\fref{tab:sites}). The settlements have been randomly selected, so various configurations are possible: some of the settlements do not have compounds, some have few, some have compounds regularly spread across all the area, and even some intermediate cases among these are possible; this enriches the range of possibilities, not limiting the analysis to ``simplest'' cases. The map in \fref{fig:sites-map} shows the position of the analyzed sites (points with a site code), of all the settlements in the Tavoliere project (yellow marks) and of the major cities.
+            The above figure helps to explain how the data deriving has been structured:
+
+            \begin{description}
+                \item[ditches, compounds] are the base geometries for all other operations;
+                \item[areas] a separate vector geometry has been drawn for each ditch and each compound;
+                \item[perimeters] archaeologically speaking, the perimeter of the ``lived'' ground for a single compound is the border of the geometry of the area; this is the reason behind the derivation of the perimeter from the area geometry and not from the compound enclosure itself; the perimeters are usually automatically derived using GIS calculation functions, and are stored next to the respective geometries, as numerical attributes;
+                \item[access] it is manually derived from the compound's geometry; it is recognized by the operator, who must watch each compound at least once, and write down an index representing the orientation as attribute in the same table as above.
+            \end{description}
+
+            The tests to prove the validity of the current work have been done on the data outputted by this process, using 11 of the 23 digitized settlements (\fref{tab:sites}).
+            
             \input{tab/tab-sites}
+            
+            The settlements have been randomly selected, so various configurations are possible: some of the settlements do not have compounds, some have few, some have compounds regularly spread across all the area, and even some intermediate cases among these are possible; this enriches the range of possibilities, not limiting the analysis to ``simplest'' cases. The map in \fref{fig:sites-map} shows the position of the analyzed sites (points with a site code), of all the settlements in the Tavoliere project (yellow marks) and of the major cities.
 
             \begin{figure}[H]
                 \includegraphics[width=1\textwidth]{sites-map/tavoliere.pdf}
@@ -76,7 +97,7 @@
                 \vspace{-0.03\textheight}
             \end{wrapfigure}
 
-            In the case study, geometries have been classified by perimeter values (calculated and saved automatically from ditches and compounds shapes; see app.~\ref{sec:code-jenks} for code). The different coloring of the geometries on the map based on the newly created classes (\fref{fig:jenks-color}) helps the user to distinguish ditches from compounds at a glance.
+            In the case study, geometries have been classified by perimeter values (calculated and saved automatically from ditches and compounds' shapes; see app.~\ref{sec:code-jenks} for code). The different coloring of the geometries on the map based on the newly created classes (\fref{fig:jenks-color}) helps the user to distinguish ditches from compounds at a glance.
 
             The process is semi-automated since the user have to manually select the ditches and, if necessary, change the class numbers to have a good fit. The flowchart in \fref{fig:flow-map} reports the logic of the process. At the end, the geometry types are saved as text attribute (literally \textsf{ditch} or \textsf{compound}) in a table containing the results of the processing (one row for each geometry); \fref{tab:jnb-results} shows sample data from the \emph{Anglisano} settlement.
 
@@ -113,7 +134,7 @@
                     \begin{tikzpicture}[x=1mm,y=1mm,scale=0.041]
                         \input{img/comp-base} 
                     \end{tikzpicture}
-                    \caption{Compound's wall surface}
+                    \caption{Compound enclosure's surface}
                     \label{fig:comp-wall}
                 \end{subfigure}
 
@@ -150,7 +171,7 @@
                     \label{fig:comp-ang-area}
                 \end{subfigure}
 
-                \caption[Deriving compound area from difference between total occupied surface and wall surface]{The area derived from the difference between compound's total occupied surface and the wall surface.}
+                \caption[Deriving compound area as the difference between total occupied surface and the enclosure's surface]{The area derived from the difference between compound's total surface and the enclosure's surface.}
                 \label{fig:comp}
 
                 \vspace{-0.07\textheight}
@@ -162,15 +183,15 @@
             
             \begin{enumerate}
                 \item generate the convex hull\footnote{In mathematics, the convex hull or convex envelope of a set X of points in the Euclidean plane or Euclidean space is the smallest convex set that contains X \cite{wiki:hull}.} of the compound
-                \item subtract the surface occupied by the compound wall from the convex hull area
+                \item subtract the surface occupied by the compound's enclosure from the convex hull area
                 \item get the extent of the new geometry (in effect, the extension of the compound's internal area)
             \end{enumerate}
 
             This method has some drawbacks, mostly the needing to fix the limits of the doorway. A sample result using this approach can be seen in \fref{fig:comp} (compound from the Trecasette settlement). The result shows that it is not suitable for analysis, since doorstep is not set adequately (compare \fref{fig:comp-area} with the \ref{fig:comp-ang-area} from \cite{laterza}). Iterating over this method on all the compounds would have generated a consistent error so this method has been discarded.
 
-            The problem has been solved applying a common analytic geometry procedure, considering the compound's internal surface as the envelope of the compound wall's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the compound's wall and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the compound's wall is registered. This process is explained in \fref{fig:comp-iter}.
+            The problem has been solved applying a common analytic geometry procedure, considering the compound's internal surface as the envelope of the compound enclosure's points nearest to an inner point (the compound's \emph{centroid}). Compound's inner side points have been captured as the intersection between the enclosure and a new segment binding the centroid with a point external to the compound. Rotating this external points by \SI{1}{\degree}, the segment itself is rotated and the intersection with the innermost point of the enclosure is registered. This process is explained in \fref{fig:comp-iter}.
             
-            In \fref{fig:comp-iter-1} centroid $C$ is calculated using standard GIS tools from compound's convex hull; point $F$ represents the point on the compound's wall with the maximum distance from $C$; point $B$ is obtained applying a buffer to $F$ ($d_{(C,B)} > d_{(C,F)}$). This last step ensures that the circle $D$ created from $B$ --- using $C$ as center --- is outside the compound's geometry (\fref{fig:comp-iter-2}). A set of points is created on $D$ dividing the perimeter by 360, obtaining one point every \SI{1}{\degree}. In detail, given an angle $\alpha$, a circle $D$ with radius $r=d_{(C,B)}$ and center in $C$ ($x_C, y_C$), a general point $P$ ($x_P, y_P$) on $D$ is defined by:
+            In \fref{fig:comp-iter-1} centroid $C$ is calculated using standard GIS tools from the compound's convex hull; point $F$ represents the point on the enclosure with the maximum distance from $C$; point $B$ is obtained applying a buffer to $F$ ($d_{(C,B)} > d_{(C,F)}$). This last step ensures that the circle $D$ created from $B$ --- using $C$ as center --- is outside the compound's geometry (\fref{fig:comp-iter-2}). A set of points is created on $D$ dividing the perimeter by 360, obtaining one point every \SI{1}{\degree}. In detail, given an angle $\alpha$, a circle $D$ with radius $r=d_{(C,B)}$ and center in $C$ ($x_C, y_C$), a general point $P$ ($x_P, y_P$) on $D$ is defined by:
             %
             \begin{align}
                 \label{eq:point-circle}
@@ -251,12 +272,12 @@
             
             In a last step (not represented in \fref{fig:comp-iter}) a convex hull is generated using all the points in $I$; this is the compound's inner surface (the algorithm code is in app.~\ref{sec:code-area}).
 
-            A Python algorithm has been used to automate the process, which saves the derived area geometries to a database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared} (they are saved as attributes). A sample table with the compound's area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data \cite{laterza}.
+            A Python algorithm has been used to automate the process, which saves the derived area geometries to a database table separated from the others. Further informations could be derived from these geometries, mostly their perimeter and surface in \si{\meter\squared} (they are saved as attributes). A sample table with the compounds' area and attributes is presented in \fref{tab:tab-area-anglisano}. The derived perimeters and areas are useful for a comparison with the results obtained from a manual deriving of the same data \cite{laterza}.
 
             \begin{table}[!htb]
                 \centering
                 \input{tab/tab-area-anglisano}
-                \caption[Sample results of area geometries derived from compounds and their attributes for the Anglisano settlement.]{Sample results of the derived area geometries for some compounds in the Anglisano settlement. Rows 1, 4 and 16 represent the same compounds as in \fref{tab:jnb-results}, excepted that the perimeter value is calculated from the area geometry and not from the compound's wall geometry as before (the data are not redundant).}
+                \caption[Sample results of area geometries derived from compounds and their attributes for the Anglisano settlement]{Sample results of the derived area geometries for some compounds in the Anglisano settlement. Rows 1, 4 and 16 represent the same compounds as in \fref{tab:jnb-results}, excepted that the perimeter value is calculated from the area geometry and not from the compound enclosure's geometry as before (the data are not redundant).}
                 \label{tab:tab-area-anglisano}
             \end{table}
 
@@ -327,13 +348,13 @@
                         \label{fig:comp-orient-4}
                     \end{subfigure}
 
-                    \caption[Graphical rapresentation of the steps to derive compound's access orientation.]{Derivation of the orientation for a single compound's access segment.% While $a_1, a_2 \in I$, $e$ is derived using GIS.
+                    \caption[Graphical rapresentation of the steps to derive compound's access orientation]{Derivation of the orientation for a single compound's access segment.% While $a_1, a_2 \in I$, $e$ is derived using GIS.
                     }
                     \label{fig:comp-orient}
                     \vspace{-0.1\textheight}
                 \end{wrapfigure}
                 %
-                Since the access (or doorstep) of a compound is the segment joining the two farthest points in its internal surface ($a_1$, $a_2$), we can derive compound orientation as the orientation of this segment. Many approaches are possible; we have chosen to calculate the cardinal point that ``contains'' the access. The calculation consisted in building an octagon using the 8 above mentioned cardinal points as sides. Every triangular slice of the octagon represents the area for that cardinal point. Then, a simple \emph{spatial} check of which triangle contains the access segment allows to define the orientation of the access. This process details are represented in \fref{fig:comp-orient}.
+                Since the access (or doorstep) of a compound is the segment joining the two farthest points in its internal surface ($a_1$, $a_2$), we can derive the compound's orientation as this segment's. Many approaches are possible; we have chosen to calculate the cardinal point that ``contains'' the access. The calculation consisted in building an octagon using the 8 above mentioned cardinal points as sides. Every triangular slice of the octagon represents the area for that cardinal point. Then, a simple \emph{spatial} check of which triangle contains the access segment allows to define the orientation of the access. This process details are represented in \fref{fig:comp-orient}.
                 
                 Unfortunately, some compounds have a very large access, so we need to reduce the access to a smaller geometry: we considered the access segment's centroid. This point is calculated using standard GIS tools; from the geometrical point of view, the centroid of a line is its \emph{midpoint} \cite{calculus-geom}; for a line segment joining $P_1$ $(x_1, y_1)$ and $P_2$ $(x_2, y_2)$ the midpoint $(\bar{x}, \bar{y})$ is
                 %
@@ -354,16 +375,16 @@
                 
                 The last step, in \fref{fig:comp-orient-3} uses a standard \emph{contains} GIS function to determine in which triangle the centroid $e$ is contained, iterating over all triangles; the example returns a western orientation. To ease the statistical approach, a numerical index has been attributed to each cardinal point (e.g.\ $W = 4$ in \fref{fig:comp-orient-4}); the relevant code for this operation is in app.~\ref{sec:code-access}.
 
-                To store the results, a new table is created; for each compounds the table registers the original Shapefile's ID, the compound's ID, the length of the access segment (automatically calculated as $d_{a_1, a_2}$, and the orientation index (between $0$ and $7$). Sample results for the Anglisano settlements are shown in \fref{tab:tab-access-anglisano}.
+                To store the results, a new table is created; for each compound, the table registers the original Shapefile's ID, the compound's ID, the length of the access segment (automatically calculated as $d_{a_1, a_2}$, and the orientation index (between $0$ and $7$). Sample results for the Anglisano settlements are shown in \fref{tab:tab-access-anglisano}.
                 %
                 \begin{table}[!htb]
                     \centering
                     \input{tab/tab-access-anglisano}
-                    \caption[Sample results of access calculations for the compounds in the Anglisano settlement.]{Sample results of access calculations for the compounds in the Anglisano settlement.}
+                    \caption[Sample results of access calculations for the compounds in the Anglisano settlement]{Sample results of access calculations for the compounds in the Anglisano settlement.}
                     \label{tab:tab-access-anglisano}
                 \end{table}
 
-        \subsection{Saving and access data}
+        \subsection{Saving and accessing data}
             All the algorithms described above store derived data in a different database table, easing the information retrieving in order to present them on the web interface. A scheme of where data are stored for each compound is presented in \fref{fig:scheme-derive-2}.
 
             \begin{figure}[H]
@@ -373,7 +394,7 @@
                         \input{tab/dot-geo-workflow-def}
                     \end{tikzpicture}
                 }
-                \caption[The three diffrent tables to store compound's derived data.]{The new data structure of the Tavoliere project. Starting from the same raster data as in \fref{fig:scheme-derive}, all the newly derived vector data and their attributes are placed in a different table.}
+                \caption[The three different tables to store compound's derived data]{The new data structure of the Tavoliere project. Starting from the same raster data as in \fref{fig:scheme-derive}, all the newly derived vector data and their attributes are placed in a different table.}
                 \label{fig:scheme-derive-2}
             \end{figure}
 

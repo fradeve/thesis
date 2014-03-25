@@ -1,0 +1,124 @@
+%% splitted nodes
+%%%%%%%%%%%%%%%%%
+
+\tikzstyle{automated} = [
+    rectangle split,
+    rectangle split horizontal,
+    rectangle split parts=2,
+    rectangle split part fill={White, Yellow!50},
+    draw=MidnightBlue, very thick,
+    text centered, rounded corners,
+    minimum height=2em
+]
+
+\tikzstyle{human_vect} = [
+    rectangle split,
+    rectangle split horizontal,
+    rectangle split parts=2,
+    rectangle split part fill={White, RoyalPurple!50},
+    draw=Black, very thick,
+    text centered, rounded corners,
+    minimum height=2em
+]
+
+\tikzstyle{human_num} = [
+    rectangle, draw=YellowGreen, ultra thick, fill=YellowGreen!50,
+    text centered, rounded corners,
+    minimum height=3em
+]
+
+\tikzstyle{table_vect4} = [
+    rectangle split,
+    rectangle split parts=4,
+    rectangle split part fill={White, RoyalPurple!50, YellowGreen!50},
+    draw=Black, very thick,
+    text centered, rounded corners,
+    minimum height=2em
+]
+
+\tikzstyle{table_vect5} = [
+    rectangle split,
+    rectangle split parts=5,
+    rectangle split part fill={White, RoyalPurple!50, YellowGreen!50},
+    draw=Black, very thick,
+    text centered, rounded corners,
+    minimum height=2em
+]
+
+\tikzstyle{table_vect6} = [
+    rectangle split,
+    rectangle split parts=6,
+    rectangle split part fill={White, RoyalPurple!50, YellowGreen!50},
+    draw=Black, very thick,
+    text centered, rounded corners,
+    minimum height=2em
+]
+
+%% not-flowchart normal nodes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tikzstyle{sourcelabel} = [
+    rectangle,
+    draw=MidnightBlue,
+    ultra thick,
+    fill=black!0,
+    text centered, rounded corners,
+    minimum height=1.5em
+]
+
+\tikzstyle{datalabel} = [
+    rectangle,
+    draw=black,
+    ultra thick,
+    fill=black!0,
+    text centered, rounded corners,
+    minimum height=1.5em
+]
+
+\tikzstyle{derivedlabel} = [
+    rectangle,
+    draw=YellowGreen!50,
+    ultra thick,
+    fill=black!0,
+    text centered, rounded corners,
+    minimum height=1.5em
+]
+
+%% standard flow chart nodes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tikzstyle{extreme} = [
+    rectangle,
+    draw=GreenYellow,
+    very thick,
+    text centered,
+    rounded corners,
+    minimum height=2.5em
+]
+
+\tikzstyle{elaboration} = [
+    rectangle,
+    draw=GreenYellow,
+    very thick,
+    align=center,
+    minimum height=2.5em
+]
+
+\tikzstyle{io} = [
+    trapezium,
+    trapezium left angle=70,
+    trapezium right angle=-70,
+    draw=GreenYellow,
+    very thick,
+    align=center,
+    minimum height=1em
+]
+
+\tikzstyle{decision} = [
+    diamond, 
+    aspect=2,
+    align=center,
+    draw=GreenYellow,
+    very thick,
+    minimum height=2.5em
+]

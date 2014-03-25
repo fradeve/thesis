@@ -20,7 +20,7 @@
                 \begin{tikzpicture}
                     \input{tab/graph-num-compound}
                 \end{tikzpicture}
-                \caption[The number of compounds in \cite{laterza} compared to the results of the proposed method.]{The number of compounds automatically calculated for all the analyzed settlements, compared with the results reported in \cite{laterza}.}
+                \caption[The number of compounds in \cite{laterza} compared to the results of the proposed method]{The number of compounds automatically calculated for all the analyzed settlements, compared with the results reported in \cite{laterza} (source data in \fref{tab:raw-tab-compound}).}
                 \label{fig:graph-num-compound}
             \end{figure}
 
@@ -29,14 +29,14 @@
                 \begin{tikzpicture}
                     \input{tab/graph-num-ditch}
                 \end{tikzpicture}
-                \caption[The number of ditches in \cite{laterza} compared to the results of the proposed method.]{The number of ditches automatically calculated for all the analyzed settlements, compared with the results reported in \cite{laterza}.}
+                \caption[The number of ditches in \cite{laterza} compared to the results of the proposed method]{The number of ditches automatically calculated for all the analyzed settlements, compared with the results reported in \cite{laterza} (source data in \fref{tab:raw-tab-ditch}).}
                 \label{fig:graph-num-ditch}
             \end{figure}
 
             Having all the statistics registered in a database, the extraction of further data is very easy; the \fref{fig:graph-perim-class}, for example, shows the frequency of perimeter's classes for all the compounds; it is evident that most of the analyzed compounds are contained in the first class of perimeters, ranging from \SI{96.6}{\meter} to \SI{103}{\meter}.
 
             \begin{SCfigure}
-                \caption[Frequency of all the analyzed compounds for each perimeter class, with $k=5$.]{Frequency of all the analyzed compounds for each perimeter class, with the default number of classes $k=5$. Class $6$ has been removed since only ditches belong to it.}
+                \caption[Frequency of all the analyzed compounds for each perimeter class, with $k=5$]{Frequency of all the analyzed compounds for each perimeter class, with the default number of classes $k=5$ (source data in \fref{tab:raw-tab-perim-class}). Class $6$ has been removed since only ditches belong to it.}
                 \begin{tikzpicture}
                     \input{tab/graph-perim-class}
                 \end{tikzpicture}
@@ -54,7 +54,7 @@
                 \begin{tikzpicture}
                     \input{tab/graph-area}
                 \end{tikzpicture}
-                \caption[Areas of all the analyzed settlements compared with ones published in \cite{laterza}.]{Areas of all the analyzed settlements, compared to ones defined in \cite{laterza}. The proposed values fit well with published data.}
+                \caption[Areas of all the analyzed settlements compared with ones published in \cite{laterza}]{Areas of all the analyzed settlements, compared to ones defined in \cite{laterza} (source data in \fref{tab:raw-tab-area}). The proposed values fit well with published data.}
                 \label{fig:graph-area}
             \end{figure}
 
@@ -68,7 +68,7 @@
                 \begin{tikzpicture}
                     \input{tab/graph-perim}
                 \end{tikzpicture}
-                \caption[Comparison of published perimeters with ones obtained with the proposed method.]{Comparison of the total perimeters obtained for all the compounds in each analyzed settlement with the values published in \cite{laterza}, showing a good correspondence.}
+                \caption[Comparison of published perimeters with ones obtained with the proposed method]{Comparison of the total perimeters obtained for all the compounds in each analyzed settlement with the values published in \cite{laterza}, showing a good correspondence (source data in \fref{tab:raw-tab-perim}).}
                 \label{fig:graph-perim}
             \end{figure}
 
@@ -80,8 +80,8 @@
             % min, max, avg access length
             % is there any relation between orientation and access length?
 
-            Automating the compound orientation discovering has been the hardest task, since involved the derivation of multiple geometries for each compound (see \fref{sec:orientation}).
-            The information about compound orientation for 155 compounds in all the analyzed sites has been automatically calculated and required less than \SI{4}{\minute} to generate and save the relevant data to the database, while manually defining an orientation index as for a ``normal'' approach requires several days of work.
+            Automating the discovering of compounds' orientation has been the hardest task, since involved the derivation of multiple geometries for each compound (see \fref{sec:orientation}).
+            The information about orientation for 155 compounds in all the analyzed sites has been automatically calculated and required less than \SI{4}{\minute} to generate and save the relevant data to the database, while manually defining an orientation index as for a ``normal'' approach requires several days of work.
             
             The results plotted in \fref{fig:graph-orient} show that the general trend in the orientations calculated in this work is very similar to the one published in \cite{laterza}. However, the significance of this calculation can be improved, since presenting each orientation as an interval of values (e.g.\ NE contains all the values ranging from \SI{0}{\degree} to \SI{45}{\degree}) is an operation of classification itself and has caused a loss of detail. This has been done to register values comparable to the ones defined in \cite{laterza}. At the current status, nothing can be done to prove which measurement is nearest to reality, but the assumption that both datasets share the same trends seems a result good enough to state that the automated method is fully functional.
 
@@ -90,11 +90,40 @@
                 \begin{tikzpicture}
                     \input{tab/graph-orient}
                 \end{tikzpicture}
-                \caption[Orientation of compounds for all the settlements calculated in this work compared with know data.]{Compounds' orientation calculated using the automated algorithm compared to manually derived data.}
+                \caption[Orientation of compounds for all the settlements calculated in this work compared with know data]{Compounds' orientation calculated using the automated algorithm compared to manually derived data (source data in \fref{tab:raw-tab-orient}).}
                 \label{fig:graph-orient}
             \end{figure}
 
-            Before the work of dott.ssa Laterza in 2013, the only available data about the compound orientation of the Tavoliere settlements were in \textcite[appx.~IV]{jones-tavoliere}, reported as data tables and derived drawing by hand on graph paper, on top of aerial photos. The orientation data contained in the tables refer to the ``average orientation'' of compounds in some settlements and have not been calculated for each compound. Thus, comparing these general values to \emph{atomized} data obtained from calculation on every single compound as done so far in this work, may appear risky from the scientific point of view. Nonetheless, a graphical comparison may still be useful to visually find some trends --- if any. 
+            Since the forced classification introduced an error between the two datasets, the only way to check if the data produced with the automated method are reliable is the \emph{F--test} between the variances of the two populations \cite[p.~53]{troi2010statistical}. This is a two--sided distribution since we will have two rejection regions, because the alternative to the null hypothesis is that the two sets are different. Calculation follows, with orientation data from \fref{tab:raw-tab-orient}, and assuming orientations in \cite{laterza} as \emph{Population 1} and automated results as \emph{Population 2}. The test hypothesis is $H_0 : \sigma^2_1 = \sigma^2_2$ versus $H_a : \sigma^2_1\neq\sigma^2_2$. Given the averages $\overline{x}$ of the two populations:
+            \begin{align}\label{eq:ftest-m}
+                \overline{x}_1 = 20.75\quad \overline{x}_2 = 19.37
+            \end{align}
+            Given the corrected sample variance:
+            \begin{align}\label{eq:ftest-s}
+                s^2 = \frac{1}{N-1} \sum_{i=1}^N (x_i - \overline{x})^2\\
+                s_1 = 20.95\quad s^2_{1} = 438.79\nonumber\\
+                s_2 = 21.70\quad s^2_{2} = 470.84
+            \end{align}
+            Degrees of freedom are calculated for both populations; in both cases we are dealing with $n=8$ cardinal points:
+            \begin{align}\label{eq:f-test-degree}
+                df_1 = df_2 = 8-1 = 7
+            \end{align}
+            The value of the test statistic is:
+            \begin{align}
+                \label{eq:ftest-f}
+                F_{\text{cal}} = \frac{s^2_2}{s^2_1} = \frac{470.84}{438.79} = 1.07
+            \end{align}
+            % http://www.wolframalpha.com/input/?i=f-distribution%2C+n%3D7%2C+m%3D7
+            % http://2012books.lardbucket.org/books/beginning-statistics/s15-03-f-tests-for-equality-of-two-va.html#fwk-shafer-ch11_s03_s02_f02
+            % http://faculty.washington.edu/heagerty/Books/Biostatistics/TABLES/F-Tables/
+            The upper critical value for two--sided distribution is $F_{df_1, df_2}(0.05)=4.99$, then
+            \begin{align}
+                \label{eq:f-test-prove}
+                F_{\text{cal}} < F_{\text{tab}}\nonumber
+            \end{align}
+            and the null hypothesis $H_0$ can be accepted: the two data sets are equal, and the automated calculation method is affordable, with certainty to $0.05$ significance levels ($97.5$ percentile).
+
+            Before the work of dott.ssa Laterza in 2013, the only available data about the compounds' orientation of the Tavoliere settlements were in \textcite[appx.~IV]{jones-tavoliere}, reported as data tables and derived drawing by hand on graph paper, on top of aerial photos. The orientation data contained in the tables refer to the ``average orientation'' of compounds in some settlements and have not been calculated for each compound. Thus, comparing these general values to \emph{atomized} data obtained from calculation on every single compound as done so far in this work, may appear risky from the scientific point of view. Nonetheless, a graphical comparison may still be useful to visually find some trends --- if any. 
 
             \cite{jones-tavoliere} reports orientation data of 24 settlements, and just few of these are referable to the set analyzed in this work. Thus, orientation data from all the sources (\cite{laterza}, \cite{jones-tavoliere} and this work) have been calculated as percentage referred to the total analyzed compounds. Results are shown in \fref{fig:graph-orient-jones}.
 
@@ -103,9 +132,11 @@
                 \begin{tikzpicture}
                     \input{tab/graph-orient-jones}
                 \end{tikzpicture}
-                \caption[Comparison of automatically derived orientation data with the other sources.]{Comparison of the orientation data, from left: manually derived by \citeauthor{laterza}, automatically calculated in the current work and derived by hand by \citeauthor{jones-tavoliere} in 1987. The latter refers to average settlements' orientation, while the others to average compounds' orientation.}
+                \caption[Comparison of automatically derived orientation data with the other sources]{Comparison of the orientation data, from left: manually derived by \citeauthor{laterza}, automatically calculated in the current work and derived by hand by \citeauthor{jones-tavoliere} in 1987. The latter refers to average settlements' orientation, while the others to average compounds' orientation. Source data in \fref{tab:raw-tab-orient-jones}.}
                 \label{fig:graph-orient-jones}
             \end{figure}
+            
+            Apart from noting that N, SW and W orientations in Jones seems to fit the trend found in the other sources, and that Jones also found that NE, E and SE orientations are null, no other observation can be pointed out.
 
         \subsection{The web interface structure\label{sec:webgis}}
             Having defined all the algorithms to derive geometries and data from the input vectors, the next step concerned a way to make these tool accessible to the operator, even ones with less experience. To ease the development of a standard compliant interface the Django \emph{framework} has been used; both the framework and the algorithms share the same open source programming language, Python.
@@ -127,7 +158,7 @@
             \vfill
 
             \begin{figure}[H]
-                \caption[Screenshots of the main tools of the software created to automate statistical calculations.]{Main tools included in the software used to automate statistical calculations of the data presented in this work. The calculation functions are accessible from buttons on the interface. All the images show sample calculations operated on the \emph{ang1} settlement.}
+                \caption[Screenshots of the main tools of the software created to automate statistical calculations]{Main tools included in the software used to automate statistical calculations of the data presented in this work. The calculation functions are accessible from buttons on the interface. All the images show sample calculations operated on the \emph{ang1} settlement.}
                 \label{fig:screenshots}
             \end{figure}
 
@@ -177,7 +208,7 @@
                 \begin{subfigure}[b]{1\textwidth}
                     \centering
                     \includegraphics[width=0.95\textwidth]{img/shp-wizard}
-                    \caption{The wizard used to show compounds geometries classified using the Jenks Natural Breaks, with slider to redefine the number of $k$ classes to find the best fit with perimeters.}
+                    \caption{The wizard used to show compounds' geometries classified using the Jenks Natural Breaks, with slider to redefine the number of $k$ classes to find the best fit with perimeters.}
                     \label{fig:shp-wizard}
                 \end{subfigure}
             \end{figure}

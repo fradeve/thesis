@@ -64,8 +64,8 @@
 \DeclareBibliographyCategory{online}
 \defbibheading{online}{\section*{Online resources}}
 
-\addtocategory{online}{wiki:aerial}
 \addtocategory{online}{wiki:hull}
+\addtocategory{online}{wiki:gpl}
 
 %%% math and science %%%%%%%%%
 
@@ -174,7 +174,6 @@
     \input{pages/dedication}\cleardoublepage
     \pagestyle{scrheadings} 
     \input{pages/index}\cleardoublepage
-    \input{pages/forewords}\cleardoublepage
     %******************************************
     % Materiale principale
     %******************************************
@@ -193,6 +192,7 @@
     \appendix
     \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
     \addcontentsline{toc}{part}{\appendixname} 
+    \input{cap/data-stat}
     \input{cap/data}
     \input{cap/code}
 \end{document}
