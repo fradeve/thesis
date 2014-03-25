@@ -1,0 +1,4 @@
+[submodule "refs"]
+	path = refs
+	url = git@git.sdonk.org:fradeve/latex-bib.git
+	branch = thesis
